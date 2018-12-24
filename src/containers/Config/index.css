@@ -1,0 +1,12 @@
+.config {
+    text-align: center;
+}
+
+.scan {
+    display: flex;
+    align-items: center;
+}
+
+.submit {
+    margin-top: 20px;
+}
