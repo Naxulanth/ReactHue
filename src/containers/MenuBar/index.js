@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
-import Config from 'containers/Config'
 import colorChanger from 'utils/colorChanger';
 
 import './index.css';
@@ -10,7 +9,8 @@ class MenuBar extends Component {
 
     componentDidMount() {
         let c = colorChanger();
-        c.start('border', this.menuBar.style, 'borderBottomColor');
+        c.start(this.menuBar.style, 'borderBottomColor');
+        c.start(this.menuBar.style, 'borderTopColor', 'reverse');
     }
     render() {
         return (

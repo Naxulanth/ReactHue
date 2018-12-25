@@ -1,41 +1,47 @@
 function colorChanger() {
-    let waypoints = [[255, 0, 255], [0, 191, 255]];
-    let startColor = waypoints[0];
-    let defaultColor = startColor.slice();
-    let targetColor = waypoints[1];
-    let currentIndex = 1;
-    let timer = 10;
-    let loop = [];
+    let waypoints = { 'default': [[255, 0, 255], [0, 191, 255]], 'reverse': [ [0, 191, 255],[255, 0, 255]]  };
+    let currentIndex = {};
+    let frequency = {'default': 10};
+    let loop = {};
 
-    function setTimer(e) {
-        timer = e;
+    function setFrequency(e, id) {
+        if (!id) id = 'default';
+        frequency[id] = e;
     }
 
-    function setWaypoints(e) {
-        waypoints = e;
+    function setWaypoints(e, id) {
+        if (!id) id = 'default';
+        waypoints[id] = e;
     }
 
     function stop(id) {
         clearInterval(loop[id]);
     }
 
-    function start(id, style, attribute) {
+    function start(style, attribute, id) {
+        if (!id) id = 'default';
+        let startColor = waypoints[id][0];
+        let defaultColor = startColor.slice();
+        let targetColor = waypoints[id][1];
+        currentIndex[id] = 1;
         loop[id] = setInterval(() => {
             for (let i = 0; i < defaultColor.length; ++i) {
                 if (targetColor[i] > defaultColor[i]) defaultColor[i]++;
                 else if (targetColor[i] < defaultColor[i]) defaultColor[i]--;
             }
-            if (JSON.stringify(targetColor) == JSON.stringify(defaultColor)) {
-                targetColor = waypoints[currentIndex++];
-                currentIndex = currentIndex % waypoints.length;
+            if (JSON.stringify(targetColor) === JSON.stringify(defaultColor)) {
+                console.log(waypoints[id])
+                targetColor = waypoints[id][currentIndex[id]++];
+                currentIndex[id] = currentIndex[id] % waypoints[id].length;
+                console.log(targetColor)
             }
             style[attribute] = 'rgb(' + defaultColor[0] + ',' + defaultColor[1] + ',' + defaultColor[2] + ')'
-        }, timer)
+        }, frequency[id])
     }
 
     return {
         start: start,
-        setTimer: setTimer,
+        setFrequency: setFrequency,
         stop: stop,
         setWaypoints: setWaypoints
     }
