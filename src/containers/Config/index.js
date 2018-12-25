@@ -4,6 +4,7 @@ import axios from 'axios';
 import TextInput from 'components/TextInput';
 import { Redirect } from 'react-router-dom';
 import Button from 'components/Button';
+import validator from 'validator';
 import './index.css'
 
 import { user, bridge } from 'constants/localStorage';
@@ -42,12 +43,24 @@ class Config extends Component {
 
     handleSubmit() {
         const { ip, username } = this.state;
+        if (!validator.isIP(ip)) {
+            this.setState({
+                text: "IP validation failed (don't use http/https)"
+            })
+        }
+        else {
         this.setState({
             text: 'Testing...'
         })
-        axios.get(this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
+        axios.get('http://' + this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
             localStorage.setItem(user, username);
             localStorage.setItem(bridge, ip);
+            if (res.data && res.data[0] && res.data[0].error) {
+                this.setState({
+                    text: 'Unauthorized user'
+                })
+            }
+            else {
             this.setState({
                 text: 'Success, redirecting...',
             })
@@ -56,11 +69,13 @@ class Config extends Component {
                     redirect: true,
                 })
             }, 2000);
-        }).catch((e) => {
+        }}).catch((e) => {
+            console.log(e)
             this.setState({
-                text: 'Failed'
+                text: 'Unable to reach bridge'
             })
         })
+    }
     }
 
     render() {

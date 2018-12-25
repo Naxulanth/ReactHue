@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
 import Config from 'containers/Config'
+import React, { Component } from 'react';
 import './index.css';
 
 class ConfigScene extends Component {
@@ -13,3 +13,4 @@ class ConfigScene extends Component {
 }
 
 export default ConfigScene;
+
