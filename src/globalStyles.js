@@ -11,7 +11,26 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    height: 100%;
+    margin: 0;
+    padding: 0;
   }
+
+  html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  #root {
+    min-height: 100%;
+    position: relative;
+  }
+
+  .pad {
+    padding-bottom: 50px;
+  }
+  
 `
 
 export default GlobalStyle;

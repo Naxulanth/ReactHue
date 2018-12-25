@@ -5,7 +5,7 @@ import './index.css';
 class ConfigScene extends Component {
     render() {
         return (
-            <div className="config-center">
+            <div className="config-center pad">
                 <Config />
             </div>
         );

@@ -7,7 +7,7 @@ import './index.css';
 class Main extends Component {
   render() {
     return (
-      <div className="main">
+      <div className="main pad">
         <Rooms/>
       </div>
       );
