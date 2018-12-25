@@ -24,7 +24,7 @@ class MenuBar extends Component {
                             Home | Config
             </Col>
                         <Col className="about" lg="2">
-                            About | Contact
+                            FAQ
             </Col>
                         <Col lg="1" />
                     </Row>
