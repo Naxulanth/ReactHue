@@ -12,9 +12,7 @@ import MenuBar from './containers/MenuBar'
 const history = createHistory()
 ReactDOM.render(
     <Fragment>
-        <Routes history={history}>
-        <MenuBar/>
-        </Routes>
+        <Routes history={history}/>
         <GlobalStyle />
     </Fragment>,
     document.getElementById('root'));

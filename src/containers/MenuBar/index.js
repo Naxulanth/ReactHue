@@ -21,7 +21,6 @@ class MenuBar extends Component {
                         </Col>
                         <Col lg="6">
                             <MenuBarLink to={process.env.PUBLIC_URL + '/'}>Home</MenuBarLink>
-                            <MenuBarLink to={process.env.PUBLIC_URL + '/rooms'}>Rooms</MenuBarLink>
                             <MenuBarLink to={process.env.PUBLIC_URL + '/config'}>Config</MenuBarLink> 
                         </Col>
                         <Col className="about" lg="2">
