@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'sanitize.css/sanitize.css'
 
 import Routes from './routes'
-import MenuBar from './containers/MenuBar'
 
 const history = createHistory()
 ReactDOM.render(
