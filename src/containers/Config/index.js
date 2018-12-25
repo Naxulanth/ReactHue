@@ -2,21 +2,34 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import axios from 'axios';
 import TextInput from 'components/TextInput';
+import { Redirect } from 'react-router-dom';
 import Button from 'components/Button';
 import './index.css'
+
+import { user, bridge } from 'constants/localStorage';
 
 class Config extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            ip: 'http://192.168.2.100',
-            username: '1SLcIETR1tmnP-rFuasBumGdku1MYn4GxscoSI57',
-            text: ''
+            ip: '',
+            username: '',
+            text: '',
+            redirect: false,
         }
         this.handleIPInput = this.handleIPInput.bind(this)
         this.handleUsernameInput = this.handleUsernameInput.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentWillMount() {
+        let localUser = localStorage.getItem(user);
+        let localBridge = localStorage.getItem(bridge);
+        this.setState({
+            username: localUser ? localUser : '',
+            ip: localBridge ? localBridge : '',
+        })
     }
 
     handleIPInput(e) {
@@ -28,13 +41,21 @@ class Config extends Component {
     }
 
     handleSubmit() {
+        const { ip, username } = this.state;
         this.setState({
             text: 'Testing...'
         })
         axios.get(this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
+            localStorage.setItem(user, username);
+            localStorage.setItem(bridge, ip);
             this.setState({
-                text: 'Success'
+                text: 'Success, redirecting...',
             })
+            setTimeout(() => {
+                this.setState({
+                    redirect: true,
+                })
+            }, 2000);
         }).catch((e) => {
             this.setState({
                 text: 'Failed'
@@ -43,8 +64,9 @@ class Config extends Component {
     }
 
     render() {
-        const { ip, username, text } = this.state;
+        const { ip, username, text, redirect } = this.state;
         const { handleIPInput, handleUsernameInput, handleSubmit } = this;
+        if (redirect) return (<Redirect to='/' />)
         return (
             <div className="config">
                 <Row>

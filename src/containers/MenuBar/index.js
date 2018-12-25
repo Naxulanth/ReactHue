@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import colorChanger from 'utils/colorChanger';
+import MenuBarLink from 'components/MenuBarLink'
 
 import './index.css';
 
@@ -10,25 +11,24 @@ class MenuBar extends Component {
     componentDidMount() {
         let c = colorChanger();
         c.start(this.menuBar.style, 'borderBottomColor');
-        c.start(this.menuBar.style, 'borderTopColor', 'reverse');
     }
     render() {
         return (
             <div ref={(e) => this.menuBar = e} className="menu-bar">
-                <div className="menu-inner">
                     <Row>
                         <Col lg={{ offset: 1, size: 2 }}>
-                            Hue Console
-            </Col>
+                        <MenuBarLink to={process.env.PUBLIC_URL + '/'}>Hue Console</MenuBarLink>
+                        </Col>
                         <Col lg="6">
-                            Home | Config
-            </Col>
+                            <MenuBarLink to={process.env.PUBLIC_URL + '/'}>Home</MenuBarLink>
+                            <MenuBarLink to={process.env.PUBLIC_URL + '/rooms'}>Rooms</MenuBarLink>
+                            <MenuBarLink to={process.env.PUBLIC_URL + '/config'}>Config</MenuBarLink> 
+                        </Col>
                         <Col className="about" lg="2">
-                            FAQ
-            </Col>
+                            <MenuBarLink to={process.env.PUBLIC_URL + '/faq'}>FAQ</MenuBarLink>
+                        </Col>
                         <Col lg="1" />
                     </Row>
-                </div>
             </div>
         );
     }

@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import GlobalStyle from 'globalStyles'
-
 import Config from 'containers/Config'
-
 import './index.css';
 
 class ConfigScene extends Component {
@@ -10,7 +7,6 @@ class ConfigScene extends Component {
         return (
             <div className="main">
                 <Config />
-                <GlobalStyle />
             </div>
         );
     }
