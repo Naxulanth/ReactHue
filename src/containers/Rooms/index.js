@@ -16,8 +16,7 @@ class Rooms extends Component {
         this.populateWidgets = this.populateWidgets.bind(this);
     }
 
-    populateWidgets() {
-        let arr = [0, 0, 0, 0, 0, 0];
+    populateWidgets(arr) {
         let rows = [];
         while (arr.length) rows.push(arr.splice(0, 3));
         let insert = [];
@@ -45,7 +44,7 @@ class Rooms extends Component {
                         <Title>Your Rooms ({roomAmount})</Title>
                     </Col>
                 </Row>
-                {this.populateWidgets()}
+                {this.populateWidgets([0, 0, 0, 0, 0, 0])}
             </Fragment>
         )
     }
