@@ -4,6 +4,11 @@ function colorChanger() {
     let frequency = {'default': 10};
     let loop = {};
 
+    function initialize(frequency, waypoints, id) {
+        setFrequency(frequency,id);
+        setWaypoints(waypoints,id);
+    }
+
     function setFrequency(e, id) {
         if (!id) id = 'default';
         frequency[id] = e;
@@ -41,7 +46,8 @@ function colorChanger() {
         start: start,
         setFrequency: setFrequency,
         stop: stop,
-        setWaypoints: setWaypoints
+        setWaypoints: setWaypoints,
+        initialize: initialize,
     }
 }
 
