@@ -20,12 +20,13 @@ class MenuBar extends Component {
                         <Col lg={{ offset: 1, size: 2 }}>
                             Hue Console
             </Col>
-                        <Col lg="7">
+                        <Col lg="6">
                             Home | Config
             </Col>
-                        <Col lg="2">
+                        <Col className="about" lg="2">
                             About | Contact
             </Col>
+                        <Col lg="1" />
                     </Row>
                 </div>
             </div>
