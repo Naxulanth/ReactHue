@@ -4,23 +4,23 @@ function colorChanger() {
     let defaultColor = startColor.slice();
     let targetColor = waypoints[1];
     let currentIndex = 1;
-    let interv = 10;
-    let loop = null;
+    let timer = 10;
+    let loop = [];
 
-    function setInterv(e) {
-        interv = e;
+    function setTimer(e) {
+        timer = e;
     }
 
     function setWaypoints(e) {
         waypoints = e;
     }
 
-    function stop() {
-        clearInterval(loop);
+    function stop(id) {
+        clearInterval(loop[id]);
     }
 
-    function start(style, attribute) {
-        loop = setInterval(() => {
+    function start(id, style, attribute) {
+        loop[id] = setInterval(() => {
             for (let i = 0; i < defaultColor.length; ++i) {
                 if (targetColor[i] > defaultColor[i]) defaultColor[i]++;
                 else if (targetColor[i] < defaultColor[i]) defaultColor[i]--;
@@ -30,12 +30,12 @@ function colorChanger() {
                 currentIndex = currentIndex % waypoints.length;
             }
             style[attribute] = 'rgb(' + defaultColor[0] + ',' + defaultColor[1] + ',' + defaultColor[2] + ')'
-        }, interv)
+        }, timer)
     }
 
     return {
         start: start,
-        setInterv: setInterv,
+        setTimer: setTimer,
         stop: stop,
         setWaypoints: setWaypoints
     }

@@ -10,7 +10,7 @@ class MenuBar extends Component {
 
     componentDidMount() {
         let c = colorChanger();
-        c.start(this.menuBar.style, 'borderBottomColor');
+        c.start('border', this.menuBar.style, 'borderBottomColor');
     }
     render() {
         return (
