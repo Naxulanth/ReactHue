@@ -30,10 +30,8 @@ function colorChanger() {
                 else if (targetColor[i] < defaultColor[i]) defaultColor[i]--;
             }
             if (JSON.stringify(targetColor) === JSON.stringify(defaultColor)) {
-                console.log(waypoints[id])
                 targetColor = waypoints[id][currentIndex[id]++];
                 currentIndex[id] = currentIndex[id] % waypoints[id].length;
-                console.log(targetColor)
             }
             style[attribute] = 'rgb(' + defaultColor[0] + ',' + defaultColor[1] + ',' + defaultColor[2] + ')'
         }, frequency[id])
