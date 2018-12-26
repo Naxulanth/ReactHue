@@ -70,7 +70,6 @@ class Config extends Component {
                 })
             }, 2000);
         }}).catch((e) => {
-            console.log(e)
             this.setState({
                 text: 'Unable to reach bridge'
             })
@@ -90,7 +89,7 @@ class Config extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className="scan" lg="12" sm="12" md="12" xl="12">
+                    <Col className lg="12" sm="12" md="12" xl="12">
                         <TextInput value={ip} onChange={handleIPInput} />
                     </Col>
                 </Row>

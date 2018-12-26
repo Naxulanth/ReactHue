@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import Title from 'components/Title';
 import RoomWidget from 'containers/RoomWidget'
 import './index.css';
+import uuidv4 from 'uuid/v4'
 
 
 class Rooms extends Component {
@@ -20,15 +21,14 @@ class Rooms extends Component {
         let rows = [];
         while (arr.length) rows.push(arr.splice(0, 3));
         let insert = [];
-        rows.forEach(row => {
+        rows.forEach((row, i) => {
             let temp = [];
-            let subInsert = <Row><Col/>{temp}<Col/></Row>;
-            row.forEach(() => {
-                temp.push(<Col lg={{ size: 3 }}>
+            let subInsert = <Row key={uuidv4()}><Col />{temp}<Col /></Row>;
+            row.forEach((j) => {
+                temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
                     <RoomWidget />
                 </Col>
                 )
-                console.log(temp);
             })
             insert.push(subInsert)
         })
