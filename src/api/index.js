@@ -2,14 +2,11 @@ import axios from 'axios'
 
 import { GROUPS } from 'constants/endpoints'
 
-async function getRooms() {
-    let res = null;
-    await axios.get(GROUPS).then((e) => {
-        res = e.data;
-    }).catch((e) => {
-        console.error(e)
+function getRooms() {
+    return axios.request({
+        method: 'get',
+        url: GROUPS,
     })
-    return res;
 }
 
 export default {
