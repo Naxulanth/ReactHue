@@ -1,13 +1,11 @@
 import styled, { css } from 'styled-components';
 
-const Toggle = styled.div`
-font-size: 20px;
-height: 30px;
-line-height: 30px;
-width: 50%;
-margin-bottom: 20px;
+import Switch from 'react-switch';
+
+const Toggle = styled(Switch)`
 display:inline-block;
-text-align: right;
+float:right;
+margin-top: 2px;
 `;
 
 export default Toggle;

@@ -3,7 +3,6 @@ import './index.css';
 
 import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
-
 import colorChanger from 'utils/colorChanger';
 
 class RoomWidget extends Component {
