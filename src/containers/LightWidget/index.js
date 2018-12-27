@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './index.css';
+import {Row, Col}  from 'reactstrap';
 
-import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
 import colorChanger from 'utils/colorChanger';
 
@@ -23,7 +23,14 @@ class LightWidget extends Component {
         const { lightName } = this.state;
         return (
             <div ref={(e) => this.main = e} className="light-widget">
+            <Row>
+            <Col lg="8">
             {lightName}
+            </Col>
+            <Col lg="4">
+            <Toggle/>
+            </Col>
+            </Row>
             </div>
         )
     }

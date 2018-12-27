@@ -1,7 +1,7 @@
 function colorChanger() {
     let waypoints = { 'default': [[255, 0, 255], [0, 191, 255]], 'reverse': [[0, 191, 255], [255, 0, 255]] };
     let currentIndex = {};
-    let frequency = { 'default': 10 };
+    let frequency = { 'default': 500 };
     let loop = {};
 
     function initialize(frequency, waypoints, id) {

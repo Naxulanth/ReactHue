@@ -1,10 +1,9 @@
 import styled, { css } from 'styled-components';
 
 const WidgetTitle = styled.div`
-font-size: 20px;
+font-size: 1.3rem;
 height: 30px;
 line-height: 30px;
-margin-bottom: 20px;
 display:inline-block;
 `;
 
