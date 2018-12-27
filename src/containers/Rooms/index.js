@@ -13,12 +13,18 @@ class Rooms extends Component {
         this.state = {
             roomAmount: '0',
             redirect: false,
+            rooms: []
         }
         this.populateWidgets = this.populateWidgets.bind(this);
+    }
+    
+    componentDidMount() {
+        this.populateWidgets([0,0,0,0,0])
     }
 
     populateWidgets(arr) {
         let rows = [];
+        let acc = 0;
         while (arr.length) rows.push(arr.splice(0, 3));
         let insert = [];
         rows.forEach((row, i) => {
@@ -29,14 +35,18 @@ class Rooms extends Component {
                     <RoomWidget />
                 </Col>
                 )
+                acc++;
             })
             insert.push(subInsert)
         })
-        return insert.map((e) => { return e; });
+       this.setState({
+           rooms: insert,
+           roomAmount: acc
+       })
     }
 
     render() {
-        const { roomAmount } = this.state;
+        const { roomAmount, rooms } = this.state;
         return (
             <Fragment>
                 <Row>
@@ -46,7 +56,7 @@ class Rooms extends Component {
                         </Col>
                         <Col/>
                 </Row>
-                {this.populateWidgets([0, 0, 0, 0, 0, 0])}
+                {rooms}
             </Fragment>
         )
     }
