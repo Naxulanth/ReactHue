@@ -29,7 +29,7 @@ class Rooms extends Component {
         let insert = [];
         rows.forEach((row, i) => {
             let temp = [];
-            let subInsert = <Row key={uuidv4()}><Col />{temp}<Col /></Row>;
+            let subInsert = <Row key={uuidv4()}><Col lg ="1" />{temp}<Col lg ="1" /></Row>;
             row.forEach((j) => {
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
                     <RoomWidget />
@@ -50,7 +50,7 @@ class Rooms extends Component {
         return (
             <Fragment>
                 <Row>
-                    <Col/>
+                    <Col lg="1"/>
                     <Col className="title-text" lg={{ size: 9 }}>
                         <Title>Your Rooms ({roomAmount})</Title>
                         </Col>
