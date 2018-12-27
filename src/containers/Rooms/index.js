@@ -40,9 +40,11 @@ class Rooms extends Component {
         return (
             <Fragment>
                 <Row>
-                    <Col className="title-text" lg={{ offset: 1, size: 11 }}>
+                    <Col/>
+                    <Col className="title-text" lg={{ size: 9 }}>
                         <Title>Your Rooms ({roomAmount})</Title>
-                    </Col>
+                        </Col>
+                        <Col/>
                 </Row>
                 {this.populateWidgets([0, 0, 0, 0, 0, 0])}
             </Fragment>
