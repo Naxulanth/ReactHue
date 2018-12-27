@@ -37,13 +37,17 @@ class RoomWidget extends Component {
         const { roomName } = this.state;
         return (
             <div ref={(e) => this.main = e} className="room-widget">
+            <div className="child">
             <Row>
-                <Col lg="12">
+                <Col lg="8">
                 <WidgetTitle>{roomName}</WidgetTitle>
+                </Col>
+                <Col lg="4">
                 <Toggle/>
                 </Col>
                 </Row>
                 {this.populateLights([0, 0, 0, 0, 0, 0])}
+            </div>
             </div>
         )
     }
