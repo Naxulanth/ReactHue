@@ -4,3 +4,7 @@
     padding-bottom: 25px;
     line-height: 30px;
 }
+
+.center-toggle {
+    align-self: center;
+}

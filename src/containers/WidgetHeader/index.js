@@ -21,7 +21,7 @@ class WidgetHeader extends Component {
             <Col lg="8">
             <WidgetTitle>{roomName}</WidgetTitle>
             </Col>
-            <Col lg="4">
+            <Col className="center-toggle" lg="4">
             <Toggle/>
             </Col>
             </Row>
