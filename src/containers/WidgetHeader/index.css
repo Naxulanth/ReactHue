@@ -1,10 +1,13 @@
 .widget-header {
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-bottom: 25px;
+    text-align: center;
     line-height: 30px;
 }
 
 .center-toggle {
     align-self: center;
+    
+}
+
+.center-toggle .react-toggle {
+    float: left;
 }
