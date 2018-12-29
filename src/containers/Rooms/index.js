@@ -54,7 +54,7 @@ class Rooms extends Component {
                     <Col className="title-text" lg={{ size: 9 }}>
                         <Title>Your Rooms ({roomAmount})</Title>
                         </Col>
-                        <Col/>
+                        <Col lg="1"/>
                 </Row>
                 {rooms}
             </Fragment>

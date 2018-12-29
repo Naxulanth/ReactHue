@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import './index.css';
-import {Row, Col}  from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 import Toggle from 'components/Toggle'
+import LightDetails from 'containers/LightDetails'
+
 import colorChanger from 'utils/colorChanger';
+
+import './index.css';
 
 class LightWidget extends Component {
 
@@ -11,7 +14,15 @@ class LightWidget extends Component {
         super(props);
         this.state = {
             lightName: 'Main',
+            expanded: false,
         }
+        this.expand = this.expand.bind(this);
+    }
+
+    expand() {
+        this.setState({
+            expanded: !this.state.expanded
+        })
     }
 
     componentDidMount() {
@@ -20,17 +31,20 @@ class LightWidget extends Component {
     }
 
     render() {
+        let { expanded } = this.state;
+        let details = expanded ? <LightDetails /> : null;
         const { lightName } = this.state;
         return (
             <div ref={(e) => this.main = e} className="light-widget">
-            <Row>
-            <Col lg="8">
-            {lightName}
-            </Col>
-            <Col lg="4">
-            <Toggle/>
-            </Col>
-            </Row>
+                <Row>
+                    <Col lg="8">
+                        {lightName}
+                    </Col>
+                    <Col lg="4">
+                        <Toggle onChange={this.expand} />
+                    </Col>
+                </Row>
+                {details}
             </div>
         )
     }

@@ -1,0 +1,18 @@
+.react-toggle {
+}
+
+.react-toggle-track {
+    background: #464646 !important;
+}
+
+.react-toggle-thumb {
+
+}
+
+.react-toggle-track-x {
+    display: none;
+}
+
+.react-toggle-track-check {
+    display: none;
+}
