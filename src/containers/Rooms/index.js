@@ -19,7 +19,7 @@ class Rooms extends Component {
     }
     
     componentDidMount() {
-        this.populateWidgets([0,0,0,0,0])
+        this.populateWidgets([0,0,0,0,0,0])
     }
 
     populateWidgets(arr) {

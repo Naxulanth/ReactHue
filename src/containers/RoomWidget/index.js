@@ -1,12 +1,14 @@
 import React, { Component, Fragment } from 'react';
-
 import { Row, Col } from 'reactstrap';
+import uuidv4 from 'uuid/v4'
 
 import LightWidget from 'containers/LightWidget'
 import colorChanger from 'utils/colorChanger';
 
 import './index.css';
 import WidgetHeader from '../WidgetHeader';
+
+
 
 class RoomWidget extends Component {
 
@@ -20,8 +22,8 @@ class RoomWidget extends Component {
 
     populateLights(arr) {
         let insert = [];
-        arr.map((e) => {
-            insert.push(<Row><Col lg="12"><LightWidget /></Col></Row>);
+        arr.map((e, i) => {
+            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget /></Col></Row>);
         })
         return insert;
     }
