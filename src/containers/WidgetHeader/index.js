@@ -12,7 +12,6 @@ class WidgetHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            roomName: 'Living Room',
             expanded: false
         }
         this.expand = this.expand.bind(this);
@@ -27,7 +26,8 @@ class WidgetHeader extends Component {
 
     render() {
         const { expand } = this;
-        const { expanded, roomName } = this.state;
+        const { expanded } = this.state;
+        const { roomName } = this.props;
         let details = expanded ? <LightDetails /> : null;
         return (
             <div className="widget-header">

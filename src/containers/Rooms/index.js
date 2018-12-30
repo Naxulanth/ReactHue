@@ -5,9 +5,12 @@ import RoomWidget from 'containers/RoomWidget'
 import './index.css';
 import uuidv4 from 'uuid/v4'
 
+import { getRooms } from 'actions/rooms'
 import { getLights } from 'actions/lights'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+
+import { isEmpty, objectToArray, filterLights } from 'utils'
 
 class Rooms extends Component {
 
@@ -16,27 +19,37 @@ class Rooms extends Component {
         this.state = {
             roomAmount: '0',
             redirect: false,
-            rooms: []
         }
         this.populateWidgets = this.populateWidgets.bind(this);
     }
 
     componentDidMount() {
+        this.props.getRooms();
         this.props.getLights();
-        this.populateWidgets([0, 0, 0, 0, 0, 0])
     }
 
-    populateWidgets(arr) {
+    componentDidUpdate(prevProps) {
+        const { rooms, lights } = this.props;
+        if (rooms && lights && !isEmpty(rooms) && !isEmpty(lights) && (prevProps.rooms !== rooms || prevProps.lights !== lights)) {
+            this.populateWidgets(this.props.rooms)
+        }
+    }
+
+    populateWidgets(obj) {
+        const { lights } = this.props;
+        let rooms = objectToArray(obj);
         let rows = [];
         let acc = 0;
-        while (arr.length) rows.push(arr.splice(0, 3));
         let insert = [];
+        while (rooms.length) rows.push(rooms.splice(0, 3));
         rows.forEach((row, i) => {
             let temp = [];
             let subInsert = <Row key={uuidv4()}><Col lg="1" />{temp}<Col lg="1" /></Row>;
-            row.forEach((j) => {
+            row.forEach((room, j) => {
+                let roomLights = filterLights(lights, room)
+                console.log(roomLights)
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
-                    <RoomWidget />
+                    <RoomWidget lights={roomLights} roomId={i * 3 + j} roomName={room.name} />
                 </Col>
                 )
                 acc++;
@@ -69,10 +82,12 @@ class Rooms extends Component {
 
 
 const mapStateToProps = state => ({
-    id: state.lights.id,
+    rooms: state.rooms.list,
+    lights: state.lights.list,
 })
 
 const mapDispatchToProps = dispatch => ({
+    getRooms: bindActionCreators(getRooms.request, dispatch),
     getLights: bindActionCreators(getLights.request, dispatch)
 })
 

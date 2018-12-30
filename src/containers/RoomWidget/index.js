@@ -7,7 +7,7 @@ import colorChanger from 'utils/colorChanger';
 
 import './index.css';
 import WidgetHeader from '../WidgetHeader';
-
+import { isEmpty } from '../../utils';
 
 
 class RoomWidget extends Component {
@@ -15,26 +15,37 @@ class RoomWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            roomName: 'Living Room',
-            lights: {},
+            lights: null
         }
+    }
+
+    shouldComponentUpdate(nextProps) { 
+        const { lights } = this.props;
+        if (lights.state === nextProps.state) console.log('ok')
+        return true
     }
 
     populateLights(arr) {
         let insert = [];
-        arr.forEach((e, i) => {
-            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget /></Col></Row>);
+        arr.forEach((light, i) => {
+            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget light={light} /></Col></Row>);
         })
-        return insert;
+        this.setState({
+            lights: insert
+        })
     }
 
     componentDidMount() {
-        let c = colorChanger();
-        c.start(this.main.style, 'borderColor');
+        let { lights } = this.props
+        if (lights && !isEmpty(lights)) {
+            this.populateLights(lights);
+        }
     }
 
     render() {
-        const { roomName } = this.state;
+        const { roomName } = this.props;
+        const { lights } = this.state;
+        console.log(lights)
         return (
             <div ref={(e) => this.main = e} className="room-widget">
                 <div className="child">
@@ -43,7 +54,7 @@ class RoomWidget extends Component {
                             <WidgetHeader roomName={roomName} />
                         </Col>
                     </Row>
-                    {this.populateLights([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])}
+                    {lights}
                 </div>
             </div>
         )
