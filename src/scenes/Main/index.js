@@ -14,11 +14,6 @@ class Main extends Component {
     }
   }
 
-  componentDidMount() {
-    rooms.getRooms().then(e => console.log(e));
-  }
-
-
 
   render() {
     return (

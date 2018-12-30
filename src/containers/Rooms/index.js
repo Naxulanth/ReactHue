@@ -5,6 +5,9 @@ import RoomWidget from 'containers/RoomWidget'
 import './index.css';
 import uuidv4 from 'uuid/v4'
 
+import { getLights } from 'actions/lights'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
 class Rooms extends Component {
 
@@ -17,9 +20,10 @@ class Rooms extends Component {
         }
         this.populateWidgets = this.populateWidgets.bind(this);
     }
-    
+
     componentDidMount() {
-        this.populateWidgets([0,0,0,0,0,0])
+        this.props.getLights();
+        this.populateWidgets([0, 0, 0, 0, 0, 0])
     }
 
     populateWidgets(arr) {
@@ -29,7 +33,7 @@ class Rooms extends Component {
         let insert = [];
         rows.forEach((row, i) => {
             let temp = [];
-            let subInsert = <Row key={uuidv4()}><Col lg ="1" />{temp}<Col lg ="1" /></Row>;
+            let subInsert = <Row key={uuidv4()}><Col lg="1" />{temp}<Col lg="1" /></Row>;
             row.forEach((j) => {
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
                     <RoomWidget />
@@ -39,10 +43,10 @@ class Rooms extends Component {
             })
             insert.push(subInsert)
         })
-       this.setState({
-           rooms: insert,
-           roomAmount: acc
-       })
+        this.setState({
+            rooms: insert,
+            roomAmount: acc
+        })
     }
 
     render() {
@@ -50,11 +54,11 @@ class Rooms extends Component {
         return (
             <Fragment>
                 <Row>
-                    <Col lg="1"/>
+                    <Col lg="1" />
                     <Col className="title-text" lg={{ size: 9 }}>
                         <Title>Your Rooms ({roomAmount})</Title>
-                        </Col>
-                        <Col lg="1"/>
+                    </Col>
+                    <Col lg="1" />
                 </Row>
                 {rooms}
             </Fragment>
@@ -63,4 +67,13 @@ class Rooms extends Component {
 
 }
 
-export default Rooms;
+
+const mapStateToProps = state => ({
+    id: state.lights.id,
+})
+
+const mapDispatchToProps = dispatch => ({
+    getLights: bindActionCreators(getLights.request, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Rooms);
