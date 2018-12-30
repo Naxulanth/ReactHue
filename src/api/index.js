@@ -1,14 +1,17 @@
 import axios from 'axios'
 
-import { GROUPS } from 'constants/endpoints'
+import { GROUPS, LIGHTS } from 'constants/endpoints'
 
-function getRooms() {
+export function getRooms() {
     return axios.request({
         method: 'get',
         url: GROUPS,
     })
 }
 
-export default {
-    getRooms: getRooms
+export function getLights() {
+    return axios.request({
+        method: 'get',
+        url: LIGHTS,
+    })
 }

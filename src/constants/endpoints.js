@@ -2,6 +2,5 @@
 import { user, bridge } from './localStorage.js'
 
 const WRAPPER = 'http://' + localStorage.getItem(bridge) + '/api/' + localStorage.getItem(user)
-const GROUPS = WRAPPER + '/groups'
-
-export { GROUPS };
+export const GROUPS = WRAPPER + '/groups'
+export const LIGHTS = WRAPPER + '/lights'
