@@ -6,7 +6,6 @@ import { Row, Col } from 'reactstrap';
 import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
 
-import colorChanger from 'utils/colorChanger';
 import { getLights } from 'actions/lights'
 
 import './index.css';

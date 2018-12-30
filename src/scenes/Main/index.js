@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 
 import Rooms from 'containers/Rooms'
-import axios from 'axios';
 
-
-import { getRooms } from 'api'
+import * as rooms from 'api/rooms'
 
 import './index.css';
 
@@ -17,7 +15,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    getRooms().then(e => console.log(e));
+    rooms.getRooms().then(e => console.log(e));
   }
 
 
