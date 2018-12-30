@@ -7,7 +7,7 @@ const lights = (state = [], action) => {
         case LIGHTS_GET.SUCCESS:
         return {
             ...state,
-            lights: action.response
+            list: action.response.data
         }
         case LIGHTS_GET.FAILURE:
         default:

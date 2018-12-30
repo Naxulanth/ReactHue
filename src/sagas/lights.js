@@ -10,7 +10,7 @@ export function* getLights() {
         yield put(actions.getLights.success(response));
     }
     catch (e) {
-        yield put(actions.getLines.failure(e));
+        yield put(actions.getLights.failure(e));
     }
 }
 
