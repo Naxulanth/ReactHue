@@ -89,7 +89,7 @@ class Config extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col className lg="12" sm="12" md="12" xl="12">
+                    <Col lg="12" sm="12" md="12" xl="12">
                         <TextInput value={ip} onChange={handleIPInput} />
                     </Col>
                 </Row>

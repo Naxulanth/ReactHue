@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import { Row, Col } from 'reactstrap';
 
 import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
 
 import colorChanger from 'utils/colorChanger';
+import { getLights } from 'actions/lights'
 
 import './index.css';
 
@@ -20,6 +23,7 @@ class LightWidget extends Component {
     }
 
     expand() {
+        this.props.getLights();
         this.setState({
             expanded: !this.state.expanded
         })
@@ -27,9 +31,9 @@ class LightWidget extends Component {
 
 
     render() {
-        let { expanded } = this.state;
+        const { expanded, lightName } = this.state;
+        const { expand } = this;
         let details = expanded ? <LightDetails /> : null;
-        const { lightName } = this.state;
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>
@@ -37,7 +41,7 @@ class LightWidget extends Component {
                         {lightName}
                     </Col>
                     <Col lg="4">
-                        <Toggle onChange={this.expand} />
+                        <Toggle onChange={expand} />
                     </Col>
                 </Row>
                 {details}
@@ -47,4 +51,12 @@ class LightWidget extends Component {
 
 }
 
-export default LightWidget;
+const mapStateToProps = state => ({
+    id: state.lights.id,
+})
+
+const mapDispatchToProps = dispatch => ({
+    getLights: bindActionCreators(getLights.request, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LightWidget);
