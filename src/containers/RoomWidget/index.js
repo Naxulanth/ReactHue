@@ -3,7 +3,6 @@ import { Row, Col } from 'reactstrap';
 import uuidv4 from 'uuid/v4'
 
 import LightWidget from 'containers/LightWidget'
-import colorChanger from 'utils/colorChanger';
 
 import './index.css';
 import WidgetHeader from '../WidgetHeader';
@@ -17,12 +16,6 @@ class RoomWidget extends Component {
         this.state = {
             lights: null
         }
-    }
-
-    shouldComponentUpdate(nextProps) { 
-        const { lights } = this.props;
-        if (lights.state === nextProps.state) console.log('ok')
-        return true
     }
 
     populateLights(arr) {
