@@ -12,7 +12,7 @@ float:right;
 }
 
 .react-toggle-thumb {
-
+    border: 0px;
 }
 
 .react-toggle-track-x {

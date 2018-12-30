@@ -25,10 +25,6 @@ class LightWidget extends Component {
         })
     }
 
-    componentDidMount() {
-        let c = colorChanger();
-        c.start(this.main.style, 'borderColor');
-    }
 
     render() {
         let { expanded } = this.state;
