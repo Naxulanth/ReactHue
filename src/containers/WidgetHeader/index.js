@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
 import './index.css'
 
 import LightDetails from 'containers/LightDetails'
+
+import { modifyRoom } from 'actions/rooms'
 
 class WidgetHeader extends Component {
 
@@ -17,8 +20,8 @@ class WidgetHeader extends Component {
     }
 
     expand() {
-        // let { modifyRoom, room } = this.props;
-        // modifyRoom(roomId, { "on": !light.state.on })
+        let { modifyRoom, roomId, room } = this.props;
+        modifyRoom(roomId, { "on": !room.action.on })
     }
 
 
@@ -42,4 +45,11 @@ class WidgetHeader extends Component {
     }
 }
 
-export default WidgetHeader;
+const mapStateToProps = state => ({
+})
+
+const mapDispatchToProps = dispatch => ({
+    modifyRoom: bindActionCreators(modifyRoom.request, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WidgetHeader);

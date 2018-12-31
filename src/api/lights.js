@@ -9,8 +9,6 @@ export function getLights() {
 }
 
 export function modifyLight(id, body) {
-    console.log(body)
-    console.log(LIGHTS + '/' + id + '/state')
     return axios.request({
         method: 'put',
         url: LIGHTS + '/' + id + '/state',

@@ -7,3 +7,11 @@ export function getRooms() {
         url: GROUPS,
     })
 }
+
+export function modifyRoom(id, body) {
+    return axios.request({
+        method: 'put',
+        url: GROUPS + '/' + id + '/action',
+        data: JSON.stringify(body)
+    })
+}

@@ -37,6 +37,3 @@ export function* modifyLight({ id, body }) {
 export function* watchModifyLight() {
     yield takeLatest(LIGHTS_PUT.REQUEST, modifyLight)
 }
-
-// function* setLight(values) {}
-//yield call (api.setLight, values)
