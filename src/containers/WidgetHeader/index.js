@@ -12,31 +12,28 @@ class WidgetHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            expanded: false
         }
         this.expand = this.expand.bind(this);
     }
 
     expand() {
-        this.setState({
-            expanded: !this.state.expanded
-        })
+        // let { modifyRoom, room } = this.props;
+        // modifyRoom(roomId, { "on": !light.state.on })
     }
 
 
     render() {
         const { expand } = this;
-        const { expanded } = this.state;
-        const { roomName } = this.props;
-        let details = expanded ? <LightDetails /> : null;
+        const { room } = this.props;
+        let details = room.state.all_on ? <LightDetails /> : null;
         return (
             <div className="widget-header">
                 <Row>
                     <Col lg="8">
-                        <WidgetTitle>{roomName}</WidgetTitle>
+                        <WidgetTitle>{room.name}</WidgetTitle>
                     </Col>
                     <Col className="center-toggle" lg="4">
-                        <Toggle onChange={expand} />
+                        <Toggle checked={room.state.all_on} onChange={expand} />
                     </Col>
                 </Row>
                 {details}

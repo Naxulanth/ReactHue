@@ -38,7 +38,7 @@ class RoomWidget extends Component {
     }
 
     render() {
-        const { roomName } = this.props;
+        const { room } = this.props;
         const { lights } = this.state;
         console.log(lights)
         return (
@@ -46,7 +46,7 @@ class RoomWidget extends Component {
                 <div className="child">
                     <Row>
                         <Col lg="12">
-                            <WidgetHeader roomName={roomName} />
+                            <WidgetHeader room={room} />
                         </Col>
                     </Row>
                     {lights}
