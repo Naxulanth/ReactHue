@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@davidmarkclements/hsl-to-hex": "^1.0.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
+    "color-convert": "^1.9.3",
     "dotenv": "^6.2.0",
     "rc-slider": "^8.6.4",
     "react": "^16.7.0",

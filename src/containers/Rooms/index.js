@@ -47,7 +47,6 @@ class Rooms extends Component {
             let subInsert = <Row key={uuidv4()}><Col lg="1" />{temp}<Col lg="1" /></Row>;
             row.forEach((room, j) => {
                 let roomLights = filterLights(lights, room)
-                console.log(roomLights)
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
                     <RoomWidget lights={roomLights} roomId={i * 3 + j} roomName={room.name} />
                 </Col>
