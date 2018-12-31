@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 
 import * as roomsActions from '../actions/rooms'
 import * as roomsApi from '../api/rooms'

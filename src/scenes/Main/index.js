@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import Rooms from 'containers/Rooms'
 
-import * as rooms from 'api/rooms'
 
 import './index.css';
 

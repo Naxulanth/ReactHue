@@ -3,8 +3,6 @@ import { ROOMS_GET, ROOMS_PUT } from '../constants/actionTypes'
 
 import * as actions from '../actions/rooms'
 import * as api from '../api/rooms'
-import * as lightsActions from '../actions/lights'
-import * as lightsApi from '../api/lights'
 
 import { renew } from './shared'
 
