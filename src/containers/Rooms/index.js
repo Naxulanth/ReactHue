@@ -48,7 +48,7 @@ class Rooms extends Component {
             row.forEach((room, j) => {
                 let roomLights = filterLights(lights, room)
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
-                    <RoomWidget room={room} lights={roomLights} roomId={i * 3 + j} roomName={room.name} />
+                    <RoomWidget room={room} lights={roomLights} roomId={i * 3 + j} />
                 </Col>
                 )
                 acc++;
