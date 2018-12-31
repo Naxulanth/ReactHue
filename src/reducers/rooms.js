@@ -10,6 +10,7 @@ const rooms = (state = [], action) => {
                 list: action.response.data
             }
         case ROOMS_GET.FAILURE:
+            return state;
         case ROOMS_PUT.REQUEST:
             return state;
         case ROOMS_PUT.SUCCESS:

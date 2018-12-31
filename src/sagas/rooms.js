@@ -6,6 +6,8 @@ import * as api from '../api/rooms'
 import * as lightsActions from '../actions/lights'
 import * as lightsApi from '../api/lights'
 
+import { renew } from './shared'
+
 
 export function* getRooms() {
     try {
@@ -25,10 +27,7 @@ export function* modifyRoom({ id, body }) {
     try {
         const response = yield call(api.modifyRoom, id, body);
         yield put(actions.modifyRoom.success(response))
-        const refreshLights = yield call(lightsApi.getLights)
-        yield put(lightsActions.getLights.success(refreshLights))
-        const refreshRooms = yield call(api.getRooms)
-        yield put(actions.getRooms.success(refreshRooms))
+        yield call(renew);
     }
     catch (e) {
         yield put(actions.modifyRoom.failure(e));
