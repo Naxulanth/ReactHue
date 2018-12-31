@@ -21,7 +21,7 @@ class LightWidget extends Component {
 
     expand() {
         let { modifyLight, light } = this.props;
-        modifyLight(light.id, { "on": !light.state.on, "xy": [0.4316585353085756, 0.4470156585638557] })
+        modifyLight(light.id, { "on": !light.state.on })
     }
 
 
