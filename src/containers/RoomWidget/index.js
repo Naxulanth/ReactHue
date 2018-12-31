@@ -8,7 +8,7 @@ import './index.css';
 import WidgetHeader from '../WidgetHeader';
 import { isEmpty } from 'utils';
 
-import { hsvToHex } from 'utils/colorConverter'
+import { getXYtoRGB } from 'utils/colorConverter'
 
 class RoomWidget extends Component {
 
@@ -34,7 +34,7 @@ class RoomWidget extends Component {
         if (lights && !isEmpty(lights)) {
             this.populateLights(lights);
         }
-        this.main.style.borderColor = '#' + hsvToHex(lights[0].state.hue, lights[0].state.sat, lights[0].state.ct, lights[0].state.bri);
+        this.main.style.borderColor = 'rgb('+ getXYtoRGB(lights[0].state.xy[0], lights[0].state.xy[1], lights[0].state.bri).join(',') + ')';
     }
 
     render() {

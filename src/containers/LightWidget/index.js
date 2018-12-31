@@ -18,10 +18,10 @@ class LightWidget extends Component {
         }
         this.expand = this.expand.bind(this);
     }
-    
+
     expand() {
         let { modifyLight, light } = this.props;
-        modifyLight(light.id, {"on": !light.state.on})
+        modifyLight(light.id, { "on": !light.state.on, "xy": [0.4316585353085756, 0.4470156585638557] })
     }
 
 
