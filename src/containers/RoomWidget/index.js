@@ -34,19 +34,18 @@ class RoomWidget extends Component {
         if (lights && !isEmpty(lights)) {
             this.populateLights(lights);
         }
-        this.main.style.borderColor = 'rgb('+ getXYtoRGB(lights[0].state.xy[0], lights[0].state.xy[1], lights[0].state.bri).join(',') + ')';
+        this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[0].state.xy[0], lights[0].state.xy[1], lights[0].state.bri).join(',') + ')';
     }
 
     render() {
-        const { room } = this.props;
+        const { room, roomId } = this.props;
         const { lights } = this.state;
-        console.log(lights)
         return (
             <div ref={(e) => this.main = e} className="room-widget">
                 <div className="child">
                     <Row>
                         <Col lg="12">
-                            <WidgetHeader room={room} />
+                            <WidgetHeader room={room} roomId={roomId} />
                         </Col>
                     </Row>
                     {lights}

@@ -26,6 +26,7 @@ class WidgetHeader extends Component {
 
 
     render() {
+        console.log(this.props.roomId);
         const { expand } = this;
         const { room } = this.props;
         let details = room.state.all_on ? <LightDetails /> : null;
