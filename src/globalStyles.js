@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: normal;
     font-style: normal;
     overflow-x: hidden;
+    font-size: 1rem !important;
     -webkit-font-smoothing: antialiased;
     height: 100%;
     margin: 0;

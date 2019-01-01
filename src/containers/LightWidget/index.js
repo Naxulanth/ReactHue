@@ -30,12 +30,14 @@ class LightWidget extends Component {
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>
-                    <Col lg="8">
+                    <Col lg="1"/>
+                    <Col lg="7">
                         {light[lightId].name}
                     </Col>
-                    <Col lg="4">
+                    <Col lg="3">
                         <Toggle checked={light[lightId].state.on} onChange={expand} />
                     </Col>
+                    <Col lg="1"/>
                 </Row>
                 <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId} /></Animate>
             </div>

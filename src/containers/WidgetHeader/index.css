@@ -1,6 +1,7 @@
 .widget-header {
     text-align: center;
     line-height: 30px;
+    padding: 10px;
 }
 
 .center-toggle {
