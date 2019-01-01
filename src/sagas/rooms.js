@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { ROOMS_GET, ROOMS_PUT, ROOM_GET } from '../constants/actionTypes'
+import { ROOMS_GET, ROOMS_PUT } from '../constants/actionTypes'
 
 import * as actions from '../actions/rooms'
 import * as api from '../api/rooms'
@@ -35,19 +35,4 @@ export function* modifyRoom({ id, body }) {
 export function* watchModifyRoom() {
     yield takeLatest(ROOMS_PUT.REQUEST, modifyRoom)
 }
-
-export function* getRoomById({ id, body }) {
-    try {
-        const response = yield call(api.getRoomById, id);
-        yield put(actions.getRoomById.success(response))
-    }
-    catch (e) {
-        yield put(actions.getRoomById.failure(e));
-    }
-}
-
-export function* watchGetRoomById() {
-    yield takeLatest(ROOM_GET.REQUEST, getRoomById)
-}
-
 

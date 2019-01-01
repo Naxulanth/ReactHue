@@ -5,7 +5,7 @@ import RoomWidget from 'containers/RoomWidget'
 import './index.css';
 import uuidv4 from 'uuid/v4'
 
-import { getRooms, getRoomById } from 'actions/rooms'
+import { getRooms } from 'actions/rooms'
 import { getLights } from 'actions/lights'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
@@ -29,7 +29,7 @@ class Rooms extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (!prevProps.lights && this.props.lights) {
+        if (this.state.rooms.length === 0 && this.props.lights && this.props.rooms) {
             this.populateWidgets(this.props.rooms)
         }
     }
@@ -86,7 +86,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     getRooms: bindActionCreators(getRooms.request, dispatch),
     getLights: bindActionCreators(getLights.request, dispatch),
-    getRoomById: bindActionCreators(getRoomById.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

@@ -33,12 +33,6 @@ class RoomWidget extends Component {
 
     }
 
-    componentDidUpdate() {
-        const { lights, room, roomId } = this.props
-        const lightIds = room[roomId].lights;
-        this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
-    }
-
     populateLights(arr) {
         let insert = [];
         arr.forEach((lightId, i) => {
@@ -75,7 +69,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getRoomById: bindActionCreators(getRoomById.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoomWidget);
