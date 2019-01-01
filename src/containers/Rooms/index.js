@@ -84,6 +84,7 @@ class Rooms extends Component {
 const mapStateToProps = state => ({
     rooms: state.rooms.list,
     lights: state.lights.list,
+    
 })
 
 const mapDispatchToProps = dispatch => ({

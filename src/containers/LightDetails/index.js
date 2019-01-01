@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './index.css';
 import { Row, Col } from 'reactstrap';
-
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
 
@@ -29,7 +28,7 @@ class LightDetails extends Component {
             colorHex: color.hex,
             colorRgb: color.rgb
         })
-    }   
+    }
     render() {
         const { value, colorHex } = this.state;
         const { changeBrightness, changeColor } = this;
