@@ -8,3 +8,10 @@
 }
 
 
+.widget-header::after {
+    content: "";
+    display:block;
+    border-bottom: 0.5px solid #414141;
+    max-width: 300px;
+    margin: 20px auto 0px auto;
+}
