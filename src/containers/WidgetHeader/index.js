@@ -30,12 +30,14 @@ class WidgetHeader extends Component {
         return (
             <div className="widget-header">
                 <Row>
-                    <Col lg="8">
+                    <Col lg="1"/>
+                    <Col lg="7">
                         <WidgetTitle>{room.name}</WidgetTitle>
                     </Col>
-                    <Col className="center-toggle" lg="4">
+                    <Col className="center-toggle" lg="3">
                         <Toggle checked={room.state.all_on} onChange={expand} />
                     </Col>
+                    <Col lg="1"/>
                 </Row>
                 <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><LightDetails /></Animate>
             </div>
