@@ -25,11 +25,17 @@ class RoomWidget extends Component {
     }
 
     componentDidMount() {
-        const { room, roomId, lights } = this.props
+        const { room, roomId } = this.props
         const lightIds = room[roomId].lights;
         if (lightIds && !isEmpty(lightIds)) {
             this.populateLights(lightIds);
         }
+
+    }
+
+    componentDidUpdate() {
+        const { lights, room, roomId } = this.props
+        const lightIds = room[roomId].lights;
         this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
     }
 
