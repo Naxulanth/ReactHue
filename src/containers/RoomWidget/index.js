@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import uuidv4 from 'uuid/v4'
-
-import LightWidget from 'containers/LightWidget'
-
-import './index.css';
-import WidgetHeader from '../WidgetHeader';
-
-import { getXYtoRGB } from 'utils/colorConverter'
 import { connect } from 'react-redux'
+import WidgetHeader from '../WidgetHeader';
+import LightWidget from 'containers/LightWidget'
+import { getXYtoRGB } from 'utils/colorConverter'
+import './index.css';
 
 class RoomWidget extends Component {
 

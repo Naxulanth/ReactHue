@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import axios from 'axios';
-import TextInput from 'components/TextInput';
 import { Redirect } from 'react-router-dom';
-import Button from 'components/Button';
 import validator from 'validator';
+import TextInput from 'components/TextInput';
+import Button from 'components/Button';
 import './index.css'
 
 import { user, bridge } from 'constants/localStorage';

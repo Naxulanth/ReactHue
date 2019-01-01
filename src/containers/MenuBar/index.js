@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import colorChanger from 'utils/colorChanger';
 import MenuBarLink from 'components/MenuBarLink'
-
+import colorChanger from 'utils/colorChanger';
 import './index.css';
 
 class MenuBar extends Component {

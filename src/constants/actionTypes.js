@@ -1,5 +1,3 @@
-
-
 import { createRequestTypes } from '../actions';
 
 export const LIGHTS_GET = createRequestTypes('LIGHTS_GET');

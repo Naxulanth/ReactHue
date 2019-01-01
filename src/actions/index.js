@@ -1,4 +1,3 @@
-
 const REQUEST = 'REQUEST';
 const SUCCESS = 'SUCCESS';
 const FAILURE = 'FAILURE';

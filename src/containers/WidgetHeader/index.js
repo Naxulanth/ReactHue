@@ -2,15 +2,12 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import Animate from 'components/Animate'
 import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
-import './index.css'
-
 import LightDetails from 'containers/LightDetails'
-
-import Animate from 'components/Animate'
-
 import { modifyRoom } from 'actions/rooms'
+import './index.css'
 
 class WidgetHeader extends Component {
 

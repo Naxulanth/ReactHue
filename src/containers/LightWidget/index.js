@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-
 import { Row, Col } from 'reactstrap';
-
-import Toggle from 'components/Toggle'
-import LightDetails from 'containers/LightDetails'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { modifyLight } from 'actions/lights'
-
+import Toggle from 'components/Toggle'
 import Animate from 'components/Animate'
-
+import LightDetails from 'containers/LightDetails'
+import { modifyLight } from 'actions/lights'
 import './index.css';
 
 

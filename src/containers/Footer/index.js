@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import colorChanger from 'utils/colorChanger';
-
 import './index.css';
 
 class Footer extends Component {

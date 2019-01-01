@@ -1,14 +1,14 @@
 import React, { Component, Fragment } from 'react';
 import { Row, Col } from 'reactstrap';
-import Title from 'components/Title';
-import RoomWidget from 'containers/RoomWidget'
-import './index.css';
-import uuidv4 from 'uuid/v4'
-
-import { getRooms } from 'actions/rooms'
-import { getLights } from 'actions/lights'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import uuidv4 from 'uuid/v4'
+import Title from 'components/Title';
+import RoomWidget from 'containers/RoomWidget'
+import { getRooms } from 'actions/rooms'
+import { getLights } from 'actions/lights'
+import './index.css';
+
 
 import { isEmpty, objectToArray } from 'utils'
 

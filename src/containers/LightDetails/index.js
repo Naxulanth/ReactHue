@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import './index.css';
 import { Row, Col } from 'reactstrap';
-import Brightness from 'components/Brightness'
-import ColorPicker from 'components/ColorPicker'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import Brightness from 'components/Brightness'
+import ColorPicker from 'components/ColorPicker'
 import { modifyLight } from 'actions/lights'
+import './index.css';
 
 class LightDetails extends Component {
 
