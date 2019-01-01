@@ -12,7 +12,7 @@ class LightDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 50,
+            value: 0,
             colorHex: '#fff',
             colorRgb: null,
         }
@@ -20,12 +20,20 @@ class LightDetails extends Component {
         this.changeColor = this.changeColor.bind(this);
     }
 
+    componentDidMount() {
+        const { light, lightId } = this.props;
+        if (lightId) {
+            this.setState({
+                value: Math.round(light[lightId].state.bri / 2.54),
+            })
+        }
+    }
+
     changeBrightness(e) {
-        console.log(e)
         this.setState({
             value: e
         })
-        const { lightId, modifyLight } = this.props; 
+        const { lightId, modifyLight } = this.props;
         modifyLight(lightId, { "bri": Math.round(e * 2.54) })
     }
 
