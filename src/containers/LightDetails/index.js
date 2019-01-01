@@ -5,7 +5,8 @@ import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
 import { modifyLight } from 'actions/lights'
-import { getRGBfromXY } from 'utils/colorConverter'
+import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
+import { objectToArray } from 'utils'
 import './index.css';
 
 class LightDetails extends Component {
@@ -23,9 +24,14 @@ class LightDetails extends Component {
     componentDidMount() {
         const { light, lightId } = this.props;
         if (lightId) {
+            let activeColor = {};
+            let convertColor = getXYtoRGB(light[lightId].state.xy[0], light[lightId].state.xy[1], light[lightId].state.bri);
+            activeColor.r = convertColor[0];
+            activeColor.g = convertColor[1];
+            activeColor.b = convertColor[2];
             this.setState({
                 brightness: Math.round(light[lightId].state.bri / 2.54),
-                colorRgb: {r: 102, g: 255, b: 255, a: 1}
+                colorRgb: activeColor
             })
         }
     }
@@ -39,6 +45,9 @@ class LightDetails extends Component {
     }
 
     changeColor(color, event) {
+        const { lightId, modifyLight } = this.props;
+        let xy = getRGBtoXY(objectToArray(color.rgb).slice(0, 3));
+        modifyLight(lightId, { "xy": xy })
         this.setState({
             colorRgb: color.rgb
         })

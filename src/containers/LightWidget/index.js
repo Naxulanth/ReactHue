@@ -29,7 +29,9 @@ class LightWidget extends Component {
     render() {
         const { expand } = this;
         const { light, lightId } = this.props;
-        let toggleColor = getXYtoRGB(light[lightId[0]].state.xy[0], light[lightId[0]].state.xy[1], light[lightId[0]].state.bri).join(',')
+        console.log(light[lightId])
+        let toggleColor = getXYtoRGB(light[lightId].state.xy[0], light[lightId].state.xy[1], light[lightId].state.bri).join(',')
+        console.log(toggleColor)
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>

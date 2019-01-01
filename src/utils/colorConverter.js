@@ -1,7 +1,7 @@
 // https://stackoverflow.com/questions/22894498/philips-hue-convert-xy-from-api-to-hex-or-rgb/22918909#22918909
 export function getXYtoRGB(x, y, bri) {
     let z = 1.0 - x - y;
-    let Y = bri / 255.0; // Brightness of lamp
+    let Y = 200 / 254.0; // Brightness of lamp
     let X = (Y / y) * x;
     let Z = (Y / y) * z;
     let r = X * 1.612 - Y * 0.203 - Z * 0.302;
@@ -14,9 +14,9 @@ export function getXYtoRGB(x, y, bri) {
     r /= maxValue;
     g /= maxValue;
     b /= maxValue;
-    r = r * 255; if (r < 0) { r = 255 };
-    g = g * 255; if (g < 0) { g = 255 };
-    b = b * 255; if (b < 0) { b = 255 };
+    r = r * 255; if (r < 0) { r = 0 };
+    g = g * 255; if (g < 0) { g = 0 };
+    b = b * 255; if (b < 0) { b = 0 };
     return [r, g, b]
 }
 
