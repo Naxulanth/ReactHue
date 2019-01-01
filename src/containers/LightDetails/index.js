@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
 import { modifyLight } from 'actions/lights'
+import { getRGBfromXY } from 'utils/colorConverter'
 import './index.css';
 
 class LightDetails extends Component {
@@ -12,9 +13,8 @@ class LightDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            value: 0,
-            colorHex: '#fff',
-            colorRgb: null,
+            brightness: 0,
+            colorRgb: {}
         }
         this.changeBrightness = this.changeBrightness.bind(this);
         this.changeColor = this.changeColor.bind(this);
@@ -24,14 +24,15 @@ class LightDetails extends Component {
         const { light, lightId } = this.props;
         if (lightId) {
             this.setState({
-                value: Math.round(light[lightId].state.bri / 2.54),
+                brightness: Math.round(light[lightId].state.bri / 2.54),
+                colorRgb: {r: 102, g: 255, b: 255, a: 1}
             })
         }
     }
 
     changeBrightness(e) {
         this.setState({
-            value: e
+            brightness: e
         })
         const { lightId, modifyLight } = this.props;
         modifyLight(lightId, { "bri": Math.round(e * 2.54) })
@@ -39,24 +40,23 @@ class LightDetails extends Component {
 
     changeColor(color, event) {
         this.setState({
-            colorHex: color.hex,
             colorRgb: color.rgb
         })
     }
 
     render() {
-        const { value, colorHex } = this.state;
+        const { brightness, colorRgb } = this.state;
         const { changeBrightness, changeColor } = this;
         return (
             <div ref={(e) => this.main = e} className="light-widget-details">
                 <Row>
                     <Col lg="1" />
-                    <Col lg="10"><Brightness onChange={changeBrightness} value={value} /></Col>
+                    <Col lg="10"><Brightness onChange={changeBrightness} value={brightness} /></Col>
                     <Col lg="1" />
                 </Row>
                 <Row>
                     <Col lg="1" />
-                    <Col lg="10"><ColorPicker color={colorHex} onChange={changeColor} /></Col>
+                    <Col lg="10"><ColorPicker color={colorRgb} onChange={changeColor} /></Col>
                     <Col lg="1" />
                 </Row>
             </div>
