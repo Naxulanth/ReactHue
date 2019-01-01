@@ -8,12 +8,3 @@ export function objectToArray(obj) {
         return obj[key]
     })
 }
-
-export function filterLights(lights, room) {
-    let result = [];
-    room.lights.forEach(key => {
-        lights[key].id = key;
-        result.push(lights[key])
-    })
-    return result;
-}

@@ -10,43 +10,49 @@ import { isEmpty } from 'utils';
 
 import { getXYtoRGB } from 'utils/colorConverter'
 
+import { getRoomById } from 'actions/rooms'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+
+
 class RoomWidget extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            lights: null
+            lights: []
         }
+    }
+
+    componentDidMount() {
+        const { room, roomId, lights } = this.props
+        const lightIds = room[roomId].lights;
+        if (lightIds && !isEmpty(lightIds)) {
+            this.populateLights(lightIds);
+        }
+        this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
     }
 
     populateLights(arr) {
         let insert = [];
-        arr.forEach((light, i) => {
-            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget light={light} /></Col></Row>);
+        arr.forEach((lightId, i) => {
+            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget lightId={lightId} /></Col></Row>);
         })
         this.setState({
             lights: insert
         })
     }
 
-    componentDidMount() {
-        let { lights } = this.props
-        if (lights && !isEmpty(lights)) {
-            this.populateLights(lights);
-        }
-        this.main.style.borderColor = 'rgb('+ getXYtoRGB(lights[0].state.xy[0], lights[0].state.xy[1], lights[0].state.bri).join(',') + ')';
-    }
 
     render() {
-        const { room } = this.props;
+        const { room, roomId } = this.props;
         const { lights } = this.state;
-        console.log(lights)
         return (
             <div ref={(e) => this.main = e} className="room-widget">
                 <div className="child">
                     <Row>
                         <Col lg="12">
-                            <WidgetHeader room={room} />
+                            <WidgetHeader roomId={roomId} room={room[roomId]} />
                         </Col>
                     </Row>
                     {lights}
@@ -57,4 +63,13 @@ class RoomWidget extends Component {
 
 }
 
-export default RoomWidget;
+const mapStateToProps = state => ({
+    room: state.rooms.list,
+    lights: state.lights.list
+})
+
+const mapDispatchToProps = dispatch => ({
+    getRoomById: bindActionCreators(getRoomById.request, dispatch)
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomWidget);

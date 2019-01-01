@@ -8,7 +8,10 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { modifyLight } from 'actions/lights'
 
+import Animate from 'components/Animate'
+
 import './index.css';
+
 
 class LightWidget extends Component {
 
@@ -20,27 +23,25 @@ class LightWidget extends Component {
     }
 
     expand() {
-        let { modifyLight, light } = this.props;
-        modifyLight(light.id, { "on": !light.state.on })
+        let { modifyLight, light, lightId } = this.props;
+        modifyLight(lightId, { "on": !light[lightId].state.on })
     }
 
 
     render() {
         const { expand } = this;
-        const { light } = this.props;
-        console.log(light)
-        let details = light.state.on ? <LightDetails /> : null;
+        const { light, lightId } = this.props;
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>
                     <Col lg="8">
-                        {light.name}
+                        {light[lightId].name}
                     </Col>
                     <Col lg="4">
-                        <Toggle checked={light.state.on} onChange={expand} />
+                        <Toggle checked={light[lightId].state.on} onChange={expand} />
                     </Col>
                 </Row>
-                {details}
+                <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails /></Animate>
             </div>
         )
     }
@@ -48,6 +49,7 @@ class LightWidget extends Component {
 }
 
 const mapStateToProps = state => ({
+    light: state.lights.list
 })
 
 const mapDispatchToProps = dispatch => ({

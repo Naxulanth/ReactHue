@@ -5,20 +5,20 @@ import RoomWidget from 'containers/RoomWidget'
 import './index.css';
 import uuidv4 from 'uuid/v4'
 
-import { getRooms } from 'actions/rooms'
+import { getRooms, getRoomById } from 'actions/rooms'
 import { getLights } from 'actions/lights'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 
-import { isEmpty, objectToArray, filterLights } from 'utils'
+import { isEmpty, objectToArray } from 'utils'
 
 class Rooms extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            rooms: [],
             roomAmount: '0',
-            redirect: false,
         }
         this.populateWidgets = this.populateWidgets.bind(this);
     }
@@ -29,14 +29,12 @@ class Rooms extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { rooms, lights } = this.props;
-        if (rooms && lights && !isEmpty(rooms) && !isEmpty(lights) && (prevProps.rooms !== rooms || prevProps.lights !== lights)) {
+        if (!prevProps.lights && this.props.lights) {
             this.populateWidgets(this.props.rooms)
         }
     }
 
     populateWidgets(obj) {
-        const { lights } = this.props;
         let rooms = objectToArray(obj);
         let rows = [];
         let acc = 0;
@@ -46,10 +44,9 @@ class Rooms extends Component {
             let temp = [];
             let subInsert = <Row key={uuidv4()}><Col lg="1" />{temp}<Col lg="1" /></Row>;
             row.forEach((room, j) => {
-                let roomLights = filterLights(lights, room)
                 let roomId = (i * 3) + j + 1;
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
-                    <RoomWidget room={room} lights={roomLights} roomId={roomId} />
+                    <RoomWidget roomId={roomId} />
                 </Col>
                 )
                 acc++;
@@ -84,12 +81,12 @@ class Rooms extends Component {
 const mapStateToProps = state => ({
     rooms: state.rooms.list,
     lights: state.lights.list,
-    
 })
 
 const mapDispatchToProps = dispatch => ({
     getRooms: bindActionCreators(getRooms.request, dispatch),
-    getLights: bindActionCreators(getLights.request, dispatch)
+    getLights: bindActionCreators(getLights.request, dispatch),
+    getRoomById: bindActionCreators(getRoomById.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

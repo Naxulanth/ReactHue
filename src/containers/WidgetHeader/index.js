@@ -8,6 +8,8 @@ import './index.css'
 
 import LightDetails from 'containers/LightDetails'
 
+import Animate from 'components/Animate'
+
 import { modifyRoom } from 'actions/rooms'
 
 class WidgetHeader extends Component {
@@ -20,7 +22,7 @@ class WidgetHeader extends Component {
     }
 
     expand() {
-        let { modifyRoom, roomId, room } = this.props;
+        let { modifyRoom, room, roomId } = this.props;
         modifyRoom(roomId, { "on": !room.action.on })
     }
 
@@ -28,7 +30,6 @@ class WidgetHeader extends Component {
     render() {
         const { expand } = this;
         const { room } = this.props;
-        let details = room.state.all_on ? <LightDetails /> : null;
         return (
             <div className="widget-header">
                 <Row>
@@ -39,7 +40,7 @@ class WidgetHeader extends Component {
                         <Toggle checked={room.state.all_on} onChange={expand} />
                     </Col>
                 </Row>
-                {details}
+                <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><LightDetails /></Animate>
             </div>
         )
     }
