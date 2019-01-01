@@ -3,6 +3,9 @@ import './index.css';
 import { Row, Col } from 'reactstrap';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { modifyLight } from 'actions/lights'
 
 class LightDetails extends Component {
 
@@ -18,9 +21,12 @@ class LightDetails extends Component {
     }
 
     changeBrightness(e) {
+        console.log(e)
         this.setState({
             value: e
         })
+        const { lightId, modifyLight } = this.props; 
+        modifyLight(lightId, { "bri": Math.round(e * 2.54) })
     }
 
     changeColor(color, event) {
@@ -29,6 +35,7 @@ class LightDetails extends Component {
             colorRgb: color.rgb
         })
     }
+
     render() {
         const { value, colorHex } = this.state;
         const { changeBrightness, changeColor } = this;
@@ -50,4 +57,13 @@ class LightDetails extends Component {
 
 }
 
-export default LightDetails;
+const mapStateToProps = state => ({
+    light: state.lights.list
+})
+
+const mapDispatchToProps = dispatch => ({
+    modifyLight: bindActionCreators(modifyLight.request, dispatch)
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(LightDetails);

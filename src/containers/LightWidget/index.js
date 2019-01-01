@@ -41,7 +41,7 @@ class LightWidget extends Component {
                         <Toggle checked={light[lightId].state.on} onChange={expand} />
                     </Col>
                 </Row>
-                <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails /></Animate>
+                <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId} /></Animate>
             </div>
         )
     }

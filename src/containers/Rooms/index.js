@@ -24,13 +24,15 @@ class Rooms extends Component {
     }
 
     componentDidMount() {
-        this.props.getRooms();
-        this.props.getLights();
+        const { getRooms, getLights } = this.props;
+        getRooms();
+        getLights();
     }
 
     componentDidUpdate(prevProps) {
-        if (this.state.rooms.length === 0 && this.props.lights && this.props.rooms) {
-            this.populateWidgets(this.props.rooms)
+        const { lights, rooms } = this.props;
+        if (this.state.rooms.length === 0 && lights && rooms) {
+            this.populateWidgets(rooms)
         }
     }
 
