@@ -7,7 +7,9 @@ import Animate from 'components/Animate'
 import LightDetails from 'containers/LightDetails'
 import { modifyLight } from 'actions/lights'
 import './index.css';
+import { getXYtoRGB } from 'utils/colorConverter'
 
+import './index.css'
 
 class LightWidget extends Component {
 
@@ -27,17 +29,18 @@ class LightWidget extends Component {
     render() {
         const { expand } = this;
         const { light, lightId } = this.props;
+        let toggleColor = getXYtoRGB(light[lightId[0]].state.xy[0], light[lightId[0]].state.xy[1], light[lightId[0]].state.bri).join(',')
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>
                     <Col lg="1"/>
                     <Col lg="7">
-                        {light[lightId].name}
+                    <span className="color-preview" style={{ background: 'rgb(' + toggleColor + ')' }}></span>{light[lightId].name}
                     </Col>
                     <Col lg="3">
                         <Toggle checked={light[lightId].state.on} onChange={expand} />
                     </Col>
-                    <Col lg="1"/>
+                    <Col lg="1" />
                 </Row>
                 <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId} /></Animate>
             </div>
