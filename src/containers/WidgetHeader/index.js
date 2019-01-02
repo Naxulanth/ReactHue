@@ -6,6 +6,7 @@ import Animate from 'components/Animate'
 import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
+import SceneWidget from 'containers/SceneWidget'
 import { modifyRoom } from 'actions/rooms'
 import './index.css'
 
@@ -40,6 +41,7 @@ class WidgetHeader extends Component {
                     <Col lg="1"/>
                 </Row>
                 <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><LightDetails /></Animate>
+                <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
             </div>
         )
     }
