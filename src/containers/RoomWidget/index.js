@@ -42,14 +42,14 @@ class RoomWidget extends Component {
 
 
     render() {
-        const { room, roomId } = this.props;
+        const { roomId } = this.props;
         const { lights } = this.state;
         return (
             <div ref={(e) => this.main = e} className="room-widget">
                 <div className="child">
                     <Row>
                         <Col lg="12">
-                            <WidgetHeader roomId={roomId} room={room[roomId]} />
+                            <WidgetHeader roomId={roomId} />
                         </Col>
                     </Row>
                     {lights}

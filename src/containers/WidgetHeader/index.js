@@ -20,36 +20,37 @@ class WidgetHeader extends Component {
     }
 
     expand() {
-        let { modifyRoom, room, roomId } = this.props;
-        modifyRoom(roomId, { "on": !room.action.on })
+        let { modifyRoom, roomId, room } = this.props;
+        modifyRoom(roomId, { "on": !room[roomId].action.on })
     }
 
-    
+
 
 
     render() {
         const { expand } = this;
-        const { room } = this.props;
+        const { roomId, room } = this.props;
         return (
             <div className="widget-header">
                 <Row>
-                    <Col lg="1"/>
+                    <Col lg="1" />
                     <Col lg="7">
-                        <WidgetTitle>{room.name}</WidgetTitle>
+                        <WidgetTitle>{room[roomId].name}</WidgetTitle>
                     </Col>
                     <Col className="center-toggle" lg="3">
-                        <Toggle checked={room.state.all_on} onChange={expand} />
+                        <Toggle checked={room[roomId].state.all_on} onChange={expand} />
                     </Col>
-                    <Col lg="1"/>
+                    <Col lg="1" />
                 </Row>
-                <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><LightDetails /></Animate>
-                <Animate pose={room.state.all_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
+                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} /></Animate>
+                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
             </div>
         )
     }
 }
 
 const mapStateToProps = state => ({
+    room: state.rooms.list
 })
 
 const mapDispatchToProps = dispatch => ({
