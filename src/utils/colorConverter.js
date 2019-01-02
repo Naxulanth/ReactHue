@@ -72,3 +72,12 @@ export function getRGBtoXY(c) {
     xy[1] = y;
     return xy;
 }
+
+export function getFormattedXYtoRGB(light, lightId) {
+    let activeColor = {};
+    let converted = getXYtoRGB(light[lightId].state.xy[0], light[lightId].state.xy[1], light[lightId].state.bri);
+    activeColor.r = converted[0];
+    activeColor.g = converted[1];
+    activeColor.b = converted[2];
+    return activeColor;
+}

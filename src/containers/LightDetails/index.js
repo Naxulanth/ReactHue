@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
 import { modifyLight } from 'actions/lights'
-import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
+import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
 import './index.css';
 
@@ -25,16 +25,23 @@ class LightDetails extends Component {
     componentDidMount() {
         const { light, lightId } = this.props;
         if (lightId) {
-            let activeColor = {};
-            let convertColor = getXYtoRGB(light[lightId].state.xy[0], light[lightId].state.xy[1], light[lightId].state.bri);
-            activeColor.r = convertColor[0];
-            activeColor.g = convertColor[1];
-            activeColor.b = convertColor[2];
+            let converted = getFormattedXYtoRGB(light, lightId)
             this.setState({
                 brightness: Math.round(light[lightId].state.bri / 2.54),
-                colorRgb: activeColor
+                colorRgb: converted
             })
         }
+    }
+
+    componentDidUpdate(prevProps) {
+        const { lightId, light } = this.props;
+        if (prevProps.light[lightId].state.xy !== light[lightId].state.xy) {
+            let converted = getFormattedXYtoRGB(light, lightId)
+            this.setState({
+                colorRgb: converted
+            })
+        }
+
     }
 
     changeBrightness(e) {
