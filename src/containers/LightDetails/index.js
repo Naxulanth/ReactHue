@@ -19,6 +19,7 @@ class LightDetails extends Component {
         }
         this.changeBrightness = this.changeBrightness.bind(this);
         this.changeColor = this.changeColor.bind(this);
+        this.changeColorConfirm = this.changeColorConfirm.bind(this);
     }
 
     componentDidMount() {
@@ -45,17 +46,20 @@ class LightDetails extends Component {
     }
 
     changeColor(color, event) {
-        const { lightId, modifyLight } = this.props;
-        let xy = getRGBtoXY(objectToArray(color.rgb).slice(0, 3));
-        modifyLight(lightId, { "xy": xy })
         this.setState({
             colorRgb: color.rgb
         })
     }
 
+    changeColorConfirm(color, event) {
+        const { lightId, modifyLight } = this.props;
+        let xy = getRGBtoXY(objectToArray(color.rgb).slice(0, 3));
+        modifyLight(lightId, { "xy": xy })
+    }
+
     render() {
         const { brightness, colorRgb } = this.state;
-        const { changeBrightness, changeColor } = this;
+        const { changeBrightness, changeColor, changeColorConfirm } = this;
         return (
             <div ref={(e) => this.main = e} className="light-widget-details">
                 <Row>
@@ -65,7 +69,7 @@ class LightDetails extends Component {
                 </Row>
                 <Row>
                     <Col lg="1" />
-                    <Col lg="10"><ColorPicker color={colorRgb} onChange={changeColor} /></Col>
+                    <Col lg="10"><ColorPicker color={colorRgb} onChange={changeColor} onChangeComplete={changeColorConfirm} /></Col>
                     <Col lg="1" />
                 </Row>
             </div>

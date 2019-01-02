@@ -24,6 +24,8 @@ class WidgetHeader extends Component {
         modifyRoom(roomId, { "on": !room.action.on })
     }
 
+    
+
 
     render() {
         const { expand } = this;
