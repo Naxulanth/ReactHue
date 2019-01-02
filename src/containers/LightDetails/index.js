@@ -21,6 +21,7 @@ class LightDetails extends Component {
         this.changeBrightness = this.changeBrightness.bind(this);
         this.changeColor = this.changeColor.bind(this);
         this.changeColorConfirm = this.changeColorConfirm.bind(this);
+        this.changeBrightnessConfirm = this.changeBrightnessConfirm.bind(this);
     }
 
     componentDidMount() {
@@ -49,6 +50,10 @@ class LightDetails extends Component {
         this.setState({
             brightness: e
         })
+    }
+
+
+    changeBrightnessConfirm(e) {
         const { lightId, modifyLight, modifyRoom, room } = this.props;
         if (room) modifyRoom(lightId, { "bri": Math.round(e * 2.54) })
         else modifyLight(lightId, { "bri": Math.round(e * 2.54) })
@@ -69,12 +74,12 @@ class LightDetails extends Component {
 
     render() {
         const { brightness, colorRgb } = this.state;
-        const { changeBrightness, changeColor, changeColorConfirm } = this;
+        const { changeBrightness, changeColor, changeColorConfirm, changeBrightnessConfirm } = this;
         return (
             <div ref={(e) => this.main = e} className="light-widget-details">
                 <Row>
                     <Col lg="1" />
-                    <Col lg="10"><Brightness onChange={changeBrightness} value={brightness} /></Col>
+                    <Col lg="10"><Brightness onChange={changeBrightness} onAfterChange={changeBrightnessConfirm} value={brightness} /></Col>
                     <Col lg="1" />
                 </Row>
                 <Row>
