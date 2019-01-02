@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPicker'
 import { modifyLight } from 'actions/lights'
+import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
 import './index.css';
@@ -34,8 +35,8 @@ class LightDetails extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { lightId, light } = this.props;
-        if (prevProps.light[lightId].state.xy !== light[lightId].state.xy) {
+        const { room, lightId, light } = this.props;
+        if (!room && prevProps.light[lightId].state.xy !== light[lightId].state.xy) {
             let converted = getFormattedXYtoRGB(light, lightId)
             this.setState({
                 colorRgb: converted
@@ -48,8 +49,9 @@ class LightDetails extends Component {
         this.setState({
             brightness: e
         })
-        const { lightId, modifyLight } = this.props;
-        modifyLight(lightId, { "bri": Math.round(e * 2.54) })
+        const { lightId, modifyLight, modifyRoom, room } = this.props;
+        if (room) modifyRoom(lightId, { "bri": Math.round(e * 2.54) })
+        else modifyLight(lightId, { "bri": Math.round(e * 2.54) })
     }
 
     changeColor(color, event) {
@@ -59,9 +61,10 @@ class LightDetails extends Component {
     }
 
     changeColorConfirm(color, event) {
-        const { lightId, modifyLight } = this.props;
+        const { lightId, modifyLight, modifyRoom, room } = this.props;
         let xy = getRGBtoXY(objectToArray(color.rgb).slice(0, 3));
-        modifyLight(lightId, { "xy": xy })
+        if (room) modifyRoom(lightId, { "xy": xy })
+        else modifyLight(lightId, { "xy": xy })
     }
 
     render() {
@@ -90,7 +93,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    modifyLight: bindActionCreators(modifyLight.request, dispatch)
+    modifyLight: bindActionCreators(modifyLight.request, dispatch),
+    modifyRoom: bindActionCreators(modifyRoom.request, dispatch)
 })
 
 

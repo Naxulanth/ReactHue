@@ -42,7 +42,7 @@ class WidgetHeader extends Component {
                     </Col>
                     <Col lg="1" />
                 </Row>
-                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} /></Animate>
+                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} room /></Animate>
                 <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
             </div>
         )
