@@ -1,0 +1,21 @@
+.color-picker {
+    width: 99%;
+    height: auto;
+    border-radius: 20px;
+}
+
+.color-picker-hue {
+    position:relative;
+    width: 5%;
+    height: 200px;
+    display: inline-block;
+}
+
+.color-picker-sat {
+    margin-top: 10px;
+    position:relative;
+    margin-left: 4%;
+    width: 91%;
+    height: 200px;
+    display: inline-block;
+}

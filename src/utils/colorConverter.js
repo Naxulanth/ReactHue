@@ -14,9 +14,9 @@ export function getXYtoRGB(x, y, bri) {
     r /= maxValue;
     g /= maxValue;
     b /= maxValue;
-    r = r * 255; if (r < 0) { r = 0 };
-    g = g * 255; if (g < 0) { g = 0 };
-    b = b * 255; if (b < 0) { b = 0 };
+    r = r * 255; if (r < 0) { r = 255 };
+    g = g * 255; if (g < 0) { g = 255 };
+    b = b * 255; if (b < 0) { b = 255 };
     return [r, g, b]
 }
 

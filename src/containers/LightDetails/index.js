@@ -3,12 +3,13 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
-import ColorPicker from 'components/ColorPicker'
+import ColorPicker from 'components/ColorPickerExpanded'
 import { modifyLight } from 'actions/lights'
 import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
 import './index.css';
+import { compileFunction } from 'vm';
 
 class LightDetails extends Component {
 
@@ -63,6 +64,7 @@ class LightDetails extends Component {
         this.setState({
             colorRgb: color.rgb
         })
+        console.log(color.rgb)
     }
 
     changeColorConfirm(color, event) {
