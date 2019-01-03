@@ -1,5 +1,5 @@
 .room-widget {
-    border: 2px solid rgb(128, 0, 128);
+    border: 2px solid transparent;
     border-radius: 30px;
     height: 50vh;
     margin-bottom: 30px;

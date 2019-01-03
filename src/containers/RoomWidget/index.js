@@ -4,8 +4,11 @@ import uuidv4 from 'uuid/v4'
 import { connect } from 'react-redux'
 import WidgetHeader from '../WidgetHeader';
 import LightWidget from 'containers/LightWidget'
-import { getXYtoRGB } from 'utils/colorConverter'
+import { getXYtoRGB, getFormattedXYtoRGB } from 'utils/colorConverter'
 import './index.css';
+import { normal } from 'color-blend';
+import colorChanger from 'utils/colorChanger'
+import { objectToArray } from 'utils'
 
 class RoomWidget extends Component {
 
@@ -14,6 +17,8 @@ class RoomWidget extends Component {
         this.state = {
             lights: []
         }
+        this.c = null;
+        this.id = 'roomWidget' + props.roomId;
     }
 
     componentDidMount() {
@@ -27,7 +32,23 @@ class RoomWidget extends Component {
     componentDidUpdate() {
         const { lights, room, roomId } = this.props
         const lightIds = room[roomId].lights;
-        this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
+        let colorMap = [];
+        Object.keys(lights).forEach(lightId => {
+            if (lightIds.includes(lightId)) colorMap.push(objectToArray(getFormattedXYtoRGB(lights, lightId)))
+        })
+        // remove dupes
+        colorMap = Array.from(new Set(colorMap.map(JSON.stringify)), JSON.parse);
+        console.log(colorMap)
+        if (colorMap.length > 1) {
+            if (this.c) this.c.stop(this.id);
+            this.c = colorChanger();
+            this.c.initialize(100, colorMap, this.id)
+            this.c.start(this.main.style, 'borderColor', this.id)
+        }
+        else {
+            if (this.c) this.c.stop(this.id);
+            this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
+        }
     }
 
     populateLights(arr) {
@@ -46,15 +67,15 @@ class RoomWidget extends Component {
         const { lights } = this.state;
         return (
             <div ref={(e) => this.main = e} className="room-widget">
-            <span className="test">
-                <div className="child">
-                    <Row>
-                        <Col lg="12">
-                            <WidgetHeader roomId={roomId} />
-                        </Col>
-                    </Row>
-                    {lights}
-                </div>
+                <span className="test">
+                    <div className="child">
+                        <Row>
+                            <Col lg="12">
+                                <WidgetHeader roomId={roomId} />
+                            </Col>
+                        </Row>
+                        {lights}
+                    </div>
                 </span>
             </div>
         )

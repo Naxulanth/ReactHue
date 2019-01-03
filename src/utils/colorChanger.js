@@ -1,7 +1,7 @@
 function colorChanger() {
     let waypoints = { 'default': [[255, 0, 255], [0, 191, 255]], 'reverse': [[0, 191, 255], [255, 0, 255]] };
     let currentIndex = {};
-    let frequency = { 'default': 500 };
+    let frequency = { 'default': 100 };
     let loop = {};
 
     function initialize(frequency, waypoints, id) {
@@ -21,11 +21,13 @@ function colorChanger() {
     }
 
     function stop(id) {
+        console.log('stopped', id)
         clearInterval(loop[id]);
     }
 
     function start(style, attribute, id) {
         if (!id) id = 'default';
+        console.log(waypoints, id)
         let startColor = waypoints[id][0];
         let defaultColor = startColor.slice();
         let targetColor = waypoints[id][1];
