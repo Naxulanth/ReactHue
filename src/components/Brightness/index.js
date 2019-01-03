@@ -6,7 +6,7 @@ import 'rc-slider/assets/index.css';
 const Brightness = styled(Slider)`
 margin-bottom: 12px;
 min-width: auto;
-margin-top: 12  px;
+margin-top: 12px;
 .rc-slider-rail {
     background: #464646;
     }
