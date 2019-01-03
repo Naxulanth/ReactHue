@@ -44,7 +44,11 @@ class LightDetails extends Component {
                 colorRgb: converted
             })
         }
-
+        if (!room && prevProps.light[lightId].state.bri !== light[lightId].state.bri) {
+            this.setState({
+                brightness: Math.round(light[lightId].state.bri / 2.54)
+            })
+        }
     }
 
     changeBrightness(e) {

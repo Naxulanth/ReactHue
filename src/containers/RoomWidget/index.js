@@ -46,6 +46,7 @@ class RoomWidget extends Component {
         const { lights } = this.state;
         return (
             <div ref={(e) => this.main = e} className="room-widget">
+            <span className="test">
                 <div className="child">
                     <Row>
                         <Col lg="12">
@@ -54,6 +55,7 @@ class RoomWidget extends Component {
                     </Row>
                     {lights}
                 </div>
+                </span>
             </div>
         )
     }

@@ -38,12 +38,12 @@ class WidgetHeader extends Component {
                         <WidgetTitle>{room[roomId].name}</WidgetTitle>
                     </Col>
                     <Col className="center-toggle" lg="3">
-                        <Toggle checked={room[roomId].state.all_on} onChange={expand} />
+                        <Toggle checked={room[roomId].state.any_on} onChange={expand} />
                     </Col>
                     <Col lg="1" />
                 </Row>
-                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} room /></Animate>
-                <Animate pose={room[roomId].state.all_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
+                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} room /></Animate>
+                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><SceneWidget /></Animate>
             </div>
         )
     }

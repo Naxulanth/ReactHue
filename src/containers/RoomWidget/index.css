@@ -1,6 +1,5 @@
-
 .room-widget {
-    border: 2px solid rgb(128,0,128);
+    border: 2px solid rgb(128, 0, 128);
     border-radius: 30px;
     height: 50vh;
     margin-bottom: 30px;
@@ -8,10 +7,12 @@
     overflow: hidden;
 }
 
-.child{
+.child {
     height: 100%;
-    margin-right: -50px; /* maximum width of scrollbar */
-    padding-right: 35px; /* maximum width of scrollbar */
+    margin-right: -50px;
+    /* maximum width of scrollbar */
+    padding-right: 35px;
+    /* maximum width of scrollbar */
     overflow-x: hidden;
     overflow-y: scroll;
-  }
+}
