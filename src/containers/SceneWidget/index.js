@@ -16,6 +16,9 @@ class SceneWidget extends Component {
         }
     }
 
+    componentDidMount() {
+        
+    }
 
     render() {
         return (

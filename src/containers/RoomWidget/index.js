@@ -6,7 +6,6 @@ import WidgetHeader from '../WidgetHeader';
 import LightWidget from 'containers/LightWidget'
 import { getXYtoRGB, getFormattedXYtoRGB } from 'utils/colorConverter'
 import './style.css';
-import { normal } from 'color-blend';
 import colorChanger from 'utils/colorChanger'
 import { objectToArray } from 'utils'
 
