@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import TextInput from 'components/TextInput';
 import Button from 'components/Button';
-import './index.css'
+import './style.css'
 
 import { user, bridge } from 'constants/localStorage';
 

@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import WidgetHeader from '../WidgetHeader';
 import LightWidget from 'containers/LightWidget'
 import { getXYtoRGB, getFormattedXYtoRGB } from 'utils/colorConverter'
-import './index.css';
+import './style.css';
 import { normal } from 'color-blend';
 import colorChanger from 'utils/colorChanger'
 import { objectToArray } from 'utils'
@@ -38,7 +38,6 @@ class RoomWidget extends Component {
         })
         // remove dupes
         colorMap = Array.from(new Set(colorMap.map(JSON.stringify)), JSON.parse);
-        console.log(colorMap)
         if (colorMap.length > 1) {
             if (this.c) this.c.stop(this.id);
             this.c = colorChanger();

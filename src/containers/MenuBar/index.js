@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import MenuBarLink from 'components/MenuBarLink'
 import colorChanger from 'utils/colorChanger';
-import './index.css';
+import './style.css';
 
 class MenuBar extends Component {
 
@@ -19,8 +19,11 @@ class MenuBar extends Component {
                     </Col>
                     <Col lg="9">
                         <Row>
-                            <Col lg={{ offset: 8, size: 1 }}>
+                            <Col lg={{ offset: 7, size: 1 }}>
                                 <MenuBarLink to={process.env.PUBLIC_URL + '/'}>Home</MenuBarLink>
+                            </Col>
+                            <Col lg="1">
+                                <MenuBarLink to={process.env.PUBLIC_URL + '/routines'}>Routines</MenuBarLink>
                             </Col>
                             <Col lg="1">
                                 <MenuBarLink to={process.env.PUBLIC_URL + '/config'}>Config</MenuBarLink>

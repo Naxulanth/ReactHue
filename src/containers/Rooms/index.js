@@ -7,7 +7,7 @@ import Title from 'components/Title';
 import RoomWidget from 'containers/RoomWidget'
 import { getRooms } from 'actions/rooms'
 import { getLights } from 'actions/lights'
-import './index.css';
+import './style.css';
 
 
 import { isEmpty, objectToArray } from 'utils'

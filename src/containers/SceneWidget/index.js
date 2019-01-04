@@ -3,10 +3,10 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { modifyLight } from 'actions/lights'
-import './index.css';
+import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
 
-import './index.css'
+import './style.css'
 
 class SceneWidget extends Component {
 

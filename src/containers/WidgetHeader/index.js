@@ -8,7 +8,7 @@ import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
 import SceneWidget from 'containers/SceneWidget'
 import { modifyRoom } from 'actions/rooms'
-import './index.css'
+import './style.css'
 
 class WidgetHeader extends Component {
 

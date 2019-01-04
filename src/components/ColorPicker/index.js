@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 import { HuePicker } from 'react-color'
 
-import 'rc-slider/assets/index.css';
+import 'rc-slider/assets/style.css';
 
 
 const ColorPicker = styled(HuePicker)`

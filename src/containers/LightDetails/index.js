@@ -8,7 +8,7 @@ import { modifyLight } from 'actions/lights'
 import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
-import './index.css';
+import './style.css';
 import { compileFunction } from 'vm';
 
 class LightDetails extends Component {

@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Rooms from 'containers/Rooms'
 
 
-import './index.css';
+import './style.css';
 
 class Main extends Component {
 

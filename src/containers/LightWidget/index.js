@@ -6,10 +6,9 @@ import Toggle from 'components/Toggle'
 import Animate from 'components/Animate'
 import LightDetails from 'containers/LightDetails'
 import { modifyLight } from 'actions/lights'
-import './index.css';
 import { getXYtoRGB } from 'utils/colorConverter'
 
-import './index.css'
+import './style.css'
 
 class LightWidget extends Component {
 

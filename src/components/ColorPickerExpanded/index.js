@@ -1,6 +1,6 @@
 import React from 'react';
 import { CustomPicker } from 'react-color';
-import './index.css'
+import './style.css'
 import { Saturation, Hue } from 'react-color/lib/components/common'
 import HuePointer from 'components/HuePointer'
 
