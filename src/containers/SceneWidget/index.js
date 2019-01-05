@@ -19,9 +19,9 @@ class SceneWidget extends Component {
         this.getRoomScenes = this.getRoomScenes.bind(this);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         const { scenes } = this.props
-        if (scenes) {
+        if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
         }
     }

@@ -6,9 +6,11 @@ import HuePointer from 'components/HuePointer'
 
 class ColorPickerExpanded extends React.Component {
   render() {
+    let refinedProps = Object.assign({}, this.props);
+    delete refinedProps['onChangeComplete'];
     return <div className="color-picker">
-      <div className="color-picker-hue"><Hue {...this.props} pointer={HuePointer} direction={'horizontal'} /> </div>
-      <div className="color-picker-sat"><Saturation {...this.props} pointer={HuePointer} /></div>
+      <div className="color-picker-hue"><Hue {...refinedProps} pointer={HuePointer} direction={'horizontal'} /> </div>
+      <div className="color-picker-sat"><Saturation {...refinedProps} pointer={HuePointer} /></div>
     </div>;
   }
 }

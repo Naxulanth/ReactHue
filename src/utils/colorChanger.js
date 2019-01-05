@@ -21,13 +21,11 @@ function colorChanger() {
     }
 
     function stop(id) {
-        console.log('stopped', id)
         clearInterval(loop[id]);
     }
 
     function start(style, attribute, id) {
         if (!id) id = 'default';
-        console.log(waypoints, id)
         let startColor = waypoints[id][0];
         let defaultColor = startColor.slice();
         let targetColor = waypoints[id][1];

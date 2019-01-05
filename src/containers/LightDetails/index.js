@@ -68,7 +68,6 @@ class LightDetails extends Component {
         this.setState({
             colorRgb: color.rgb
         })
-        console.log(color.rgb)
     }
 
     changeColorConfirm(color, event) {
