@@ -7,6 +7,7 @@ import Title from 'components/Title';
 import RoomWidget from 'containers/RoomWidget'
 import { getRooms } from 'actions/rooms'
 import { getLights } from 'actions/lights'
+import { getScenes } from 'actions/scenes'
 import './style.css';
 
 
@@ -24,9 +25,10 @@ class Rooms extends Component {
     }
 
     componentDidMount() {
-        const { getRooms, getLights } = this.props;
+        const { getRooms, getLights, getScenes } = this.props;
         getRooms();
         getLights();
+        getScenes();
     }
 
     componentDidUpdate(prevProps) {
@@ -83,11 +85,13 @@ class Rooms extends Component {
 const mapStateToProps = state => ({
     rooms: state.rooms.list,
     lights: state.lights.list,
+    scenes: state.scenes.list,
 })
 
 const mapDispatchToProps = dispatch => ({
     getRooms: bindActionCreators(getRooms.request, dispatch),
     getLights: bindActionCreators(getLights.request, dispatch),
+    getScenes: bindActionCreators(getScenes.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Rooms);

@@ -3,7 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { modifyLight } from 'actions/lights'
-import { getScenes, getScene, modifyScene } from 'actions/scenes'
+import { getScene, modifyScene } from 'actions/scenes'
 import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
 
@@ -14,12 +14,29 @@ class SceneWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            roomScenes: {}
+        }
+        this.getRoomScenes = this.getRoomScenes.bind(this);
+    }
+
+    componentDidUpdate() {
+        const { scenes } = this.props
+        if (scenes) {
+            this.getRoomScenes();
         }
     }
 
-    componentDidMount() {
-        const { getScenes } = this.props;
-        getScenes();
+    getRoomScenes() {
+        const { scenes, room, roomId } = this.props;
+        let roomScenes = {};
+        Object.keys(scenes).forEach(scene => {
+            if (JSON.stringify(scenes[scene].lights.sort()) === JSON.stringify(room[roomId].lights.sort())) {
+                roomScenes[scene] = scenes[scene];
+            }
+        })
+        this.setState({
+            roomScenes: roomScenes
+        })
     }
 
     render() {
@@ -48,7 +65,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     modifyLight: bindActionCreators(modifyLight.request, dispatch),
-    getScenes: bindActionCreators(getScenes.request, dispatch),
     getScene: bindActionCreators(getScene.request, dispatch),
     modifyScene: bindActionCreators(modifyScene.request, dispatch),
 })
