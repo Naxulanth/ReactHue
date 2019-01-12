@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import Select from 'react-select'
 import { modifyLight } from 'actions/lights'
 import { getScene, modifyScene } from 'actions/scenes'
 import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
+import Button from 'components/Button'
+import Select from 'components/SceneSelect'
 
 import './style.css'
 
@@ -19,6 +20,8 @@ class SceneWidget extends Component {
             selectedOption: null,
         }
         this.getRoomScenes = this.getRoomScenes.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSave = this.handleSave.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -50,6 +53,9 @@ class SceneWidget extends Component {
     handleChange(selectedOption) {
         this.setState({ selectedOption });
     }
+
+    handleSave(scene) {
+    }
     
 
     render() {
@@ -65,6 +71,9 @@ class SceneWidget extends Component {
                                 onChange={this.handleChange}
                                 options={roomScenes}
                             />
+                            <Button
+                            onClick={this.handleSave}
+                            >Save Scene</Button>
                         </Col>
                         <Col lg="1" />
                     </Row>
