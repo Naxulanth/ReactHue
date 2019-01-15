@@ -25,11 +25,16 @@ class SceneWidget extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { scenes } = this.props
+        const { scenes, roomId, activeScenes } = this.props
         if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
         }
-        console.log(this.state.roomScenes)
+        if ((!prevProps.activeScenes || !prevProps.activeScenes[roomId] && activeScenes && activeScenes[roomId])
+            || ((prevProps.activeScenes && activeScenes && prevProps.activeScenes[roomId] && activeScenes[roomId])
+                && (prevProps.activeScenes[roomId] !== activeScenes[roomId]))) {
+            console.log('ye')
+            // change lightstates
+        }
     }
 
     getRoomScenes() {
@@ -53,11 +58,14 @@ class SceneWidget extends Component {
     }
 
     handleChange(selectedOption) {
-        this.setState({ selectedOption });
-        console.log(selectedOption)
+        const { getScene } = this.props;
+        this.setState({ selectedOption })
+        getScene(selectedOption.key);
     }
 
     handleSave(scene) {
+        // make new scene
+        // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
     }
 
 
@@ -91,7 +99,7 @@ const mapStateToProps = state => ({
     room: state.rooms.list,
     lights: state.lights.list,
     scenes: state.scenes.list,
-    activeScene: state.activeScenes
+    activeScenes: state.scenes.activeScenes
 })
 
 

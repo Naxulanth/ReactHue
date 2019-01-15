@@ -18,14 +18,15 @@ const SCENES = (state = [], action) => {
         case SCENES_PUT.FAILURE:
             return state;
         case SCENE_GET.REQUEST:
+            console.log(action)
             return state;
         case SCENE_GET.SUCCESS:
-        return {
-            ...state,
-            activeScenes: {
-                [action.id]: action.response.data
+            return {
+                ...state,
+                activeScenes: {
+                    [action.response.data.group]: action.response.data
+                }
             }
-        }
         case SCENE_GET.FAILURE:
             return state;
         default:
