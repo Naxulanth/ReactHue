@@ -37,12 +37,14 @@ class SceneWidget extends Component {
         let roomScenes = [];
         Object.keys(scenes).forEach(scene => {
             if (JSON.stringify(scenes[scene].lights.sort()) === JSON.stringify(room[roomId].lights.sort())) {
-                roomScenes.push(scenes[scene]);
+                roomScenes.push({ [scene]: scenes[scene] });
             }
         })
         let selectors = [];
+        console.log(roomScenes)
         roomScenes.forEach(scene => {
-            let selector = { value: scene, label: scene.name }
+            let sceneValue = Object.values(scene)[0]
+            let selector = { value: sceneValue, label: sceneValue.name, key: Object.keys(scene)[0] }
             selectors.push(selector);
         })
         this.setState({
@@ -52,11 +54,12 @@ class SceneWidget extends Component {
 
     handleChange(selectedOption) {
         this.setState({ selectedOption });
+        console.log(selectedOption)
     }
 
     handleSave(scene) {
     }
-    
+
 
     render() {
         const { selectedOption, roomScenes } = this.state;
@@ -72,7 +75,7 @@ class SceneWidget extends Component {
                                 options={roomScenes}
                             />
                             <Button
-                            onClick={this.handleSave}
+                                onClick={this.handleSave}
                             >Save Scene</Button>
                         </Col>
                         <Col lg="1" />

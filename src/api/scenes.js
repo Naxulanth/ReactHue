@@ -18,7 +18,7 @@ export function modifyScene(id, body) {
 
 export function getScene(id) {
     return axios.request({
-        method: 'put',
+        method: 'get',
         url: SCENES + '/' + id,
     })
 }
