@@ -8,6 +8,7 @@ import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
 import Button from 'components/Button'
 import Select from 'components/SceneSelect'
+import TextInput from 'components/TextInput'
 
 import './style.css'
 
@@ -18,10 +19,12 @@ class SceneWidget extends Component {
         this.state = {
             roomScenes: [],
             selectedOption: null,
+            sceneName: '',
         }
         this.getRoomScenes = this.getRoomScenes.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSave = this.handleSave.bind(this);
+        this.handleSceneText = this.handleSceneText.bind(this);
     }
 
     componentDidUpdate(prevProps) {
@@ -29,7 +32,7 @@ class SceneWidget extends Component {
         if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
         }
-        if (( (!prevProps.activeScenes || !prevProps.activeScenes[roomId]) && activeScenes && activeScenes[roomId])
+        if (((!prevProps.activeScenes || !prevProps.activeScenes[roomId]) && activeScenes && activeScenes[roomId])
             || ((prevProps.activeScenes && activeScenes && prevProps.activeScenes[roomId] && activeScenes[roomId])
                 && (prevProps.activeScenes[roomId] !== activeScenes[roomId]))) {
             console.log('ye')
@@ -66,11 +69,20 @@ class SceneWidget extends Component {
     handleSave(scene) {
         // make new scene
         // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
+        this.setState({
+            sceneName: ''
+        })
+    }
+
+    handleSceneText(e) {
+        this.setState({
+            sceneName: e.target.value
+        })
     }
 
 
     render() {
-        const { selectedOption, roomScenes } = this.state;
+        const { selectedOption, roomScenes, sceneName } = this.state;
         if (roomScenes.length > 0) {
             return (
                 <div ref={(e) => this.main = e} className="scene-widget">
@@ -82,6 +94,7 @@ class SceneWidget extends Component {
                                 onChange={this.handleChange}
                                 options={roomScenes}
                             />
+                            <TextInput placeholder={'Enter scene name...'} value={sceneName} onChange={this.handleSceneText} />
                             <Button
                                 onClick={this.handleSave}
                             >Save Scene</Button>
