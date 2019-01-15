@@ -29,7 +29,7 @@ class SceneWidget extends Component {
         if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
         }
-        if ((!prevProps.activeScenes || !prevProps.activeScenes[roomId] && activeScenes && activeScenes[roomId])
+        if (( (!prevProps.activeScenes || !prevProps.activeScenes[roomId]) && activeScenes && activeScenes[roomId])
             || ((prevProps.activeScenes && activeScenes && prevProps.activeScenes[roomId] && activeScenes[roomId])
                 && (prevProps.activeScenes[roomId] !== activeScenes[roomId]))) {
             console.log('ye')
