@@ -1,6 +1,6 @@
 import { action } from './';
 
-import { ROOMS_GET, ROOMS_PUT } from '../constants/actionTypes';
+import { ROOMS_GET, ROOMS_PUT, ROOMS_PUT_ATTR } from '../constants/actionTypes';
 
 
 export const getRooms = {
@@ -13,4 +13,10 @@ export const modifyRoom = {
     request: (id, body) => action(ROOMS_PUT.REQUEST, { id, body }),
     success: (response) => action(ROOMS_PUT.SUCCESS, { response }),
     failure: (error) => action(ROOMS_PUT.FAILURE, { error })
+}
+
+export const modifyRoomAttr = {
+    request: (id, body) => action(ROOMS_PUT_ATTR.REQUEST, { id, body }),
+    success: (response) => action(ROOMS_PUT_ATTR.SUCCESS, { response }),
+    failure: (error) => action(ROOMS_PUT_ATTR.FAILURE, { error })
 }

@@ -15,3 +15,11 @@ export function modifyRoom(id, body) {
         data: JSON.stringify(body)
     })
 }
+
+export function modifyRoomAttr(id, body) {
+    return axios.request({
+        method: 'put',
+        url: GROUPS + '/' + id + '/',
+        data: JSON.stringify(body)
+    })
+}

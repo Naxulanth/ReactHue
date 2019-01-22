@@ -1,7 +1,7 @@
 import { fork } from 'redux-saga/effects';
 
 import { watchGetLights, watchModifyLight } from './lights';
-import { watchGetRooms, watchModifyRoom } from './rooms';
+import { watchGetRooms, watchModifyRoom, watchModifyRoomAttr } from './rooms';
 import { watchGetScene, watchGetScenes, watchModifyScene } from './scenes';
 
 export default function* root() {
@@ -11,5 +11,6 @@ export default function* root() {
     yield fork(watchModifyRoom);
     yield fork(watchGetScene);
     yield fork(watchGetScenes);
-    yield fork(watchModifyScene)
+    yield fork(watchModifyScene);
+    yield fork(watchModifyRoomAttr);
 }

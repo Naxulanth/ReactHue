@@ -7,7 +7,7 @@ import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
 import SceneWidget from 'containers/SceneWidget'
-import { modifyRoom } from 'actions/rooms'
+import { modifyRoom, modifyRoomAttr } from 'actions/rooms'
 import './style.css'
 
 class WidgetHeader extends Component {
@@ -15,6 +15,7 @@ class WidgetHeader extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            roomName: ''
         }
         this.expand = this.expand.bind(this);
     }
@@ -24,6 +25,11 @@ class WidgetHeader extends Component {
         modifyRoom(roomId, { "on": !room[roomId].action.on })
     }
 
+    changeName() {
+        let { modifyRoom, roomId, room, } = this.props;
+        let { roomName } = this.state;
+        modifyRoomAttr(roomId, { "name": roomName })
+    }
 
 
 
@@ -54,7 +60,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    modifyRoom: bindActionCreators(modifyRoom.request, dispatch)
+    modifyRoom: bindActionCreators(modifyRoom.request, dispatch),
+    modifyRoomAttr: bindActionCreators(modifyRoomAttr.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(WidgetHeader);
