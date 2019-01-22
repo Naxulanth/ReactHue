@@ -69,6 +69,8 @@ class SceneWidget extends Component {
     handleSave(scene) {
         // make new scene
         // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
+        // for lights in scene... set lightstates
+        // /api/<username>/scenes/<id>/lightstates/<id>
         this.setState({
             sceneName: ''
         })
