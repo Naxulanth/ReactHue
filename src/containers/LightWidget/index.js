@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import Toggle from 'components/Toggle'
 import Animate from 'components/Animate'
 import LightDetails from 'containers/LightDetails'
-import { modifyLight } from 'actions/lights'
+import { modifyLight, modifyLightAttr } from 'actions/lights'
 import { getXYtoRGB } from 'utils/colorConverter'
 
 import './style.css'
@@ -15,6 +15,7 @@ class LightWidget extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            lightName: ''
         }
         this.expand = this.expand.bind(this);
     }
@@ -23,6 +24,13 @@ class LightWidget extends Component {
         let { modifyLight, light, lightId } = this.props;
         modifyLight(lightId, { "on": !light[lightId].state.on })
     }
+
+    changeName() {
+        let { modifyLight, light, lightId } = this.props;
+        let { lightName } = this.state;
+        modifyLightAttr(lightId, { "name": lightName })
+    }
+
 
 
     render() {
@@ -53,7 +61,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    modifyLight: bindActionCreators(modifyLight.request, dispatch)
+    modifyLight: bindActionCreators(modifyLight.request, dispatch),
+    modifyLightAttr: bindActionCreators(modifyLightAttr.request, dispatch)
 })
 
 

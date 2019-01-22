@@ -15,3 +15,11 @@ export function modifyLight(id, body) {
         data: JSON.stringify(body)
     })
 }
+
+export function modifyLightAttr(id, body) {
+    return axios.request({
+        method: 'put',
+        url: LIGHTS + '/' + id + '/',
+        data: JSON.stringify(body)
+    })
+}
