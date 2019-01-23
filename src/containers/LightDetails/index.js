@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Button } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
@@ -23,6 +23,7 @@ class LightDetails extends Component {
         this.changeColor = this.changeColor.bind(this);
         this.changeColorConfirm = this.changeColorConfirm.bind(this);
         this.changeBrightnessConfirm = this.changeBrightnessConfirm.bind(this);
+        this.colorLoop = this.colorLoop.bind(this);
     }
 
     componentDidMount() {
@@ -77,9 +78,22 @@ class LightDetails extends Component {
         else modifyLight(lightId, { "xy": xy })
     }
 
+    colorLoop() {
+        const { lightId, modifyLight, modifyRoom, room, rooms, light } = this.props;
+        if (room) {
+            if (rooms[lightId].action.effect === "none") modifyRoom(lightId, { "effect": "colorloop" })
+            else modifyRoom(lightId, { "effect": "none" })
+        }
+        else {
+            if (light[lightId].state.effect === "none") modifyLight(lightId, { "effect": "colorloop" })
+            else modifyLight(lightId, { "effect": "none" })
+        }
+    }
+
+
     render() {
         const { brightness, colorRgb } = this.state;
-        const { changeBrightness, changeColor, changeColorConfirm, changeBrightnessConfirm } = this;
+        const { changeBrightness, changeColor, changeColorConfirm, changeBrightnessConfirm, colorLoop } = this;
         return (
             <div ref={(e) => this.main = e} className="light-widget-details">
                 <Row>
@@ -92,6 +106,11 @@ class LightDetails extends Component {
                     <Col lg="10"><ColorPicker color={colorRgb} onChange={changeColor} onChangeComplete={changeColorConfirm} /></Col>
                     <Col lg="1" />
                 </Row>
+                <Row>
+                    <Col lg="1" />
+                    <Col lg="10"><Button onClick={colorLoop}>test</Button></Col>
+                    <Col lg="1" />
+                </Row>
             </div>
         )
     }
@@ -99,7 +118,8 @@ class LightDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-    light: state.lights.list
+    light: state.lights.list,
+    rooms: state.rooms.list
 })
 
 const mapDispatchToProps = dispatch => ({

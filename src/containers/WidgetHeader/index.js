@@ -18,6 +18,7 @@ class WidgetHeader extends Component {
             roomName: ''
         }
         this.expand = this.expand.bind(this);
+        this.changeName = this.changeName.bind(this);
     }
 
     expand() {
@@ -30,7 +31,6 @@ class WidgetHeader extends Component {
         let { roomName } = this.state;
         modifyRoomAttr(roomId, { "name": roomName })
     }
-
 
 
     render() {
