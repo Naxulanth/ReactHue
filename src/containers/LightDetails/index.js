@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Row, Col, Button } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPickerExpanded'
 import { modifyLight } from 'actions/lights'
+import Toggle from 'components/Toggle'
 import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
@@ -17,7 +18,8 @@ class LightDetails extends Component {
         super(props);
         this.state = {
             brightness: 0,
-            colorRgb: {}
+            colorRgb: {},
+            colorLoop: false,
         }
         this.changeBrightness = this.changeBrightness.bind(this);
         this.changeColor = this.changeColor.bind(this);
@@ -27,12 +29,13 @@ class LightDetails extends Component {
     }
 
     componentDidMount() {
-        const { light, lightId } = this.props;
+        const { light, lightId, room, rooms } = this.props;
         if (lightId) {
             let converted = getFormattedXYtoRGB(light, lightId)
             this.setState({
                 brightness: Math.round(light[lightId].state.bri / 2.54),
-                colorRgb: converted
+                colorRgb: converted,
+                colorLoop: room ? rooms[lightId].action.effect === "none" ? false : true : light[lightId].state.effect === "none" ? false : true
             })
         }
     }
@@ -48,6 +51,11 @@ class LightDetails extends Component {
         if (!room && prevProps.light[lightId].state.bri !== light[lightId].state.bri) {
             this.setState({
                 brightness: Math.round(light[lightId].state.bri / 2.54)
+            })
+        }
+        if (!room && prevProps.light[lightId].state.effect !== light[lightId].state.effect) {
+            this.setState({
+                colorLoop: !this.state.colorLoop
             })
         }
     }
@@ -88,6 +96,11 @@ class LightDetails extends Component {
             if (light[lightId].state.effect === "none") modifyLight(lightId, { "effect": "colorloop" })
             else modifyLight(lightId, { "effect": "none" })
         }
+        if (room) {
+            this.setState({
+                colorLoop: !this.state.colorLoop
+            })
+        }
     }
 
 
@@ -108,7 +121,8 @@ class LightDetails extends Component {
                 </Row>
                 <Row>
                     <Col lg="1" />
-                    <Col lg="10"><Button onClick={colorLoop}>test</Button></Col>
+                    <Col className="pad" lg="8">Colorloop</Col>
+                    <Col className="pad" lg="2"><Toggle checked={this.state.colorLoop} onChange={colorLoop} pad /></Col>
                     <Col lg="1" />
                 </Row>
             </div>
