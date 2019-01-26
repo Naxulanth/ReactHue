@@ -17,7 +17,7 @@ class LightWidget extends Component {
         this.state = {
             lightName: ''
         }
-        this.expand = this.expand.bind(this);
+        this.expand = this.expand.bind(this); 
     }
 
     expand() {
