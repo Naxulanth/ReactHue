@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { modifyLight,  } from 'actions/lights'
+import { modifyLight, } from 'actions/lights'
 import { getScene, modifyScene, modifySceneLights } from 'actions/scenes'
 import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
@@ -66,10 +66,17 @@ class SceneWidget extends Component {
     }
 
     handleSave(scene) {
-        // make new scene
+        // make new scene - needs endpoint
         // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
-        // for lights in scene... set lightstates
-        // /api/<username>/scenes/<id>/lightstates/<id>
+        const { modifyScene, modifySceneLights, roomId, room, lights } = this.props;
+        const { sceneName } = this.state;
+        const roomLights = room[roomId].lights;
+        /*
+        for (let i = 0; i < roomLights.length; ++i) {
+            modifySceneLights(sceneId, lightId, lights[roomLights[i]].state)
+        }
+        modifyScene(sceneId, { "name": sceneName })
+        */
         this.setState({
             sceneName: ''
         })
