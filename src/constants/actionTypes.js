@@ -11,4 +11,5 @@ export const ROOMS_PUT_ATTR = createRequestTypes('ROOMS_PUT_ATTR');
 export const SCENES_GET = createRequestTypes('SCENES_GET');
 export const SCENE_GET = createRequestTypes('SCENE_GET');
 export const SCENES_PUT = createRequestTypes('SCENES_PUT');
+export const SCENE_LIGHTS_PUT = createRequestTypes('SCENE_LIGHTS_PUT');
 

@@ -22,3 +22,11 @@ export function getScene(id) {
         url: SCENES + '/' + id,
     })
 }
+
+export function modifySceneLights(id, lightId, body) {
+    return axios.request({
+        method: 'put',
+        url: SCENES + '/' + id + '/lightstates/' + lightId,
+        data: JSON.stringify(body)
+    })
+}

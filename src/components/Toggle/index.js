@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 import ReactToggle from 'react-toggle';
 import "react-toggle/style.css"

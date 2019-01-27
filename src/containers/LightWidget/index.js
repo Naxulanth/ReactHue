@@ -26,7 +26,7 @@ class LightWidget extends Component {
     }
 
     changeName() {
-        let { modifyLight, light, lightId } = this.props;
+        let { lightId } = this.props;
         let { lightName } = this.state;
         modifyLightAttr(lightId, { "name": lightName })
     }

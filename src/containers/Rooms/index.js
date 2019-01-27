@@ -11,7 +11,7 @@ import { getScenes } from 'actions/scenes'
 import './style.css';
 
 
-import { isEmpty, objectToArray } from 'utils'
+import { objectToArray } from 'utils'
 
 class Rooms extends Component {
 

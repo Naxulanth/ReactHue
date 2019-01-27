@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
-import { modifyLight } from 'actions/lights'
-import { getScene, modifyScene } from 'actions/scenes'
+import { modifyLight,  } from 'actions/lights'
+import { getScene, modifyScene, modifySceneLights } from 'actions/scenes'
 import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
 import Button from 'components/Button'
@@ -59,7 +59,6 @@ class SceneWidget extends Component {
             roomScenes: selectors
         })
     }
-
     handleChange(selectedOption) {
         const { getScene } = this.props;
         this.setState({ selectedOption })
@@ -122,6 +121,7 @@ const mapDispatchToProps = dispatch => ({
     modifyLight: bindActionCreators(modifyLight.request, dispatch),
     getScene: bindActionCreators(getScene.request, dispatch),
     modifyScene: bindActionCreators(modifyScene.request, dispatch),
+    modifySceneLights: bindActionCreators(modifySceneLights.request, dispatch),
 })
 
 

@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
 
 const WidgetTitle = styled.div`
 font-size: 22px;

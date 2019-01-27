@@ -1,4 +1,5 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+
 import Select from 'react-select';
 
 const SceneSelect = styled(Select)`

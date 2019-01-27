@@ -10,8 +10,6 @@ import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
 import './style.css';
-import { compileFunction } from 'vm';
-
 class LightDetails extends Component {
 
     constructor(props) {
