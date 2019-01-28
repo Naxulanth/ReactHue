@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
-import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT } from '../constants/actionTypes'
+import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT, SCENE_POST } from '../constants/actionTypes'
 
 import * as actions from '../actions/scenes'
 import * as api from '../api/scenes'
@@ -49,6 +49,21 @@ export function* getScene({ id }) {
 
 export function* watchGetScene() {
     yield takeLatest(SCENE_GET.REQUEST, getScene)
+}
+
+export function* createScene({ body }) {
+    try {
+        const response = yield call(api.createScene, body);
+        yield put(actions.createScene.success(response))
+        yield call(renew);
+    }
+    catch (e) {
+        yield put(actions.createScene.failure(e));
+    }
+}
+
+export function* watchCreateScene() {
+    yield takeLatest(SCENE_POST.REQUEST, createScene)
 }
 
 export function* modifySceneLights({ id, lightId, body }) {

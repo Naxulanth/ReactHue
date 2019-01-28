@@ -1,6 +1,6 @@
 import { action } from './';
 
-import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT } from '../constants/actionTypes';
+import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT, SCENE_POST } from '../constants/actionTypes';
 
 
 export const getScenes = {
@@ -13,6 +13,12 @@ export const getScene = {
     request: (id) => action(SCENE_GET.REQUEST, { id }),
     success: (response) => action(SCENE_GET.SUCCESS, { response }),
     failure: (error) => action(SCENE_GET.FAILURE, { error })
+}
+
+export const createScene = {
+    request: (body) => action(SCENE_POST.REQUEST, { body }),
+    success: (response) => action(SCENE_POST.SUCCESS, { response }),
+    failure: (error) => action(SCENE_POST.FAILURE, { error })
 }
 
 export const modifyScene = {

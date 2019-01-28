@@ -1,4 +1,4 @@
-import { SCENES_GET, SCENE_GET, SCENES_PUT, SCENE_LIGHTS_PUT } from '../constants/actionTypes';
+import { SCENES_GET, SCENE_GET, SCENES_PUT, SCENE_LIGHTS_PUT, SCENE_POST } from '../constants/actionTypes';
 
 const SCENES = (state = [], action) => {
     switch (action.type) {
@@ -33,6 +33,12 @@ const SCENES = (state = [], action) => {
         case SCENE_LIGHTS_PUT.SUCCESS:
             return state;
         case SCENE_LIGHTS_PUT.FAILURE:
+            return state;
+        case SCENE_POST.REQUEST:
+            return state;
+        case SCENE_POST.SUCCESS:
+            return state;
+        case SCENE_POST.FAILURE:
             return state;
         default:
             return state;

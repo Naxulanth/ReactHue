@@ -66,14 +66,13 @@ class SceneWidget extends Component {
     }
 
     handleSave(scene) {
-        // make new scene - needs endpoint
         // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
-        const { modifyScene, modifySceneLights, roomId, room, lights } = this.props;
+        const { createScene, modifyScene, modifySceneLights, roomId, room, lights } = this.props;
         const { sceneName } = this.state;
         const roomLights = room[roomId].lights;
         /*
         for (let i = 0; i < roomLights.length; ++i) {
-            modifySceneLights(sceneId, lightId, lights[roomLights[i]].state)
+            modifySceneLights(sceneId, roomLights[i], lights[roomLights[i]].state)
         }
         modifyScene(sceneId, { "name": sceneName })
         */
@@ -129,6 +128,7 @@ const mapDispatchToProps = dispatch => ({
     getScene: bindActionCreators(getScene.request, dispatch),
     modifyScene: bindActionCreators(modifyScene.request, dispatch),
     modifySceneLights: bindActionCreators(modifySceneLights.request, dispatch),
+    createScene: bindActionCreators(createScene.request, dispatch)
 })
 
 

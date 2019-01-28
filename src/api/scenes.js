@@ -23,6 +23,14 @@ export function getScene(id) {
     })
 }
 
+export function createScene(body) {
+    return axios.request({
+        method: 'post',
+        url: SCENES,
+        data: JSON.stringify(body)
+    })
+}
+
 export function modifySceneLights(id, lightId, body) {
     return axios.request({
         method: 'put',
