@@ -3,7 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { modifyLight, } from 'actions/lights'
-import { getScene, modifyScene, modifySceneLights } from 'actions/scenes'
+import { getScene, modifyScene, modifySceneLights, createScene } from 'actions/scenes'
 import './style.css';
 import { getXYtoRGB, getRGBtoXY } from 'utils/colorConverter'
 import Button from 'components/Button'
@@ -66,16 +66,14 @@ class SceneWidget extends Component {
     }
 
     handleSave(scene) {
-        // {"name":"test", "group": "1", "type":"GroupScene", "recycle":true}
-        const { createScene, modifyScene, modifySceneLights, roomId, room, lights } = this.props;
+        const { createScene, modifyScene, modifySceneLights, roomId, room, lights, createdScene } = this.props;
         const { sceneName } = this.state;
         const roomLights = room[roomId].lights;
-        /*
+        createScene({name: sceneName, group: roomId.toString(), type: "GroupScene", "recycle": true})
         for (let i = 0; i < roomLights.length; ++i) {
-            modifySceneLights(sceneId, roomLights[i], lights[roomLights[i]].state)
+            modifySceneLights(createdScene, roomLights[i], lights[roomLights[i]].state)
         }
-        modifyScene(sceneId, { "name": sceneName })
-        */
+        // modifyScene(createdScene, { "name": sceneName })
         this.setState({
             sceneName: ''
         })
@@ -119,7 +117,8 @@ const mapStateToProps = state => ({
     room: state.rooms.list,
     lights: state.lights.list,
     scenes: state.scenes.list,
-    activeScenes: state.scenes.activeScenes
+    activeScenes: state.scenes.activeScenes,
+    createdScene: state.scenes.createdScene,
 })
 
 

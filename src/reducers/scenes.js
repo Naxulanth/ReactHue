@@ -37,7 +37,10 @@ const SCENES = (state = [], action) => {
         case SCENE_POST.REQUEST:
             return state;
         case SCENE_POST.SUCCESS:
-            return state;
+            return {
+                ...state,
+                createdScene: action.response.data[0].success.id
+            }
         case SCENE_POST.FAILURE:
             return state;
         default:
