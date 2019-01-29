@@ -120,7 +120,7 @@ class LightDetails extends Component {
                 <Row>
                     <Col lg="1" />
                     <Col className="pad" lg="8">Colorloop</Col>
-                    <Col className="pad" lg="2"><Toggle checked={this.state.colorLoop} onChange={colorLoop} pad /></Col>
+                    <Col className="pad" lg="2"><Toggle checked={this.state.colorLoop} onChange={colorLoop} /></Col>
                     <Col lg="1" />
                 </Row>
             </div>
