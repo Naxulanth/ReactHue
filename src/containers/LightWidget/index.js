@@ -51,7 +51,6 @@ class LightWidget extends Component {
                         <span className="color-preview" style={{ background: 'rgb(' + toggleColor + ')' }}></span>
                         <div className="wrap">
                             <EditableLabel text={light[lightId].name}
-                                labelClassName="test"
                                 onFocusOut={this.changeName}
                                 inputWidth="120px"
                             />
