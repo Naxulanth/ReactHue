@@ -3,12 +3,13 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Animate from 'components/Animate'
-import WidgetTitle from 'components/WidgetTitle'
 import Toggle from 'components/Toggle'
 import LightDetails from 'containers/LightDetails'
 import SceneWidget from 'containers/SceneWidget'
 import { modifyRoom, modifyRoomAttr } from 'actions/rooms'
 import './style.css'
+
+import EditableLabel from 'react-inline-editing';
 
 class WidgetHeader extends Component {
 
@@ -26,10 +27,13 @@ class WidgetHeader extends Component {
         modifyRoom(roomId, { "on": !room[roomId].action.on })
     }
 
-    changeName() {
-        let { roomId } = this.props;
+    changeName(e) {
+        let { roomId, modifyRoomAttr } = this.props;
         let { roomName } = this.state;
-        modifyRoomAttr(roomId, { "name": roomName })
+        this.setState({
+            roomName: e
+        })
+        modifyRoomAttr(roomId, { "name": e })
     }
 
 
@@ -41,7 +45,13 @@ class WidgetHeader extends Component {
                 <Row>
                     <Col lg="1" />
                     <Col lg="7">
-                        <WidgetTitle>{room[roomId].name}</WidgetTitle>
+                        <EditableLabel text={room[roomId].name}
+                            onFocusOut={this.changeName}
+                            labelFontSize="22px"
+                            inputFontSize="22px"
+                            inputHeight="40px"
+                            inputWidth="200px"
+                        />
                     </Col>
                     <Col className="center-toggle" lg="3">
                         <Toggle checked={room[roomId].state.any_on} onChange={expand} />

@@ -8,6 +8,8 @@ import LightDetails from 'containers/LightDetails'
 import { modifyLight, modifyLightAttr } from 'actions/lights'
 import { getXYtoRGB } from 'utils/colorConverter'
 
+import EditableLabel from 'react-inline-editing';
+
 import './style.css'
 
 class LightWidget extends Component {
@@ -17,7 +19,7 @@ class LightWidget extends Component {
         this.state = {
             lightName: ''
         }
-        this.expand = this.expand.bind(this); 
+        this.expand = this.expand.bind(this);
     }
 
     expand() {
@@ -40,9 +42,17 @@ class LightWidget extends Component {
         return (
             <div ref={(e) => this.main = e} className="light-widget">
                 <Row>
-                    <Col lg="1"/>
+                    <Col lg="1" />
                     <Col lg="7">
-                    <span className="color-preview" style={{ background: 'rgb(' + toggleColor + ')' }}></span>{light[lightId].name}
+                        <span className="color-preview" style={{ background: 'rgb(' + toggleColor + ')' }}></span>
+                        <div className="wrap">
+                            <EditableLabel text={light[lightId].name}
+                                labelClassName="test"
+                                onFocus={this._handleFocus}
+                                onFocusOut={this._handleFocusOut}
+                                inputWidth="120px"
+                            />
+                        </div>
                     </Col>
                     <Col lg="3">
                         <Toggle checked={light[lightId].state.on} onChange={expand} />

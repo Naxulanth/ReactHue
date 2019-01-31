@@ -48,6 +48,6 @@ export function* modifyRoomAttr({ id, body }) {
 }
 
 export function* watchModifyRoomAttr() {
-    yield takeLatest(ROOMS_PUT_ATTR.REQUEST, modifyRoom)
+    yield takeLatest(ROOMS_PUT_ATTR.REQUEST, modifyRoomAttr)
 }
 
