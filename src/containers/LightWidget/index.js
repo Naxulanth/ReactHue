@@ -20,6 +20,7 @@ class LightWidget extends Component {
             lightName: ''
         }
         this.expand = this.expand.bind(this);
+        this.changeName = this.changeName.bind(this);
     }
 
     expand() {
@@ -27,10 +28,13 @@ class LightWidget extends Component {
         modifyLight(lightId, { "on": !light[lightId].state.on })
     }
 
-    changeName() {
-        let { lightId } = this.props;
+    changeName(e) {
+        let { lightId, modifyLightAttr } = this.props;
         let { lightName } = this.state;
-        modifyLightAttr(lightId, { "name": lightName })
+        this.setState({
+            lightName: e,
+        })
+        modifyLightAttr(lightId, { "name": e })
     }
 
 
@@ -48,8 +52,7 @@ class LightWidget extends Component {
                         <div className="wrap">
                             <EditableLabel text={light[lightId].name}
                                 labelClassName="test"
-                                onFocus={this._handleFocus}
-                                onFocusOut={this._handleFocusOut}
+                                onFocusOut={this.changeName}
                                 inputWidth="120px"
                             />
                         </div>

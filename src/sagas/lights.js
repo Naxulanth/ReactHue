@@ -48,5 +48,5 @@ export function* modifyLightAttr({ id, body }) {
 }
 
 export function* watchModifyLightAttr() {
-    yield takeLatest(LIGHTS_PUT_ATTR.REQUEST, modifyLight)
+    yield takeLatest(LIGHTS_PUT_ATTR.REQUEST, modifyLightAttr)
 }
