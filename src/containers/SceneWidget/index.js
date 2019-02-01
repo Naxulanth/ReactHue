@@ -29,7 +29,7 @@ class SceneWidget extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { scenes, roomId, activeScenes, room, lights } = this.props;
+        const { scenes, roomId, activeScenes, room, lights, modifyLight } = this.props;
         const checkLight = room[roomId].lights.sort()
         if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
@@ -37,17 +37,9 @@ class SceneWidget extends Component {
         if (((!prevProps.activeScenes || !prevProps.activeScenes[roomId]) && activeScenes && activeScenes[roomId])
             || ((prevProps.activeScenes && activeScenes && prevProps.activeScenes[roomId] && activeScenes[roomId])
                 && (prevProps.activeScenes[roomId] !== activeScenes[roomId]))) {
-            // change lightstates
-        }
-        else if (this.state.selectedOption && activeScenes && activeScenes[roomId]) {
-            for (let i = 0; i < checkLight.length; ++i) {
-                if (JSON.stringify(lights[checkLight[i]].state.xy) !== JSON.stringify(activeScenes[roomId].lightstates[checkLight[i]].xy)) {
-                    this.setState({
-                        selectedOption: null,
-                    })
-                    break;
-                }
-            }
+            room[roomId].lights.forEach(light => {
+                modifyLight(light, { "xy": activeScenes[roomId].lightstates[light].xy })
+            })
         }
     }
 
@@ -106,6 +98,8 @@ class SceneWidget extends Component {
 
     render() {
         const { selectedOption, roomScenes, sceneName } = this.state;
+        const modifyButton = selectedOption ? <Button className="one-half" onClick={this.handleModify}>Modify</Button> : null;
+        const deleteButton = selectedOption ? <Button className="one-half" onClick={this.handleDelete}>Delete</Button> : null;
         if (roomScenes.length > 0) {
             return (
                 <div ref={(e) => this.main = e} className="scene-widget">
@@ -118,12 +112,8 @@ class SceneWidget extends Component {
                                 options={roomScenes}
                                 placeholder={'Select scene...'}
                             />
-                            <Button className="one-third"
-                                onClick={this.handleModify}
-                            >Modify</Button>
-                            <Button className="one-third"
-                                onClick={this.handleDelete}
-                            >Delete</Button>
+                            {modifyButton} 
+                            {deleteButton}
                             <TextInput placeholder={'Enter scene name...'} value={sceneName} onChange={this.handleSceneText} />
                             <Button
                                 onClick={this.handleSave}
