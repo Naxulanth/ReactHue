@@ -8,10 +8,25 @@ import * as scenesActions from '../actions/scenes'
 import * as scenesApi from '../api/scenes'
 
 export function* renew() {
+    try {
     const refreshLights = yield call(lightsApi.getLights)
     yield put(lightsActions.getLights.success(refreshLights))
+    }
+    catch (e) {
+        yield put(lightsActions.getLights.failure(e));
+    }
+    try {
     const refreshRooms = yield call(roomsApi.getRooms)
     yield put(roomsActions.getRooms.success(refreshRooms))
+    }
+    catch (e) {
+        yield put(roomsActions.getRooms.failure(e));
+    }
+    try {
     const refreshScenes = yield call(scenesApi.getScenes);
     yield put(scenesActions.getScenes.success(refreshScenes))
+    }
+    catch (e) {
+        yield put(scenesActions.getScenes.failure(e));
+    }
 }
