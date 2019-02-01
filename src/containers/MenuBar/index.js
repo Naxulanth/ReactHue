@@ -19,10 +19,13 @@ class MenuBar extends Component {
                     </Col>
                     <Col md="9" lg="9" xl="9">
                         <Row>
-                            <Col md={{ offset: 6, size: 2 }} lg={{ offset: 6, size: 2 }} xl={{ offset: 6, size: 2 }}>
+                            <Col md={{ offset: 4, size: 2 }} lg={{ offset: 4, size: 2 }} xl={{ offset: 4, size: 2 }}>
                                 <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/routines', search: this.props.location.search }}>Routines</MenuBarLink>
                             </Col>
                             <Col md="2" lg="2" xl="2">
+                                <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/roomsetup', search: this.props.location.search }}>Room Setup</MenuBarLink>
+                            </Col>
+                            <Col className="about" md="2" lg="2" xl="2">
                                 <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/config', search: this.props.location.search }}>Config</MenuBarLink>
                             </Col>
                             <Col className="about" md="2" lg="2" xl="2">
