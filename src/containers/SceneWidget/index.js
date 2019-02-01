@@ -68,11 +68,11 @@ class SceneWidget extends Component {
     }
 
     handleDelete() {
-
+        const { selectedOption } = this.state;
     }
 
     handleModify() {
-
+        const { selectedOption } = this.state;
     }
 
     handleSave(scene) {
