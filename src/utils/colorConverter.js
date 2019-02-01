@@ -68,8 +68,8 @@ export function getRGBtoXY(c) {
     let y = Y / (X + Y + Z);
 
     let xy = [];
-    xy[0] = x;
-    xy[1] = y;
+    xy[0] = x
+    xy[1] = y
     return xy;
 }
 
