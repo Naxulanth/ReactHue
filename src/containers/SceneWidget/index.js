@@ -39,12 +39,14 @@ class SceneWidget extends Component {
                 && (prevProps.activeScenes[roomId] !== activeScenes[roomId]))) {
             // change lightstates
         }
-        for (let i = 0; i < checkLight.length; ++i) {
-            if (this.state.selectedOption && activeScenes && activeScenes[roomId] && JSON.stringify(lights[checkLight[i]].state.xy) !== JSON.stringify(activeScenes[roomId].lightstates[checkLight[i]].xy)) {
-                this.setState({
-                    selectedOption: null,
-                })
-                break;
+        else if (this.state.selectedOption && activeScenes && activeScenes[roomId]) {
+            for (let i = 0; i < checkLight.length; ++i) {
+                if (JSON.stringify(lights[checkLight[i]].state.xy) !== JSON.stringify(activeScenes[roomId].lightstates[checkLight[i]].xy)) {
+                    this.setState({
+                        selectedOption: null,
+                    })
+                    break;
+                }
             }
         }
     }
@@ -69,8 +71,8 @@ class SceneWidget extends Component {
     }
     handleChange(selectedOption) {
         const { getScene } = this.props;
-        this.setState({ selectedOption })
         getScene(selectedOption.key);
+        this.setState({ selectedOption })
     }
 
     handleDelete() {
