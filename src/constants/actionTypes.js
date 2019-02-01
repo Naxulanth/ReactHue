@@ -13,3 +13,4 @@ export const SCENE_GET = createRequestTypes('SCENE_GET');
 export const SCENES_PUT = createRequestTypes('SCENES_PUT');
 export const SCENE_LIGHTS_PUT = createRequestTypes('SCENE_LIGHTS_PUT');
 export const SCENE_POST  = createRequestTypes('SCENE_POST');
+export const SCENE_DELETE = createRequestTypes('SCENE_DELETE');

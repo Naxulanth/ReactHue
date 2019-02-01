@@ -38,3 +38,10 @@ export function modifySceneLights(id, lightId, body) {
         data: JSON.stringify(body)
     })
 }
+
+export function deleteScene(id) {
+    return axios.request({
+        method: 'delete',
+        url: SCENES + '/' + id,
+    })
+}

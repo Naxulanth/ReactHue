@@ -1,4 +1,4 @@
-import { SCENES_GET, SCENE_GET, SCENES_PUT, SCENE_LIGHTS_PUT, SCENE_POST } from '../constants/actionTypes';
+import { SCENES_GET, SCENE_GET, SCENES_PUT, SCENE_LIGHTS_PUT, SCENE_POST, SCENE_DELETE } from '../constants/actionTypes';
 
 const SCENES = (state = [], action) => {
     switch (action.type) {
@@ -42,6 +42,15 @@ const SCENES = (state = [], action) => {
                 createdScene: action.response.data[0].success.id
             }
         case SCENE_POST.FAILURE:
+            return state;
+        case SCENE_DELETE.REQUEST:
+            return state;
+        case SCENE_DELETE.SUCCESS:
+            return {
+                ...state,
+                deletedScene: action.response.data[0].success
+            }
+        case SCENE_DELETE.FAILURE:
             return state;
         default:
             return state;

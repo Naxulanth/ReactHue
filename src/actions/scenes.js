@@ -1,6 +1,6 @@
 import { action } from './';
 
-import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT, SCENE_POST } from '../constants/actionTypes';
+import { SCENES_GET, SCENES_PUT, SCENE_GET, SCENE_LIGHTS_PUT, SCENE_POST, SCENE_DELETE } from '../constants/actionTypes';
 
 
 export const getScenes = {
@@ -32,3 +32,10 @@ export const modifySceneLights = {
     success: (response) => action(SCENE_LIGHTS_PUT.SUCCESS, { response }),
     failure: (error) => action(SCENE_LIGHTS_PUT.FAILURE, { error })
 }
+
+export const deleteScene = {
+    request: (id) => action(SCENE_DELETE.REQUEST, { id }),
+    success: (response) => action(SCENE_DELETE.SUCCESS, { response }),
+    failure: (error) => action(SCENE_DELETE.FAILURE, { error })
+}
+

@@ -3,7 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import { modifyLight, } from 'actions/lights'
-import { getScene, modifyScene, modifySceneLights, createScene } from 'actions/scenes'
+import { getScene, modifyScene, modifySceneLights, createScene, deleteScene } from 'actions/scenes'
 import './style.css';
 import Button from 'components/Button'
 import Select from 'components/SceneSelect'
@@ -19,6 +19,7 @@ class SceneWidget extends Component {
             roomScenes: [],
             selectedOption: null,
             sceneName: '',
+            modifyName: '',
         }
         this.getRoomScenes = this.getRoomScenes.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -26,11 +27,12 @@ class SceneWidget extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleModify = this.handleModify.bind(this);
         this.handleSceneText = this.handleSceneText.bind(this);
+        this.handleModifyText = this.handleModifyText.bind(this);
+        this.prepareState = this.prepareState.bind(this);
     }
 
     componentDidUpdate(prevProps) {
-        const { scenes, roomId, activeScenes, room, lights, modifyLight } = this.props;
-        const checkLight = room[roomId].lights.sort()
+        const { scenes, roomId, activeScenes, room, modifyLight } = this.props;
         if (prevProps.scenes !== scenes) {
             this.getRoomScenes();
         }
@@ -64,26 +66,52 @@ class SceneWidget extends Component {
     handleChange(selectedOption) {
         const { getScene } = this.props;
         getScene(selectedOption.key);
-        this.setState({ selectedOption })
+        this.setState({ selectedOption, modifyName: selectedOption.label })
     }
 
     handleDelete() {
         const { selectedOption } = this.state;
+        const { deleteScene } = this.props;
+        deleteScene(selectedOption.key);
+        this.setState({
+            selectedOption: null
+        })
+    }
+
+    prepareState(tempState) {
+        delete tempState.alert;
+        delete tempState.reachable;
+        delete tempState.colormode;
+        delete tempState.mode;
+        return tempState;
     }
 
     handleModify() {
-        const { selectedOption } = this.state;
+        const { selectedOption, modifyName } = this.state;
+        const { room, roomId, lights, modifyScene, modifySceneLights } = this.props;
+        const roomLights = room[roomId].lights;
+        modifyScene(selectedOption.key, { "name": modifyName })
+        for (let i = 0; i < roomLights.length; ++i) {
+            let tempState = this.prepareState(lights[roomLights[i]].state);
+            modifySceneLights(selectedOption.key, roomLights[i], tempState)
+        }
+        let selector = selectedOption;
+        selector.label = modifyName
+        console.log(selector)
+        this.setState({
+            selectedOption: selector
+        })
     }
 
     handleSave(scene) {
-        const { createScene, modifyScene, modifySceneLights, roomId, room, lights, createdScene } = this.props;
+        const { createScene, modifySceneLights, roomId, room, lights, createdScene } = this.props;
         const { sceneName } = this.state;
         const roomLights = room[roomId].lights;
         createScene({ name: sceneName, group: roomId.toString(), type: "GroupScene", "recycle": true })
         for (let i = 0; i < roomLights.length; ++i) {
-            modifySceneLights(createdScene, roomLights[i], lights[roomLights[i]].state)
+            let tempState = this.prepareState(lights[roomLights[i]].state);
+            modifySceneLights(createdScene, roomLights[i], tempState)
         }
-        // modifyScene(createdScene, { "name": sceneName })
         this.setState({
             sceneName: ''
         })
@@ -95,11 +123,18 @@ class SceneWidget extends Component {
         })
     }
 
+    handleModifyText(e) {
+        this.setState({
+            modifyName: e.target.value
+        })
+    }
+
 
     render() {
-        const { selectedOption, roomScenes, sceneName } = this.state;
+        const { selectedOption, roomScenes, sceneName, modifyName } = this.state;
         const modifyButton = selectedOption ? <Button className="one-half" onClick={this.handleModify}>Modify</Button> : null;
         const deleteButton = selectedOption ? <Button className="one-half" onClick={this.handleDelete}>Delete</Button> : null;
+        const modifyText = selectedOption ? <TextInput placeholder={'Edit scene name...'} value={modifyName} onChange={this.handleModifyText} /> : null;
         if (roomScenes.length > 0) {
             return (
                 <div ref={(e) => this.main = e} className="scene-widget">
@@ -112,8 +147,9 @@ class SceneWidget extends Component {
                                 options={roomScenes}
                                 placeholder={'Select scene...'}
                             />
-                            {modifyButton} 
+                            {modifyButton}
                             {deleteButton}
+                            {modifyText}
                             <TextInput placeholder={'Enter scene name...'} value={sceneName} onChange={this.handleSceneText} />
                             <Button
                                 onClick={this.handleSave}
@@ -134,6 +170,7 @@ const mapStateToProps = state => ({
     scenes: state.scenes.list,
     activeScenes: state.scenes.activeScenes,
     createdScene: state.scenes.createdScene,
+    deletedScene: state.scenes.deletedScene,
 })
 
 
@@ -142,7 +179,8 @@ const mapDispatchToProps = dispatch => ({
     getScene: bindActionCreators(getScene.request, dispatch),
     modifyScene: bindActionCreators(modifyScene.request, dispatch),
     modifySceneLights: bindActionCreators(modifySceneLights.request, dispatch),
-    createScene: bindActionCreators(createScene.request, dispatch)
+    createScene: bindActionCreators(createScene.request, dispatch),
+    deleteScene: bindActionCreators(deleteScene.request, dispatch)
 })
 
 
