@@ -5,3 +5,13 @@
 .submit {
     margin-top: 20px;
 }
+
+.bridge-link {
+    margin-left: 5px;
+    color: green;
+}
+
+.bridge-switch {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

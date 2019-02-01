@@ -6,6 +6,8 @@ import validator from 'validator';
 import TextInput from 'components/TextInput';
 import Button from 'components/Button';
 import './style.css'
+import Link from 'components/MenuBarLink'
+import queryString from 'query-string';
 
 import { user, bridge } from 'constants/localStorage';
 
@@ -49,40 +51,58 @@ class Config extends Component {
             })
         }
         else {
-        this.setState({
-            text: 'Testing...'
-        })
-        axios.get('http://' + this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
-            localStorage.setItem(user, username);
-            localStorage.setItem(bridge, ip);
-            if (res.data && res.data[0] && res.data[0].error) {
-                this.setState({
-                    text: 'Unauthorized user'
-                })
-            }
-            else {
             this.setState({
-                text: 'Success, redirecting...',
+                text: 'Testing...'
             })
-            setTimeout(() => {
+            axios.get('http://' + this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
+                localStorage.setItem(user, username);
+                localStorage.setItem(bridge, ip);
+                if (res.data && res.data[0] && res.data[0].error) {
+                    this.setState({
+                        text: 'Unauthorized user'
+                    })
+                }
+                else {
+                    this.setState({
+                        text: 'Success, redirecting...',
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            redirect: true,
+                        })
+                    }, 2000);
+                }
+            }).catch((e) => {
                 this.setState({
-                    redirect: true,
+                    text: 'Unable to reach bridge'
                 })
-            }, 2000);
-        }}).catch((e) => {
-            this.setState({
-                text: 'Unable to reach bridge'
             })
-        })
-    }
+        }
     }
 
     render() {
         const { ip, username, text, redirect } = this.state;
         const { handleIPInput, handleUsernameInput, handleSubmit } = this;
-        if (redirect) return (<Redirect to='/' />)
+        if (redirect) return (<Redirect to={{ pathname: '/', search: window.location.search }} />)
         return (
             <div className="config">
+                <Row>
+                    <Col lg="12" sm="12" md="12" xl="12">
+                        Active Bridge: {queryString.parse(window.location.search)['bridge'] ? queryString.parse(window.location.search)['bridge'] : 1 }
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                    <div className="bridge-switch">
+                        Switch to Bridge: 
+                        <a className="bridge-link" href='/'>1</a>
+                        <a className="bridge-link" href='/?bridge=2'>2</a>
+                        <a className="bridge-link" href='/?bridge=3'>3</a>
+                        <a className="bridge-link" href='/?bridge=4'>4</a>
+                        <a className="bridge-link" href='/?bridge=5'>5</a>
+                        </div>
+                    </Col>
+                    </Row>
                 <Row>
                     <Col lg="12" sm="12" md="12" xl="12">
                         Bridge IP
