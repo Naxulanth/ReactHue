@@ -20,8 +20,8 @@ class Footer extends Component {
         return (
             <div ref={(e) => this.menuBar = e} className="footer">
                 <Row>
-                    <Col lg="11" />
-                    <Col lg="1">
+                    <Col lg="10" md="10"/>
+                    <Col lg="2" md="2">
                         <div className="footer-link" onClick={followLink}>
                             @Naxulanth
                         </div>
