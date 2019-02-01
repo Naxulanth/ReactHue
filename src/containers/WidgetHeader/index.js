@@ -29,7 +29,6 @@ class WidgetHeader extends Component {
 
     changeName(e) {
         let { roomId, modifyRoomAttr } = this.props;
-        let { roomName } = this.state;
         this.setState({
             roomName: e
         })

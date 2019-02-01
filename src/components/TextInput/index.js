@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 
 const TextInput = styled.input`
-font-size: 20px;
+font-size: 18px;
 margin-top: 15px;
 margin-bottom: 15px;
 width: 100%;
