@@ -37,7 +37,7 @@ class LightWidget extends Component {
     }
 
 
-
+    
     render() {
         const { expand } = this;
         const { light, lightId } = this.props;
