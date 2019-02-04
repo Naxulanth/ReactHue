@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import Animate from 'components/Animate'
 import Toggle from 'components/Toggle'
+import PropTypes from 'prop-types';
 import LightDetails from 'containers/LightDetails'
 import SceneWidget from 'containers/SceneWidget'
 import { modifyRoom, modifyRoomAttr } from 'actions/rooms'
@@ -57,11 +58,18 @@ class WidgetHeader extends Component {
                     </Col>
                     <Col lg="1" />
                 </Row>
-                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId} room /></Animate>
-                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><SceneWidget roomId={roomId} /></Animate>
+                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><LightDetails lightId={roomId.toString()} room /></Animate>
+                <Animate pose={room[roomId].state.any_on ? 'visible' : 'hidden'}><SceneWidget roomId={roomId.toString()} /></Animate>
             </div>
         )
     }
+}
+
+WidgetHeader.propTypes = {
+    modifyRoom: PropTypes.func,
+    modifyRoomAttr: PropTypes.func,
+    room: PropTypes.object,
+    roomId: PropTypes.string,
 }
 
 const mapStateToProps = state => ({

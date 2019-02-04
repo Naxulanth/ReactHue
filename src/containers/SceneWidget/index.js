@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import { modifyLight, } from 'actions/lights'
 import { getScene, modifyScene, modifySceneLights, createScene, deleteScene } from 'actions/scenes'
 import './style.css';
@@ -162,6 +163,22 @@ class SceneWidget extends Component {
         }
         else return 'Loading...'
     }
+}
+
+SceneWidget.propTypes = {
+    activeScenes: PropTypes.object,
+    createdScene: PropTypes.object,
+    deletedScene: PropTypes.object,
+    lights: PropTypes.object,
+    room: PropTypes.object,
+    scenes: PropTypes.object,
+    modifyLight: PropTypes.func,
+    getScene: PropTypes.func,
+    modifyScene: PropTypes.func,
+    modifySceneLights: PropTypes.func,
+    createScene: PropTypes.func,
+    deleteScene: PropTypes.func,
+    roomId: PropTypes.string,
 }
 
 const mapStateToProps = state => ({

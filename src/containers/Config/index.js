@@ -6,9 +6,7 @@ import validator from 'validator';
 import TextInput from 'components/TextInput';
 import Button from 'components/Button';
 import './style.css'
-import Link from 'components/MenuBarLink'
 import queryString from 'query-string';
-
 import { user, bridge } from 'constants/localStorage';
 
 class Config extends Component {
@@ -137,5 +135,6 @@ class Config extends Component {
         );
     }
 }
+
 
 export default Config;

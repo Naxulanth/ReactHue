@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types';
 import Toggle from 'components/Toggle'
 import Animate from 'components/Animate'
 import LightDetails from 'containers/LightDetails'
@@ -60,11 +61,18 @@ class LightWidget extends Component {
                     </Col>
                     <Col lg="1" />
                 </Row>
-                <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId} /></Animate>
+                <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId.toString()} /></Animate>
             </div>
         )
     }
 
+}
+
+LightWidget.propTypes = {
+    modifyLight: PropTypes.func,
+    modifyLightAttr: PropTypes.func,
+    lightId: PropTypes.string,
+    light: PropTypes.object,
 }
 
 const mapStateToProps = state => ({

@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
+import PropTypes from 'prop-types'
 import uuidv4 from 'uuid/v4'
 import Title from 'components/Title';
 import RoomWidget from 'containers/RoomWidget'
@@ -50,7 +51,7 @@ class Rooms extends Component {
             row.forEach((room, j) => {
                 let roomId = (i * 3) + j + 1;
                 temp.push(<Col key={uuidv4()} lg={{ size: 3 }}>
-                    <RoomWidget roomId={roomId} />
+                    <RoomWidget roomId={roomId.toString()} />
                 </Col>
                 )
                 acc++;
@@ -81,6 +82,14 @@ class Rooms extends Component {
 
 }
 
+Rooms.propTypes = {
+    getRooms: PropTypes.func,
+    getLights: PropTypes.func,
+    getScenes: PropTypes.func,
+    lights: PropTypes.object,
+    rooms: PropTypes.object,
+    scenes: PropTypes.object,
+}
 
 const mapStateToProps = state => ({
     rooms: state.rooms.list,

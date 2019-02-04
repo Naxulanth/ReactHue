@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import Brightness from 'components/Brightness'
 import ColorPicker from 'components/ColorPickerExpanded'
@@ -10,6 +11,7 @@ import { modifyRoom } from 'actions/rooms'
 import { getRGBtoXY, getFormattedXYtoRGB } from 'utils/colorConverter'
 import { objectToArray } from 'utils'
 import './style.css';
+
 class LightDetails extends Component {
 
     constructor(props) {
@@ -129,9 +131,18 @@ class LightDetails extends Component {
 
 }
 
+LightDetails.propTypes = {
+    modifyLight: PropTypes.func,
+    modifyRoom: PropTypes.func,
+    lightId: PropTypes.string,
+    light: PropTypes.object,
+    rooms: PropTypes.object,
+    room: PropTypes.bool,
+}
+
 const mapStateToProps = state => ({
     light: state.lights.list,
-    rooms: state.rooms.list
+    rooms: state.rooms.list,
 })
 
 const mapDispatchToProps = dispatch => ({

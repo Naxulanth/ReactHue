@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import uuidv4 from 'uuid/v4'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 import WidgetHeader from '../WidgetHeader';
 import LightWidget from 'containers/LightWidget'
 import { getXYtoRGB, getFormattedXYtoRGB } from 'utils/colorConverter'
@@ -52,7 +53,7 @@ class RoomWidget extends Component {
     populateLights(arr) {
         let insert = [];
         arr.forEach((lightId, i) => {
-            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget lightId={lightId} /></Col></Row>);
+            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget lightId={lightId.toString()} /></Col></Row>);
         })
         this.setState({
             lights: insert
@@ -80,6 +81,13 @@ class RoomWidget extends Component {
     }
 
 }
+
+RoomWidget.propTypes = {
+    lights: PropTypes.object,
+    room: PropTypes.object,
+    roomId: PropTypes.string,
+}
+
 
 const mapStateToProps = state => ({
     room: state.rooms.list,
