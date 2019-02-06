@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import './style.css';
 
-class Routines extends Component {
+class OtherRoutines extends Component {
 
     render() {
         return (
             <div>
-                Routines
+                OtherRoutines
             </div>
         );
     }
 }
 
-export default Routines;
+export default OtherRoutines;
