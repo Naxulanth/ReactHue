@@ -81,7 +81,7 @@ class Config extends Component {
     render() {
         const { ip, username, text, redirect } = this.state;
         const { handleIPInput, handleUsernameInput, handleSubmit } = this;
-        if (redirect) return (<Redirect to={{ pathname: '/', search: window.location.search }} />)
+        if (redirect) return (window.location.href = "/")
         return (
             <div className="config">
                 <Row>
