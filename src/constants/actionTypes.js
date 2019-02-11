@@ -12,5 +12,11 @@ export const SCENES_GET = createRequestTypes('SCENES_GET');
 export const SCENE_GET = createRequestTypes('SCENE_GET');
 export const SCENES_PUT = createRequestTypes('SCENES_PUT');
 export const SCENE_LIGHTS_PUT = createRequestTypes('SCENE_LIGHTS_PUT');
-export const SCENE_POST  = createRequestTypes('SCENE_POST');
+export const SCENE_POST = createRequestTypes('SCENE_POST');
 export const SCENE_DELETE = createRequestTypes('SCENE_DELETE');
+
+export const SCHEDULES_GET = createRequestTypes('SCHEDULES_GET');
+export const SCHEDULE_PUT = createRequestTypes('SCHEDULE_PUT');
+export const SCHEDULE_DELETE = createRequestTypes('SCHEDULE_DELETE');
+export const SCHEDULE_GET = createRequestTypes('SCHEDULE_GET');
+export const SCHEDULE_CREATE = createRequestTypes('SCHEDULE_CREATE');

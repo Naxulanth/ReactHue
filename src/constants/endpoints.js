@@ -4,3 +4,4 @@ const WRAPPER = 'http://' + localStorage.getItem(bridge) + '/api/' + localStorag
 export const GROUPS = WRAPPER + '/groups'
 export const LIGHTS = WRAPPER + '/lights'
 export const SCENES = WRAPPER + '/scenes'
+export const SCHEDULES = WRAPPER + '/schedules'
