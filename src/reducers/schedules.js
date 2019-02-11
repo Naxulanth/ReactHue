@@ -1,6 +1,6 @@
 import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_PUT } from '../constants/actionTypes'; 
 
-const SCHEDULES = (state = [], action) => {
+const schedules = (state = [], action) => {
     switch (action.type) {
         case SCENES_GET.REQUEST:
             return state;
@@ -57,4 +57,4 @@ const SCHEDULES = (state = [], action) => {
     }
 }
 
-export default SCHEDULES;
+export default schedules;

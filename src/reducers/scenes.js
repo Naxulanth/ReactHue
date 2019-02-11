@@ -1,6 +1,6 @@
 import { SCENES_GET, SCENE_GET, SCENES_PUT, SCENE_LIGHTS_PUT, SCENE_POST, SCENE_DELETE } from '../constants/actionTypes';
 
-const SCENES = (state = [], action) => {
+const scenes = (state = [], action) => {
     switch (action.type) {
         case SCENES_GET.REQUEST:
             return state;
@@ -57,4 +57,4 @@ const SCENES = (state = [], action) => {
     }
 }
 
-export default SCENES;
+export default scenes;
