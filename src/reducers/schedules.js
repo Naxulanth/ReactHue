@@ -2,55 +2,49 @@ import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE
 
 const schedules = (state = [], action) => {
     switch (action.type) {
-        case SCENES_GET.REQUEST:
+        case SCHEDULES_GET.REQUEST:
             return state;
-        case SCENES_GET.SUCCESS:
+        case SCHEDULES_GET.SUCCESS:
             return {
                 ...state,
                 list: action.response.data,
             }
-        case SCENES_GET.FAILURE:
+        case SCHEDULES_GET.FAILURE:
             return state;
-        case SCENES_PUT.REQUEST:
+        case SCHEDULE_CREATE.REQUEST:
             return state;
-        case SCENES_PUT.SUCCESS:
+        case SCHEDULE_CREATE.SUCCESS:
             return state;
-        case SCENES_PUT.FAILURE:
+        case SCHEDULE_CREATE.FAILURE:
             return state;
-        case SCENE_GET.REQUEST:
+        case SCHEDULE_GET.REQUEST:
             return state;
-        case SCENE_GET.SUCCESS:
+        case SCHEDULE_GET.SUCCESS:
             return {
                 ...state,
-                activeScenes: {
-                    [action.response.data.group]: action.response.data
+                activeSchedule: {
+                    [action.response.data.name]: action.response.data
                 }
             }
-        case SCENE_GET.FAILURE:
+        case SCHEDULE_GET.FAILURE:
             return state;
-        case SCENE_LIGHTS_PUT.REQUEST:
+        case SCHEDULE_DELETE.REQUEST:
             return state;
-        case SCENE_LIGHTS_PUT.SUCCESS:
+        case SCHEDULE_DELETE.SUCCESS:
+        return {
+            ...state,
+            deletedSchedule: action.response.data[0].success
+        }
+        case SCHEDULE_DELETE.FAILURE:
             return state;
-        case SCENE_LIGHTS_PUT.FAILURE:
+        case SCHEDULE_PUT.REQUEST:
             return state;
-        case SCENE_POST.REQUEST:
-            return state;
-        case SCENE_POST.SUCCESS:
+        case SCHEDULE_PUT.SUCCESS:
             return {
                 ...state,
-                createdScene: action.response.data[0].success.id
+                createdSchedule: action.response.data[0].success.id
             }
-        case SCENE_POST.FAILURE:
-            return state;
-        case SCENE_DELETE.REQUEST:
-            return state;
-        case SCENE_DELETE.SUCCESS:
-            return {
-                ...state,
-                deletedScene: action.response.data[0].success
-            }
-        case SCENE_DELETE.FAILURE:
+        case SCHEDULE_PUT.FAILURE:
             return state;
         default:
             return state;
