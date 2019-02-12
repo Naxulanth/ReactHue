@@ -28,7 +28,7 @@ export const setSchedule = {
 }
 
 export const getSchedule = {
-    request: (id, body) => action(SCHEDULE_GET.REQUEST, { id, body }),
+    request: (id) => action(SCHEDULE_GET.REQUEST, { id }),
     success: (response) => action(SCHEDULE_GET.SUCCESS, { response }),
     failure: (error) => action(SCHEDULE_GET.FAILURE, { error })
 }
