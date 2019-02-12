@@ -6,13 +6,21 @@ import './style.css';
 
 class MenuBar extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
+        this.main = React.createRef();
+    }
+
     componentDidMount() {
         let c = colorChanger();
-        c.start(this.menuBar.style, 'borderBottomColor');
+        c.start(this.menuBar.style, 'borderBottomColor');      
     }
+    
     render() {
         return (
-            <div ref={(e) => this.menuBar = e} className="menu-bar">
+            <div ref={this.menuBar} className="menu-bar">
                 <Row>
                     <Col md={{ offset: 1, size: 2 }} lg={{ offset: 1, size: 2 }} xl={{ offset: 1, size: 2 }}>
                         <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/', search: this.props.location.search }}>Hue Console</MenuBarLink>

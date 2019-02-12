@@ -19,6 +19,7 @@ class RoomWidget extends Component {
         }
         this.c = null;
         this.id = 'roomWidget' + props.roomId;
+        this.main = React.createRef();
     }
 
     componentDidMount() {
@@ -65,7 +66,7 @@ class RoomWidget extends Component {
         const { roomId } = this.props;
         const { lights } = this.state;
         return (
-            <div ref={(e) => this.main = e} className="room-widget">
+            <div ref={this.main} className="room-widget">
                 <span className="test">
                     <div className="child">
                         <Row>

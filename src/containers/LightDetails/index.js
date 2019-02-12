@@ -26,6 +26,7 @@ class LightDetails extends Component {
         this.changeColorConfirm = this.changeColorConfirm.bind(this);
         this.changeBrightnessConfirm = this.changeBrightnessConfirm.bind(this);
         this.colorLoop = this.colorLoop.bind(this);
+        this.main = React.createRef();
     }
 
     componentDidMount() {
@@ -108,7 +109,7 @@ class LightDetails extends Component {
         const { brightness, colorRgb } = this.state;
         const { changeBrightness, changeColor, changeColorConfirm, changeBrightnessConfirm, colorLoop } = this;
         return (
-            <div ref={(e) => this.main = e} className="light-widget-details">
+            <div ref={this.main} className="light-widget-details">
                 <Row>
                     <Col lg="1" />
                     <Col lg="10"><Brightness onChange={changeBrightness} onAfterChange={changeBrightnessConfirm} value={brightness} /></Col>

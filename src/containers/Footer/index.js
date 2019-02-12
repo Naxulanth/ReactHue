@@ -10,11 +10,12 @@ class Footer extends Component {
         this.state = {
         }
         this.followLink = this.followLink.bind(this);
+        this.footer = React.createRef();
     }
 
     componentDidMount() {
         let c = colorChanger();
-        c.start(this.menuBar.style, 'borderTopColor');
+        c.start(this.footer.style, 'borderTopColor');
     }
 
     followLink() {
@@ -24,7 +25,7 @@ class Footer extends Component {
     render() {
         const { followLink } = this;
         return (
-            <div ref={(e) => this.menuBar = e} className="footer">
+            <div ref={this.footer} className="footer">
                 <Row>
                     <Col lg="10" md="10" />
                     <Col lg="2" md="2">

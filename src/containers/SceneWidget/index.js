@@ -30,6 +30,7 @@ class SceneWidget extends Component {
         this.handleSceneText = this.handleSceneText.bind(this);
         this.handleModifyText = this.handleModifyText.bind(this);
         this.prepareState = this.prepareState.bind(this);
+        this.main = React.createRef();
     }
 
     componentDidUpdate(prevProps) {
@@ -138,7 +139,7 @@ class SceneWidget extends Component {
         const modifyText = selectedOption ? <TextInput placeholder={'Edit scene name...'} value={modifyName} onChange={this.handleModifyText} /> : null;
         if (roomScenes.length > 0) {
             return (
-                <div ref={(e) => this.main = e} className="scene-widget">
+                <div ref={this.main} className="scene-widget">
                     <Row>
                         <Col lg="1" />
                         <Col lg="10">

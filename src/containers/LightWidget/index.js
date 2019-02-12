@@ -22,6 +22,7 @@ class LightWidget extends Component {
         }
         this.expand = this.expand.bind(this);
         this.changeName = this.changeName.bind(this);
+        this.main = React.createRef();
     }
 
     expand() {
@@ -44,7 +45,7 @@ class LightWidget extends Component {
         const { light, lightId } = this.props;
         let toggleColor = getXYtoRGB(light[lightId].state.xy[0], light[lightId].state.xy[1], light[lightId].state.bri).join(',')
         return (
-            <div ref={(e) => this.main = e} className="light-widget">
+            <div ref={this.main} className="light-widget">
                 <Row>
                     <Col lg="1" />
                     <Col lg="7">
