@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import TextInput from 'components/TextInput';
 import Button from 'components/Button';
