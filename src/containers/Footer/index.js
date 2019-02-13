@@ -15,7 +15,7 @@ class Footer extends Component {
 
     componentDidMount() {
         let c = colorChanger();
-        c.start(this.footer.style, 'borderTopColor');
+        c.start(this.footer.current.style, 'borderTopColor');
     }
 
     followLink() {

@@ -6,7 +6,7 @@ class Timers extends Component {
 
     render() {
         return (
-            <div className="timers">
+            <div className="timers routines">
                 Timers
             </div>
         );

@@ -43,11 +43,11 @@ class RoomWidget extends Component {
             if (this.c) this.c.stop(this.id);
             this.c = colorChanger();
             this.c.initialize(100, colorMap, this.id)
-            this.c.start(this.main.style, 'borderColor', this.id)
+            this.c.start(this.main.current.style, 'borderColor', this.id)
         }
         else {
             if (this.c) this.c.stop(this.id);
-            this.main.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
+            this.main.current.style.borderColor = 'rgb(' + getXYtoRGB(lights[lightIds[0]].state.xy[0], lights[lightIds[0]].state.xy[1], lights[lightIds[0]].state.bri).join(',') + ')';
         }
     }
 

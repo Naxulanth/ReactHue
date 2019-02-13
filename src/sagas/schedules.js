@@ -1,7 +1,8 @@
+import { call, put, takeLatest } from 'redux-saga/effects';
 import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_PUT } from '../constants/actionTypes';
 
-import * as actions from '../actions/scenes'
-import * as api from '../api/scenes'
+import * as actions from '../actions/schedules'
+import * as api from '../api/schedules'
 
 import { renew } from './shared'
 

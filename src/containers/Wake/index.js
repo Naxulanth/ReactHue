@@ -6,7 +6,7 @@ class Wake extends Component {
 
     render() {
         return (
-            <div className="wake">
+            <div className="wake routines">
                 Wake
             </div>
         );

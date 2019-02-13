@@ -6,7 +6,7 @@ class Sleep extends Component {
 
     render() {
         return (
-            <div className="sleep">
+            <div className="sleep routines">
                 Sleep
             </div>
         );

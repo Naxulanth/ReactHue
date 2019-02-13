@@ -31,6 +31,10 @@ const GlobalStyle = createGlobalStyle`
   .pad {
     padding-bottom: 50px;
   }
+
+  .routines {
+    padding: 20px;
+  }
   
 `
 

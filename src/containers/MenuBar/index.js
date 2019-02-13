@@ -10,14 +10,14 @@ class MenuBar extends Component {
         super(props);
         this.state = {
         }
-        this.main = React.createRef();
+        this.menuBar = React.createRef();
     }
 
     componentDidMount() {
         let c = colorChanger();
-        c.start(this.menuBar.style, 'borderBottomColor');      
+        c.start(this.menuBar.current.style, 'borderBottomColor');
     }
-    
+
     render() {
         return (
             <div ref={this.menuBar} className="menu-bar">

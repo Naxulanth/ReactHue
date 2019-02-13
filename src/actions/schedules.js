@@ -16,7 +16,7 @@ export const createSchedule = {
 }
 
 export const deleteSchedule = {
-    request: (id) => action(SCHEDULE_DELETE.REQUEST, { id, body }),
+    request: (id) => action(SCHEDULE_DELETE.REQUEST, { id }),
     success: (response) => action(SCHEDULE_DELETE.SUCCESS, { response }),
     failure: (error) => action(SCHEDULE_DELETE.FAILURE, { error })
 }

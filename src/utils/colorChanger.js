@@ -1,7 +1,7 @@
 function colorChanger() {
     let waypoints = { 'default': [[255, 0, 255], [0, 191, 255]], 'reverse': [[0, 191, 255], [255, 0, 255]] };
     let currentIndex = {};
-    let frequency = { 'default': 100 };
+    let frequency = { 'default': 1000 };
     let loop = {};
 
     function initialize(frequency, waypoints, id) {
@@ -32,8 +32,8 @@ function colorChanger() {
         currentIndex[id] = 1;
         loop[id] = setInterval(() => {
             for (let i = 0; i < defaultColor.length; ++i) {
-                if (targetColor[i] > defaultColor[i]) defaultColor[i]++;
-                else if (targetColor[i] < defaultColor[i]) defaultColor[i]--;
+                if (targetColor[i] > defaultColor[i]) defaultColor[i] = Math.min(255, defaultColor[i] + 10);
+                else if (targetColor[i] < defaultColor[i]) defaultColor[i] = Math.max(0, defaultColor[i] - 10);
             }
             if (JSON.stringify(targetColor) === JSON.stringify(defaultColor)) {
                 targetColor = waypoints[id][currentIndex[id]++];

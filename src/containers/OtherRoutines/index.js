@@ -6,7 +6,7 @@ class OtherRoutines extends Component {
 
     render() {
         return (
-            <div className="other-routines">
+            <div className="other-routines routines">
                 OtherRoutines
             </div>
         );
