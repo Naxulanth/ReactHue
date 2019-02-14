@@ -54,13 +54,12 @@ class RoomWidget extends Component {
     populateLights(arr) {
         let insert = [];
         arr.forEach((lightId, i) => {
-            insert.push(<Row key={uuidv4()}><Col lg="12"><LightWidget lightId={lightId.toString()} /></Col></Row>);
+            insert.push(<Row key={uuidv4()}><Col lg="12" sm="12" md="12" xl="12"><LightWidget lightId={lightId.toString()} /></Col></Row>);
         })
         this.setState({
             lights: insert
         })
     }
-
 
     render() {
         const { roomId } = this.props;
@@ -70,7 +69,7 @@ class RoomWidget extends Component {
                 <span className="test">
                     <div className="child">
                         <Row>
-                            <Col lg="12">
+                        <Col lg="12" sm="12" md="12" xl="12">
                                 <WidgetHeader roomId={roomId} />
                             </Col>
                         </Row>
