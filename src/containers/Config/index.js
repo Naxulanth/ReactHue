@@ -121,7 +121,7 @@ class Config extends Component {
                     </Col>
                 </Row>
                 <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
+                    <Col className="center" lg="12" sm="12" md="12" xl="12">
                         <Button onClick={handleSubmit} className="submit">Submit</Button>
                     </Col>
                 </Row>

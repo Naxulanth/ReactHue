@@ -35,6 +35,10 @@ const GlobalStyle = createGlobalStyle`
   .routines {
     padding: 20px;
   }
+
+  .center {
+    text-align: center;
+  }
   
 `
 

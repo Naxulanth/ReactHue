@@ -142,7 +142,7 @@ class SceneWidget extends Component {
                 <div ref={this.main} className="scene-widget">
                     <Row>
                         <Col lg="1" />
-                        <Col lg="10">
+                        <Col className="center" lg="10">
                             <Select
                                 value={selectedOption}
                                 onChange={this.handleChange}
@@ -152,7 +152,7 @@ class SceneWidget extends Component {
                             {modifyButton}
                             {deleteButton}
                             {modifyText}
-                            <TextInput placeholder={'Enter scene name...'} value={sceneName} onChange={this.handleSceneText} />
+                            <TextInput placeholder={'Create new scene...'} value={sceneName} onChange={this.handleSceneText} />
                             <Button
                                 onClick={this.handleSave}
                             >Save</Button>
