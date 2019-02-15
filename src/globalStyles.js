@@ -34,6 +34,7 @@ const GlobalStyle = createGlobalStyle`
 
   .routines {
     padding: 20px;
+    max-height: 400px;
   }
 
   .center {

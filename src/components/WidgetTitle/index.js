@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 import EditableLabel from 'react-inline-editing';
 
 const WidgetTitle = styled(EditableLabel)`
