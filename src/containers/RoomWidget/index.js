@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import WidgetHeader from '../WidgetHeader';
 import LightWidget from 'containers/LightWidget'
+import RoutineWidget from 'containers/RoutineWidget'
 import { getXYtoRGB, getFormattedXYtoRGB } from 'utils/colorConverter'
 import './style.css';
 import colorChanger from 'utils/colorChanger'
