@@ -3,7 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { modifyLight, } from 'actions/lights'
+import { modifyLight } from 'actions/lights'
 import { getScene, modifyScene, modifySceneLights, createScene, deleteScene } from 'actions/scenes'
 import './style.css';
 import Button from 'components/Button'

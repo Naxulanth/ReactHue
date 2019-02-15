@@ -3,6 +3,7 @@ import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE
 
 import * as actions from '../actions/schedules'
 import * as api from '../api/schedules'
+import { objectToArray } from 'utils' 
 
 import { renew } from './shared'
 
@@ -68,8 +69,32 @@ export function* watchGetSchedule() {
 
 export function* getSchedules() {
     try {
-        const response = yield call(api.getSchedules);
-        yield put(actions.getSchedules.success(response))
+        let timers = [];
+        let routines = [];
+        let wake = [];
+        let sleep = [];
+        let schedules = {};
+        const response = yield call(api.getSchedules)
+        yield objectToArray(response.data).forEach((schedule) => {
+            console.log(schedule)
+            if (schedule.description.includes("Timer")) {
+                timers.push(schedule)
+            }
+            else if (schedule.description.includes("wake up")) {
+                wake.push(schedule)
+            }
+            else if (schedule.description.includes("go to sleep")) {
+                sleep.push(schedule)
+            }
+            else if (schedule.description.includes("Routine")) {
+                routines.push(schedule);
+            }
+        })
+        yield schedules['timers'] = timers;
+        yield schedules['routines'] = routines;
+        yield schedules['wake'] = wake;
+        yield schedules['sleep'] = sleep;
+        yield put(actions.getSchedules.success(schedules))
         yield call(renew);
     }
     catch (e) {

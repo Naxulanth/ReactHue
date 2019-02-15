@@ -5,9 +5,10 @@ const schedules = (state = [], action) => {
         case SCHEDULES_GET.REQUEST:
             return state;
         case SCHEDULES_GET.SUCCESS:
+        console.log(action)
             return {
                 ...state,
-                list: action.response.data,
+                list: action.response,
             }
         case SCHEDULES_GET.FAILURE:
             return state;

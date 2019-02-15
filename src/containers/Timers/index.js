@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
+import { Button } from 'components/Button';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
 import './style.css';
 
 class Timers extends Component {
@@ -13,4 +16,11 @@ class Timers extends Component {
     }
 }
 
-export default Timers;
+const mapStateToProps = state => ({
+    schedules: state.schedules.list,
+})
+
+const mapDispatchToProps = dispatch => ({
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timers);
