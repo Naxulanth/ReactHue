@@ -22,21 +22,21 @@ class MenuBar extends Component {
         return (
             <div ref={this.menuBar} className="menu-bar">
                 <Row>
-                    <Col md={{ offset: 1, size: 2 }} lg={{ offset: 1, size: 2 }} xl={{ offset: 1, size: 2 }}>
-                        <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/', search: this.props.location.search }}>Hue Console</MenuBarLink>
+                    <Col sm={{ offset: 1, size: 2 }} md={{ offset: 1, size: 2 }} lg={{ offset: 1, size: 2 }} xl={{ offset: 1, size: 2 }}>
+                        <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/', search: this.props.location.search }}>Home</MenuBarLink>
                     </Col>
-                    <Col md="9" lg="9" xl="9">
+                    <Col sm="9" md="9" lg="9" xl="9">
                         <Row>
-                            <Col md={{ offset: 4, size: 2 }} lg={{ offset: 4, size: 2 }} xl={{ offset: 4, size: 2 }}>
+                            <Col sm={{ size: 3 }}  md={{ offset: 4, size: 2 }} lg={{ offset: 4, size: 2 }} xl={{ offset: 4, size: 2 }}>
                                 <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/routines', search: this.props.location.search }}>Routines</MenuBarLink>
                             </Col>
-                            <Col md="2" lg="2" xl="2">
-                                <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/roomsetup', search: this.props.location.search }}>Room Setup</MenuBarLink>
+                            <Col sm="3" md="2" lg="2" xl="2">
+                                <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/roomsetup', search: this.props.location.search }}>Setup</MenuBarLink>
                             </Col>
-                            <Col className="about" md="2" lg="2" xl="2">
+                            <Col className="about"  sm="3" md="2" lg="2" xl="2">
                                 <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/config', search: this.props.location.search }}>Config</MenuBarLink>
                             </Col>
-                            <Col className="about" md="2" lg="2" xl="2">
+                            <Col className="about"  sm="3" md="2" lg="2" xl="2">
                                 <MenuBarLink to={{ pathname: process.env.PUBLIC_URL + '/faq', search: this.props.location.search }}>FAQ</MenuBarLink>
                             </Col>
                         </Row>
