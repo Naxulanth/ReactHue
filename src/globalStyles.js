@@ -32,11 +32,6 @@ const GlobalStyle = createGlobalStyle`
     padding-bottom: 50px;
   }
 
-  .routines {
-    padding: 20px;
-    max-height: 400px;
-  }
-
   .center {
     text-align: center;
   }

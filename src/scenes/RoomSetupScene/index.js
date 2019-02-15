@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import RoomSetup from 'containers/Wake'
+import RoomSetup from 'containers/RoomSetup'
 import './style.css';
 
 class RoomSetupScene extends Component {

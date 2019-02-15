@@ -3,41 +3,47 @@ import { Row, Col } from 'reactstrap';
 import RoutineTitle from 'components/RoutineTitle';
 import { Button } from 'components/Button';
 import { connect } from 'react-redux';
+import Toggle from 'components/Toggle'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
-class Timers extends Component {
+class Routines extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
         }
-        this.mapTimers = this.mapTimers.bind(this);
+        this.mapRoutines = this.mapRoutines.bind(this);
     }
 
 
-    mapTimers(timers) {
-        return timers.map((timer) => {
+    mapRoutines(routines) {
+        return routines.map((timer) => {
             return (
                 <Row key={uuidv4()}>
-                    <Col sm="8" md="8" lg="8" xl="8">
+                    <Col lg="1" />
+                    <Col sm="7" md="7" lg="7" xl="7">
                         {timer.name}
                     </Col>
+                    <Col lg="3">
+                        <Toggle />
+                    </Col>
+                    <Col lg="1" />
                 </Row>
             )
         })
     }
 
     render() {
-        const { mapTimers } = this;
-        const { schedules } = this.props;
-        if (schedules && schedules.timers) {
+        const { mapRoutines } = this;
+        const { schedules, type } = this.props;
+        if (schedules && schedules[type]) {
             return (
-                <div className="timers routines">
+                <div className={"routines-main " + type}>
                     <div>
-                        <RoutineTitle> Timers </RoutineTitle>
+                        <RoutineTitle> {type.charAt(0).toUpperCase() + type.slice(1)} </RoutineTitle>
                     </div>
-                    {mapTimers(schedules.timers)}
+                    {mapRoutines(schedules[type])}
                 </div>
             );
         }
@@ -52,4 +58,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Timers);
+export default connect(mapStateToProps, mapDispatchToProps)(Routines);
