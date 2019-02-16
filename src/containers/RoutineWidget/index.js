@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
-import uuidv4 from 'uuid/v4'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
