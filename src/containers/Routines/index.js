@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
 import RoutineTitle from 'components/RoutineTitle';
-import { Button } from 'components/Button';
 import { connect } from 'react-redux';
-import Toggle from 'components/Toggle'
+import Routine from 'containers/Routine'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
@@ -12,38 +10,45 @@ class Routines extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            routines: [],
         }
         this.mapRoutines = this.mapRoutines.bind(this);
     }
 
+    componentDidMount() {
+        const { schedules, type } = this.props;
+        if (schedules) {
+        this.mapRoutines(type)
+        }
+    }
 
-    mapRoutines(routines) {
-        return routines.map((timer) => {
-            return (
-                <Row key={uuidv4()}>
-                    <Col lg="1" />
-                    <Col sm="7" md="7" lg="7" xl="7">
-                        {timer.name}
-                    </Col>
-                    <Col lg="3">
-                        <Toggle />
-                    </Col>
-                    <Col lg="1" />
-                </Row>
-            )
+    componentDidUpdate() {
+        const { schedules, type } = this.props;
+        const { routines } = this.state;
+        if (schedules && routines.length === 0) {
+        this.mapRoutines(type)
+        }  
+    }
+
+    mapRoutines(type) {
+        const { schedules } = this.props;
+        const keys = Object.keys(schedules[type]);
+        let r = keys.map((routine) => {
+            return <Routine key={uuidv4()} type={type} id={routine} />
         })
+        this.setState({routines: r})
     }
 
     render() {
-        const { mapRoutines } = this;
-        const { schedules, type } = this.props;
+        const { routines } = this.state;
+        const { type, schedules } = this.props;
         if (schedules && schedules[type]) {
             return (
                 <div className={"routines-main " + type}>
                     <div>
                         <RoutineTitle> {type.charAt(0).toUpperCase() + type.slice(1)} </RoutineTitle>
                     </div>
-                    {mapRoutines(schedules[type])}
+                    {routines}
                 </div>
             );
         }

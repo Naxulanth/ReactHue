@@ -3,7 +3,6 @@ import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE
 
 import * as actions from '../actions/schedules'
 import * as api from '../api/schedules'
-import { objectToArray } from 'utils' 
 
 import { renew } from './shared'
 
@@ -11,6 +10,7 @@ export function* setSchedule({ id, body }) {
     try {
         const response = yield call(api.setSchedule, id, body);
         yield put(actions.setSchedule.success(response))
+        yield call(getSchedules);
         yield call(renew);
     }
     catch (e) {
@@ -69,25 +69,25 @@ export function* watchGetSchedule() {
 
 export function* getSchedules() {
     try {
-        let timers = [];
-        let routines = [];
-        let wake = [];
-        let sleep = [];
+        let timers = {};
+        let routines = {};
+        let wake = {};
+        let sleep = {};
         let schedules = {};
         const response = yield call(api.getSchedules)
-        yield objectToArray(response.data).forEach((schedule) => {
-            console.log(schedule)
-            if (schedule.description.includes("Timer")) {
-                timers.push(schedule)
+        const keys = Object.keys(response.data)
+        yield keys.forEach((schedule) => {
+            if (response.data[schedule].description.includes("Timer")) {
+                timers[schedule] = response.data[schedule]
             }
-            else if (schedule.description.includes("wake up")) {
-                wake.push(schedule)
+            else if (response.data[schedule].description.includes("wake up")) {
+                wake[schedule] = response.data[schedule]
             }
-            else if (schedule.description.includes("go to sleep")) {
-                sleep.push(schedule)
+            else if (response.data[schedule].description.includes("go to sleep")) {
+                sleep[schedule] = response.data[schedule]
             }
-            else if (schedule.description.includes("Routine")) {
-                routines.push(schedule);
+            else if (response.data[schedule].description.includes("Routine")) {
+                routines[schedule] = response.data[schedule]
             }
         })
         yield schedules['timers'] = timers;

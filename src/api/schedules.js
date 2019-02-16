@@ -11,21 +11,22 @@ export function getSchedules() {
 export function getSchedule(id) {
     return axios.request({
         method: 'get',
-        url: SCHEDULES + '/id',
+        url: SCHEDULES + '/' + id,
     })
 }
 
 export function deleteSchedule(id) {
     return axios.request({
         method: 'delete',
-        url: SCHEDULES + '/ID',
+        url: SCHEDULES + '/' + id,
     })
 }
 
 export function setSchedule(id, body) {
     return axios.request({
         method: 'put',
-        url: SCHEDULES + '/id',
+        url: SCHEDULES + '/' + id,
+        data: JSON.stringify(body)
     })
 }
 
