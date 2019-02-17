@@ -5,7 +5,6 @@ const schedules = (state = [], action) => {
         case SCHEDULES_GET.REQUEST:
             return state;
         case SCHEDULES_GET.SUCCESS:
-        console.log(action)
             return {
                 ...state,
                 list: action.response,
@@ -43,7 +42,7 @@ const schedules = (state = [], action) => {
         case SCHEDULE_PUT.SUCCESS:
             return {
                 ...state,
-                createdSchedule: action.response.data[0].success.id
+                createdSchedule: action.response.data[0]
             }
         case SCHEDULE_PUT.FAILURE:
             return state;

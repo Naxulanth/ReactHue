@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Row, Col } from 'reactstrap';
 import Button from 'components/Button'
 import Routine from 'containers/Routine'
-import RoutineCreator from 'containers/RoutineCreate'
+import RoutineDetails from 'containers/RoutineDetails'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
@@ -57,7 +57,7 @@ class Routines extends Component {
         const { handleCreator } = this;
         const create = creator ? ( <Row>
         <Col sm="12" md="12" lg="12" xl="12">
-        <RoutineCreator type={type}/> 
+        <RoutineDetails type={type}/> 
         </Col>
         </Row> ) : null;
         if (schedules && schedules[type]) {
@@ -68,7 +68,7 @@ class Routines extends Component {
                             <RoutineTitle> {type.charAt(0).toUpperCase() + type.slice(1)} </RoutineTitle>
                         </Col>
                         <Col className="align-right" sm="4" md="4" lg="4" xl="4">
-                        <Button onClick={handleCreator} fullWidth>{creator ? "Cancel" : "Create"}</Button>
+                        <Button onClick={handleCreator} width="true">{creator ? "Cancel" : "Create"}</Button>
                         </Col>
                     </Row>
                     {create}

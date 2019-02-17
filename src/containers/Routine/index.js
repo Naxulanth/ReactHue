@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { setSchedule } from 'actions/schedules';
 import { bindActionCreators } from 'redux';
 import Toggle from 'components/Toggle'
+import { calibrate } from 'utils/date' 
 import './style.css';
-
 
 class Routine extends Component {
 
@@ -18,9 +18,12 @@ class Routine extends Component {
 
     handleToggle() {
         const { setSchedule, id, schedules, type } = this.props;
+        let { localtime, time} = schedules[type][id];
+        let localTime = calibrate(localtime, time)
         setSchedule(id, {
             "status": schedules[type][id].status === "enabled" ? "disabled" : "enabled",
-        })
+            "localtime": localTime
+        }) 
     }
 
     render() {

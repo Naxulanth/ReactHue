@@ -8,7 +8,7 @@ import TextInput from 'components/TextInput';
 import { createSchedule } from 'actions/schedules';
 import './style.css';
 
-class RoutineCreate extends Component {
+class RoutineDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -32,6 +32,8 @@ class RoutineCreate extends Component {
         let obj = {};
         obj.description = type;
         obj.name = name;
+        obj.status = "enabled";
+        
     }
 
     render() {
@@ -60,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
     createSchedule: bindActionCreators(createSchedule.request, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoutineCreate);
+export default connect(mapStateToProps, mapDispatchToProps)(RoutineDetails);

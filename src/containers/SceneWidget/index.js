@@ -99,7 +99,6 @@ class SceneWidget extends Component {
         }
         let selector = selectedOption;
         selector.label = modifyName
-        console.log(selector)
         this.setState({
             selectedOption: selector
         })
