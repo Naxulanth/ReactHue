@@ -25,13 +25,13 @@ class RoutineCreate extends Component {
         return (
             <div className="routine-create">
             <Row>
-            <Col lg="2" sm="2" md="2" xl="2"/>
-                <Col lg="8" sm="8" md="8" xl="8">
+            <Col lg="3" sm="3" md="3" xl="3"/>
+                <Col lg="6" sm="6" md="6" xl="6">
                 <form onSubmit={handleSubmit}>
                 <TextInput placeholder={'Name...'}></TextInput>
                     </form>
                 </Col>
-                <Col lg="2" sm="2" md="2" xl="2"/>
+                <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             </div>
         )

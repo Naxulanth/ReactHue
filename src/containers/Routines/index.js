@@ -67,7 +67,7 @@ class Routines extends Component {
                         <Col sm="8" md="8" lg="8" xl="8">
                             <RoutineTitle> {type.charAt(0).toUpperCase() + type.slice(1)} </RoutineTitle>
                         </Col>
-                        <Col sm="4" md="4" lg="4" xl="4">
+                        <Col className="align-right" sm="4" md="4" lg="4" xl="4">
                         <Button onClick={handleCreator} fullWidth>{creator ? "Cancel" : "Create"}</Button>
                         </Col>
                     </Row>
