@@ -20,3 +20,5 @@ export const SCHEDULE_PUT = createRequestTypes('SCHEDULE_PUT');
 export const SCHEDULE_DELETE = createRequestTypes('SCHEDULE_DELETE');
 export const SCHEDULE_GET = createRequestTypes('SCHEDULE_GET');
 export const SCHEDULE_CREATE = createRequestTypes('SCHEDULE_CREATE');
+
+export const RESOURCES_GET = createRequestTypes('RESOURCES_GET');

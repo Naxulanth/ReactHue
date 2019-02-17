@@ -1,6 +1,6 @@
 import { action } from './';
 
-import { SCHEDULES_GET, SCHEDULE_PUT, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_CREATE } from '../constants/actionTypes';
+import { SCHEDULES_GET, SCHEDULE_PUT, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_CREATE, RESOURCES_GET } from '../constants/actionTypes';
 
 
 export const getSchedules = {
@@ -31,4 +31,10 @@ export const getSchedule = {
     request: (id) => action(SCHEDULE_GET.REQUEST, { id }),
     success: (response) => action(SCHEDULE_GET.SUCCESS, { response }),
     failure: (error) => action(SCHEDULE_GET.FAILURE, { error })
+}
+
+export const getResources = {
+    request: (id) => action(RESOURCES_GET.REQUEST),
+    success: (response) => action(RESOURCES_GET.SUCCESS, { response }),
+    failure: (error) => action(RESOURCES_GET.FAILURE, { error })
 }

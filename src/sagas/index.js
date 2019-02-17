@@ -3,8 +3,7 @@ import { fork } from 'redux-saga/effects';
 import { watchGetLights, watchModifyLight, watchModifyLightAttr } from './lights';
 import { watchGetRooms, watchModifyRoom, watchModifyRoomAttr } from './rooms';
 import { watchGetScene, watchGetScenes, watchModifyScene, watchModifySceneLights, watchCreateScene, watchDeleteScene } from './scenes';
-import { watchCreateSchedule, watchGetSchedule, watchGetSchedules, watchDeleteSchedule, watchSetSchedule } from './schedules'
-import { } from './schedules';
+import { watchCreateSchedule, watchGetSchedule, watchGetSchedules, watchDeleteSchedule, watchSetSchedule, watchGetResources } from './schedules'
 
 export default function* root() {
     yield fork(watchGetLights);
@@ -24,4 +23,5 @@ export default function* root() {
     yield fork(watchGetSchedules);
     yield fork(watchDeleteSchedule);
     yield fork(watchSetSchedule);
+    yield fork(watchGetResources)
 }

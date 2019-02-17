@@ -38,10 +38,12 @@ class Routines extends Component {
     mapRoutines(type) {
         const { schedules } = this.props;
         const keys = Object.keys(schedules[type]);
+        if (keys.length > 0) {
         let r = keys.map((routine) => {
             return <Routine key={uuidv4()} type={type} id={routine} />
         })
         this.setState({ routines: r })
+    }
     }
 
     handleCreator() {

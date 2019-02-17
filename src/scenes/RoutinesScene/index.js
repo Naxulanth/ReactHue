@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import Routines from 'containers/Routines'
-import { getSchedules } from 'actions/schedules';
+import { getSchedules, getResources } from 'actions/schedules';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import './style.css';
@@ -9,8 +9,9 @@ import './style.css';
 class RoutinesScene extends Component {
 
     componentDidMount() {
-        const { getSchedules } = this.props;
+        const { getSchedules, getResources } = this.props;
         getSchedules();
+        getResources();
     }
 
     render() {
@@ -43,7 +44,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    getSchedules: bindActionCreators(getSchedules.request, dispatch)
+    getSchedules: bindActionCreators(getSchedules.request, dispatch),
+    getResources: bindActionCreators(getResources.request, dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutinesScene);
