@@ -21,7 +21,8 @@ class Routine extends Component {
     handleToggle() {
         const { setSchedule, id, schedules, type } = this.props;
         let { localtime, time} = schedules[type][id];
-        let localTime = calibrate(localtime, time)
+        let localTime = localtime;
+        if ( type !== "timers") localTime = calibrate(localtime, time)
         setSchedule(id, {
             "status": schedules[type][id].status === "enabled" ? "disabled" : "enabled",
             "localtime": localTime
