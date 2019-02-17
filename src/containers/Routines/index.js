@@ -5,6 +5,7 @@ import { Row, Col } from 'reactstrap';
 import Button from 'components/Button'
 import Routine from 'containers/Routine'
 import RoutineDetails from 'containers/RoutineDetails'
+import TimerDtails from 'containers/TimerDetails'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
@@ -57,9 +58,10 @@ class Routines extends Component {
         const { routines, creator } = this.state;
         const { type, schedules } = this.props;
         const { handleCreator } = this;
+        const details = type === "timers" ? <TimerDetails/> : <RoutineDetails/>
         const create = creator ? ( <Row>
         <Col sm="12" md="12" lg="12" xl="12">
-        <RoutineDetails type={type}/> 
+        {details}
         </Col>
         </Row> ) : null;
         if (schedules && schedules[type]) {

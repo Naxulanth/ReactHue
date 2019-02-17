@@ -5,11 +5,10 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types'
 import Button from 'components/Button'
 import TextInput from 'components/TextInput';
-import TimePicker from 'components/TimePicker';
 import { createSchedule } from 'actions/schedules';
 import './style.css';
 
-class RoutineDetails extends Component {
+class TimerDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -41,26 +40,13 @@ class RoutineDetails extends Component {
         const { handleSubmit, handleName } = this;
         const { name } = this.state;
         return (
-            <div className="routine-details">
+            <div className="timer-details">
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
                 <Col className="center" lg="6" sm="6" md="6" xl="6">
                 <TextInput onChange={handleName} value={name} placeholder={'Name...'}></TextInput>
+                <Button onClick={handleSubmit}> Create </Button>
                 </Col>
-                <Col lg="3" sm="3" md="3" xl="3"/>
-            </Row>
-            <Row>
-            <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="center" lg="6" sm="6" md="6" xl="6">
-            <TimePicker showSecond={false} use12Hours/>
-            </Col>
-                <Col lg="3" sm="3" md="3" xl="3"/>
-            </Row>
-            <Row>
-            <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="center" lg="6" sm="6" md="6" xl="6">
-            <Button onClick={handleSubmit}> Create </Button>
-            </Col>
                 <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             </div>
@@ -76,4 +62,4 @@ const mapDispatchToProps = dispatch => ({
     createSchedule: bindActionCreators(createSchedule.request, dispatch)
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RoutineDetails);
+export default connect(mapStateToProps, mapDispatchToProps)(TimerDetails);

@@ -1,3 +1,7 @@
-.routine-create {
+.routine-details {
     margin-bottom: 20px;
+}
+
+.rc-time-picker-panel-select {
+    color: black !important;
 }
