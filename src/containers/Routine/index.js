@@ -28,7 +28,7 @@ class Routine extends Component {
         }) 
     }
 
-    // api doesn't save name for 'sleep' type for some reason, need to get it through resource links
+    // api doesn't save name in schedule endpoint for 'sleep' type for some reason, need to get it through resourcelinks endpoint
     // resource links dont work for other types, got to get the other names the regular way
     findName() {
         const { resources, id } = this.props;
