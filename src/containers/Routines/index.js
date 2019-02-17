@@ -57,7 +57,7 @@ class Routines extends Component {
         const { handleCreator } = this;
         const create = creator ? ( <Row>
         <Col sm="12" md="12" lg="12" xl="12">
-        <RoutineCreator/> 
+        <RoutineCreator type={type}/> 
         </Col>
         </Row> ) : null;
         if (schedules && schedules[type]) {

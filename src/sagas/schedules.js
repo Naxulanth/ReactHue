@@ -77,16 +77,16 @@ export function* getSchedules() {
         const response = yield call(api.getSchedules)
         const keys = Object.keys(response.data)
         yield keys.forEach((schedule) => {
-            if (response.data[schedule].description.includes("Timer")) {
+            if (response.data[schedule].description.toLowerCase().toLowerCase().includes("timer")) {
                 timers[schedule] = response.data[schedule]
             }
-            else if (response.data[schedule].description.includes("wake up")) {
+            else if (response.data[schedule].description.toLowerCase().includes("wake up")) {
                 wake[schedule] = response.data[schedule]
             }
-            else if (response.data[schedule].description.includes("go to sleep")) {
+            else if (response.data[schedule].description.toLowerCase().includes("go to sleep")) {
                 sleep[schedule] = response.data[schedule]
             }
-            else if (response.data[schedule].description.includes("Routine")) {
+            else if (response.data[schedule].description.toLowerCase().includes("routine")) {
                 routines[schedule] = response.data[schedule]
             }
         })

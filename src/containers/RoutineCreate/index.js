@@ -3,6 +3,7 @@ import { Row, Col } from 'reactstrap';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types'
+import Button from 'components/Button'
 import TextInput from 'components/TextInput';
 import { createSchedule } from 'actions/schedules';
 import './style.css';
@@ -12,24 +13,37 @@ class RoutineCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            name: '',
+
         }
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleName = this.handleName.bind(this);
     }
 
-    handleSubmit() {
+    handleName(e) {
+        this.setState({
+            name: e.target.value
+        })
+    }
 
+    handleSubmit(e) {
+        const { type } = this.props;
+        const { name } = this.state;
+        let obj = {};
+        obj.description = type;
+        obj.name = name;
     }
 
     render() {
-        const { handleSubmit } = this;
+        const { handleSubmit, handleName } = this;
+        const { name } = this.state;
         return (
             <div className="routine-create">
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col lg="6" sm="6" md="6" xl="6">
-                <form onSubmit={handleSubmit}>
-                <TextInput placeholder={'Name...'}></TextInput>
-                    </form>
+                <Col className="center" lg="6" sm="6" md="6" xl="6">
+                <TextInput onChange={handleName} value={name} placeholder={'Name...'}></TextInput>
+                <Button onClick={handleSubmit}> Create </Button>
                 </Col>
                 <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>

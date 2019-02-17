@@ -26,7 +26,6 @@ class Routine extends Component {
     render() {
         const { handleToggle } = this;
         const { schedules, type, id } = this.props;
-        console.log(type)
         if (schedules && schedules[type]) {
         return (
             <Row className="routine-single">
