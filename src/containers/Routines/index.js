@@ -5,7 +5,7 @@ import { Row, Col } from 'reactstrap';
 import Button from 'components/Button'
 import Routine from 'containers/Routine'
 import RoutineDetails from 'containers/RoutineDetails'
-import TimerDtails from 'containers/TimerDetails'
+import TimerDetails from 'containers/TimerDetails'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
