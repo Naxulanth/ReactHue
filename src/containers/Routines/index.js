@@ -63,7 +63,7 @@ class Routines extends Component {
         if (schedules && schedules[type]) {
             return (
                 <div className={"routines-main " + type}>
-                    <Row className="">
+                    <Row className="vertical-center">
                         <Col sm="8" md="8" lg="8" xl="8">
                             <RoutineTitle> {type.charAt(0).toUpperCase() + type.slice(1)} </RoutineTitle>
                         </Col>
