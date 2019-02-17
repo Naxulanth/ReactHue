@@ -1,4 +1,4 @@
-export function calibrate(localtime, time) {
+function absolute(localtime, time) {
     let today = new Date();
     let offset = today.getTimezoneOffset()/60;
     if (!localtime) {
@@ -19,4 +19,9 @@ export function calibrate(localtime, time) {
     localtime = localtime.toISOString().split('.')[0]
     console.log(localtime)
     return localtime;
+}
+
+export function calibrate(localtime, time, type) {
+    if (type !== 'timers') return absolute(localtime,time);
+    else return localtime;
 }
