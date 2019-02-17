@@ -23,3 +23,8 @@
     padding: 30px;
     overflow: hidden;
   }
+
+  .vertical-center {
+      align-items: center;
+      margin-bottom: 20px;
+  }
