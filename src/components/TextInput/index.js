@@ -7,7 +7,7 @@ margin-bottom: 15px;
 padding: 5px;
 width: 100%;
 height: auto;
-border-radius: 5px;
+border-radius: 10px;
 background: black;
 color: white;
 border: 0.5px solid white;
