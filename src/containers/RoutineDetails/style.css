@@ -26,3 +26,7 @@
     background: black !important;
     color: white !important;
 }
+
+.day-picker-col {
+    padding: 4px;
+}

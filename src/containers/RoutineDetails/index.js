@@ -59,13 +59,23 @@ class RoutineDetails extends Component {
             </Row>
             <Row  className="vertical-center">
             <Col lg="3" sm="3" md="3" xl="3"/>
-            <Col lg="4" sm="4" md="4" xl="4">
+            <Col className="day-picker-col" lg="4" sm="4" md="4" xl="4">
             <DayPicker days={getDays}/>
             </Col>
             <Col lg="2" sm="2" md="2" xl="2">
             <TimePicker showSecond={false} use12Hours/>
             </Col>
             <Col lg="3" sm="3" md="3" xl="3"/>
+            </Row>
+            <Row>
+            <Col lg="3" sm="3" md="3" xl="3"/>
+                <Col className="vertical-center" lg="4" sm="4" md="4" xl="4">
+            Fade in
+            </Col>
+            <Col className="vertical-center center" lg="2" sm="2" md="2" xl="2">
+            Select
+            </Col>
+                <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
