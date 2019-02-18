@@ -10,7 +10,11 @@ import DayPicker from 'containers/DayPicker'
 import { createSchedule } from 'actions/schedules';
 import Select from 'react-select'
 import { wakeFade, sleepFade, otherFade } from 'constants/fade';
+import { selectStyle } from 'constants/selectStyle'
 import './style.css';
+import moment from 'moment';
+
+moment().format();
 
 class RoutineDetails extends Component {
 
@@ -57,6 +61,7 @@ class RoutineDetails extends Component {
     }
 
     render() {
+        console.log(moment())
         const { handleSubmit, handleName, getDays, handleFade } = this;
         const { name, fadeSelect } = this.state;
         const { type } = this.props;
@@ -75,24 +80,22 @@ class RoutineDetails extends Component {
             <DayPicker days={getDays}/>
             </Col>
             <Col lg="2" sm="2" md="2" xl="2">
-            <TimePicker showSecond={false} use12Hours/>
+            <TimePicker placeholder={'Pick time'} showSecond={false} use12Hours allowEmpty={false}/>
             </Col>
             <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="vertical-center" lg="3" sm="3" md="3" xl="3">
-            Fade in
-            </Col>
             <Col className="vertical-center center" lg="3" sm="3" md="3" xl="3">
             <Select
-            placeholder={"Minutes..."}
+            placeholder={"Fade"}
             value={fadeSelect}
             onChange={handleFade}
+            styles={selectStyle}
             options={type === "wake" ? wakeFade : type === "sleep" ? sleepFade : otherFade}
             />
             </Col>
-                <Col lg="3" sm="3" md="3" xl="3"/>
+                <Col lg="6" sm="6" md="6" xl="6"/>
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
