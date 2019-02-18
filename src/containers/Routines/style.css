@@ -24,11 +24,6 @@
     overflow: hidden;
   }
 
-  .vertical-center {
-      align-items: center;
-      margin-bottom: 20px;
-  }
-
   .align-right {
       text-align: right;
   }

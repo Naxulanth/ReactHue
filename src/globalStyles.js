@@ -35,6 +35,11 @@ const GlobalStyle = createGlobalStyle`
   .center {
     text-align: center;
   }
+
+  .vertical-center {
+    align-items: center;
+    margin-bottom: 20px;
+}
   
 `
 

@@ -2,6 +2,27 @@
     margin-bottom: 20px;
 }
 
+.rc-time-picker-input {
+    background: black;
+    border: 0.5px solid white;
+    color: white;
+}
+
+.rc-time-picker-panel-inner {
+    background: black;
+    color: white;
+}
+
+.rc-time-picker-panel-input {
+    background: black;
+    color: white !important;
+}
+
 .rc-time-picker-panel-select {
-    color: black !important;
+    color: white !important;
+}
+
+.rc-time-picker-panel-select-option-selected {
+    background: black !important;
+    color: white !important;
 }

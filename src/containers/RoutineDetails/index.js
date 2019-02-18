@@ -20,6 +20,7 @@ class RoutineDetails extends Component {
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleName = this.handleName.bind(this);
+        this.getDays = this.getDays.bind(this);
     }
 
     handleName(e) {
@@ -56,19 +57,15 @@ class RoutineDetails extends Component {
                 </Col>
                 <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
-            <Row>
+            <Row  className="vertical-center">
             <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="center" lg="6" sm="6" md="6" xl="6">
-            <TimePicker showSecond={false} use12Hours/>
-            </Col>
-                <Col lg="3" sm="3" md="3" xl="3"/>
-            </Row>
-            <Row>
-            <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="center" lg="6" sm="6" md="6" xl="6">
+            <Col lg="4" sm="4" md="4" xl="4">
             <DayPicker days={getDays}/>
             </Col>
-                <Col lg="3" sm="3" md="3" xl="3"/>
+            <Col lg="2" sm="2" md="2" xl="2">
+            <TimePicker showSecond={false} use12Hours/>
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
