@@ -8,6 +8,8 @@ import TextInput from 'components/TextInput';
 import TimePicker from 'components/TimePicker';
 import DayPicker from 'containers/DayPicker'
 import { createSchedule } from 'actions/schedules';
+import Select from 'react-select'
+import { wakeFade, sleepFade, otherFade } from 'constants/fade';
 import './style.css';
 
 class RoutineDetails extends Component {
@@ -16,16 +18,25 @@ class RoutineDetails extends Component {
         super(props);
         this.state = {
             name: '',
-            days: {}
+            days: {},
+            fadeSelect: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleName = this.handleName.bind(this);
         this.getDays = this.getDays.bind(this);
+        this.handleFade = this.handleFade.bind(this);
     }
 
     handleName(e) {
         this.setState({
             name: e.target.value
+        })
+    }
+
+    handleFade(e) {
+        const { fadeSelect } = this.state;
+        this.setState({
+            fadeSelect: e
         })
     }
 
@@ -46,8 +57,9 @@ class RoutineDetails extends Component {
     }
 
     render() {
-        const { handleSubmit, handleName, getDays } = this;
-        const { name } = this.state;
+        const { handleSubmit, handleName, getDays, handleFade } = this;
+        const { name, fadeSelect } = this.state;
+        const { type } = this.props;
         return (
             <div className="routine-details">
             <Row>
@@ -69,11 +81,16 @@ class RoutineDetails extends Component {
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
-                <Col className="vertical-center" lg="4" sm="4" md="4" xl="4">
+                <Col className="vertical-center" lg="3" sm="3" md="3" xl="3">
             Fade in
             </Col>
-            <Col className="vertical-center center" lg="2" sm="2" md="2" xl="2">
-            Select
+            <Col className="vertical-center center" lg="3" sm="3" md="3" xl="3">
+            <Select
+            placeholder={"Minutes..."}
+            value={fadeSelect}
+            onChange={handleFade}
+            options={type === "wake" ? wakeFade : type === "sleep" ? sleepFade : otherFade}
+            />
             </Col>
                 <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>

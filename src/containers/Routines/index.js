@@ -58,7 +58,7 @@ class Routines extends Component {
         const { routines, creator } = this.state;
         const { type, schedules } = this.props;
         const { handleCreator } = this;
-        const details = type === "timers" ? <TimerDetails/> : <RoutineDetails/>
+        const details = type === "timers" ? <TimerDetails/> : <RoutineDetails type={type}/>
         const create = creator ? ( <Row>
         <Col sm="12" md="12" lg="12" xl="12">
         {details}
