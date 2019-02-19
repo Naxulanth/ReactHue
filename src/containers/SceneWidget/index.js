@@ -9,6 +9,7 @@ import './style.css';
 import Button from 'components/Button'
 import Select from 'components/SceneSelect'
 import TextInput from 'components/TextInput'
+import { sceneSelectStyle } from 'constants/selectStyle'
 
 import './style.css'
 
@@ -143,6 +144,7 @@ class SceneWidget extends Component {
                         <Col lg="1" />
                         <Col className="center" lg="10">
                             <Select
+                                styles={sceneSelectStyle}
                                 value={selectedOption}
                                 onChange={this.handleChange}
                                 options={roomScenes}
