@@ -9,8 +9,7 @@ cursor: pointer;
 font-size: 20px;
 line-height: 25px;
 padding-bottom: 5px;
-border-right: 0.5px solid black;
-border: ${props=> props.selected ? "1px solid white" : "1px solid black"}
+border: 1px solid ${props=> props.selected ? "white" : "black"}
 `;
 
 export default Day;
