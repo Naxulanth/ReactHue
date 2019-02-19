@@ -7,7 +7,7 @@ export const getSensors = {
     failure: (error) => action(SENSORS_GET.FAILURE, { error })
 }
 
-export const modifyCreate = {
+export const createSensor = {
     request: (body) => action(SENSOR_CREATE.REQUEST, { body }),
     success: (response) => action(SENSOR_CREATE.SUCCESS, { response }),
     failure: (error) => action(SENSOR_CREATE.FAILURE, { error })

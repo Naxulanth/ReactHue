@@ -1,4 +1,4 @@
-import { RESOURCES_GET } from '../constants/actionTypes'; 
+import { RESOURCES_GET, RESOURCE_CREATE, RESOURCE_DELETE, RESOURCE_PUT } from '../constants/actionTypes'; 
 
 const resources = (state = [], action) => {
     switch (action.type) {
@@ -10,6 +10,27 @@ const resources = (state = [], action) => {
                 list: action.response.data
             }
         case RESOURCES_GET.FAILURE:
+            return state;
+        case RESOURCE_CREATE.REQUEST:
+            return state;
+        case RESOURCE_CREATE.SUCCESS:
+        return {
+            ...state,
+            createdResource: action.response.data
+        }
+        case RESOURCE_CREATE.FAILURE:
+            return state;
+        case RESOURCE_DELETE.REQUEST:
+            return state;
+        case RESOURCE_DELETE.SUCCESS:
+            return state;
+        case RESOURCE_DELETE.FAILURE:
+            return state;
+        case RESOURCE_PUT.REQUEST:
+            return state;
+        case RESOURCE_PUT.SUCCESS:
+            return state;
+        case RESOURCE_PUT.FAILURE:
             return state;
         default:
             return state;

@@ -8,6 +8,9 @@ import TextInput from 'components/TextInput';
 import TimePicker from 'components/TimePicker';
 import DayPicker from 'containers/DayPicker'
 import { createSchedule } from 'actions/schedules';
+import { createResource } from 'actions/resources';
+import { createRule } from 'actions/rules';
+import { createSensor } from 'actions/sensors';
 import Checkbox from 'components/Checkbox'
 import Select from 'react-select'
 import { wakeFade, sleepFade, otherFade } from 'constants/fade';
@@ -146,7 +149,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-    createSchedule: bindActionCreators(createSchedule.request, dispatch)
+    createSchedule: bindActionCreators(createSchedule.request, dispatch),
+    createResource: bindActionCreators(createResource.request,dispatch),
+    createRule: bindActionCreators(createRule.request,dispatch),
+    createSensor: bindActionCreators(createSensor.request,dispatch)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RoutineDetails);
