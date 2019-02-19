@@ -30,7 +30,7 @@ class CheckboxComponent extends Component {
 			</Col>
 			</Row>
 			<Row>
-			<Col lg="12" sm="12" md="12">
+			<Col className="checkbox-text" lg="12" sm="12" md="12">
 			{children}
 			</Col>
 			</Row>

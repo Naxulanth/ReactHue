@@ -7,9 +7,10 @@ height: 30px;
 text-align: center;
 cursor: pointer;
 font-size: 20px;
-line-height: 30px;
+line-height: 25px;
+padding-bottom: 5px;
 border-right: 0.5px solid black;
-background: ${props=> props.selected ? "green" : "transparent"}
+border: ${props=> props.selected ? "1px solid white" : "0px"}
 `;
 
 export default Day;
