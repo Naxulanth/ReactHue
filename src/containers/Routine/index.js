@@ -71,7 +71,7 @@ class Routine extends Component {
 
 const mapStateToProps = state => ({
     schedules: state.schedules.list,
-    resources: state.schedules.resources
+    resources: state.resources.list
 })
 
 const mapDispatchToProps = dispatch => ({

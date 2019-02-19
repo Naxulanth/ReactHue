@@ -38,7 +38,7 @@ const GlobalStyle = createGlobalStyle`
 
   .vertical-center {
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
   
 `

@@ -1,4 +1,4 @@
-import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_PUT, RESOURCES_GET } from '../constants/actionTypes'; 
+import { SCHEDULES_GET, SCHEDULE_CREATE, SCHEDULE_DELETE, SCHEDULE_GET, SCHEDULE_PUT } from '../constants/actionTypes'; 
 
 const schedules = (state = [], action) => {
     switch (action.type) {
@@ -45,15 +45,6 @@ const schedules = (state = [], action) => {
                 createdSchedule: action.response.data[0]
             }
         case SCHEDULE_PUT.FAILURE:
-            return state;
-        case RESOURCES_GET.REQUEST:
-            return state;
-        case RESOURCES_GET.SUCCESS:
-            return {
-                ...state,
-                resources: action.response.data
-            }
-        case RESOURCES_GET.FAILURE:
             return state;
         default:
             return state;

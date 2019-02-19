@@ -38,7 +38,6 @@ class RoutineDetails extends Component {
     }
 
     handleFade(e) {
-        const { fadeSelect } = this.state;
         this.setState({
             fadeSelect: e
         })
