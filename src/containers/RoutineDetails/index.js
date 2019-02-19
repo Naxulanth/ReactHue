@@ -57,7 +57,7 @@ class RoutineDetails extends Component {
       createResource,
       createSensor
     } = this.props;
-    const { name } = this.state;
+    const { name, days, rooms, home } = this.state;
     let obj = {};
     obj.description = type;
     obj.name = name;
@@ -172,7 +172,8 @@ class RoutineDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  roomList: state.rooms.list
+  roomList: state.rooms.list,
+  
 });
 
 const mapDispatchToProps = dispatch => ({

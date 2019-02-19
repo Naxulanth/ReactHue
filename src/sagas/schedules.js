@@ -10,14 +10,11 @@ import {
 import * as actions from "../actions/schedules";
 import * as api from "../api/schedules";
 
-import { renew } from "./shared";
-
 export function* setSchedule({ id, body }) {
   try {
     const response = yield call(api.setSchedule, id, body);
     yield put(actions.setSchedule.success(response));
     yield call(getSchedules);
-    yield call(renew);
   } catch (e) {
     yield put(actions.setSchedule.failure(e));
   }
@@ -31,7 +28,6 @@ export function* deleteSchedule({ id }) {
   try {
     const response = yield call(api.deleteSchedule, id);
     yield put(actions.deleteSchedule.success(response));
-    yield call(renew);
   } catch (e) {
     yield put(actions.deleteSchedule.failure(e));
   }
@@ -45,7 +41,6 @@ export function* createSchedule({ body }) {
   try {
     const response = yield call(api.createSchedule, body);
     yield put(actions.createSchedule.success(response));
-    yield call(renew);
   } catch (e) {
     yield put(actions.createSchedule.failure(e));
   }
@@ -59,7 +54,6 @@ export function* getSchedule({ id }) {
   try {
     const response = yield call(api.getSchedule, id);
     yield put(actions.getSchedule.success(response));
-    yield call(renew);
   } catch (e) {
     yield put(actions.getSchedule.failure(e));
   }
