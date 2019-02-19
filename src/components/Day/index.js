@@ -10,7 +10,7 @@ font-size: 20px;
 line-height: 25px;
 padding-bottom: 5px;
 border-right: 0.5px solid black;
-border: ${props=> props.selected ? "1px solid white" : "0px"}
+border: ${props=> props.selected ? "1px solid white" : "1px solid black"}
 `;
 
 export default Day;
