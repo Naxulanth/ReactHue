@@ -147,7 +147,7 @@ class SceneWidget extends Component {
                                 styles={sceneSelectStyle}
                                 value={selectedOption}
                                 onChange={this.handleChange}
-                                options={roomScenes}
+                                options={roomScenes.filter(scene => {return !scene.label.includes("Wake Up init") && !scene.label.includes("Wake Up end")})}
                                 placeholder={'Select scene...'}
                             />
                             {modifyButton}
