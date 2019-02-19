@@ -5,6 +5,8 @@ import { watchGetRooms, watchModifyRoom, watchModifyRoomAttr } from './rooms';
 import { watchGetScene, watchGetScenes, watchModifyScene, watchModifySceneLights, watchCreateScene, watchDeleteScene } from './scenes';
 import { watchCreateSchedule, watchGetSchedule, watchGetSchedules, watchDeleteSchedule, watchSetSchedule } from './schedules'
 import { watchGetResources } from './resources'
+import { watchGetRules } from './rules'
+import { watchGetSensors } from './sensors'
 
 export default function* root() {
     yield fork(watchGetLights);
@@ -25,4 +27,6 @@ export default function* root() {
     yield fork(watchDeleteSchedule);
     yield fork(watchSetSchedule);
     yield fork(watchGetResources)
+    yield fork(watchGetRules);
+    yield fork(watchGetSensors);
 }

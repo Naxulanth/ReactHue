@@ -22,3 +22,7 @@ export const SCHEDULE_GET = createRequestTypes('SCHEDULE_GET');
 export const SCHEDULE_CREATE = createRequestTypes('SCHEDULE_CREATE');
 
 export const RESOURCES_GET = createRequestTypes('RESOURCES_GET');
+
+export const SENSORS_GET = createRequestTypes('SENSORS_GET');
+
+export const RULES_GET = createRequestTypes('RULES_GET');
