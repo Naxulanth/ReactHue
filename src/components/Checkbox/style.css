@@ -1,0 +1,18 @@
+.checkbox-main {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.checkbox {
+    background: black;
+}
+
+.checkmark {
+
+}
+
+.checkbox-container {
+    
+}

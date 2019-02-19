@@ -59,7 +59,7 @@ class Routine extends Component {
                 {type === 'sleep' ? findName() : schedules[type][id].name}
             </Col>
             <Col lg="3">
-                <Toggle id={id} checked={schedules[type][id].status === "enabled" ? true : false} onChange={handleToggle} />
+                <Toggle id={id} checked={schedules[type][id].status === "enabled"} onChange={handleToggle} />
             </Col>
             <Col lg="1" />
         </Row>
