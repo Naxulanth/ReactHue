@@ -62,7 +62,9 @@ class LightWidget extends Component {
                     </Col>
                     <Col lg="1" />
                 </Row>
+                <div style={{pointerEvents: light[lightId].state.on ? "auto" : "none"}}>
                 <Animate pose={light[lightId].state.on ? 'visible' : 'hidden'}><LightDetails lightId={lightId.toString()} /></Animate>
+                </div>
             </div>
         )
     }

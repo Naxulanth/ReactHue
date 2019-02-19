@@ -71,7 +71,7 @@ class Routines extends Component {
                         <Button onClick={handleCreator} width="true">{creator ? "Cancel" : "Create"}</Button>
                         </Col>
                     </Row>
-                    {details}
+                    <div style={{pointerEvents: creator ? "auto" : "none"}}>{details}</div>
                     {routines}
                 </div>
             );

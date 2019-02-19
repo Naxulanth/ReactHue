@@ -60,7 +60,6 @@ class RoutineDetails extends Component {
     }
 
     render() {
-        console.log(moment())
         const { handleSubmit, handleName, getDays, handleFade } = this;
         const { name, fadeSelect } = this.state;
         const { type } = this.props;
