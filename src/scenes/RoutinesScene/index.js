@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import Routines from 'containers/Routines'
-import { getSchedules, getResources } from 'actions/schedules';
+import { getSchedules } from 'actions/schedules';
+import { getResources } from 'actions/resources';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux';
 import './style.css';

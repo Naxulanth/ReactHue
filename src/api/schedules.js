@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { SCHEDULES, RESOURCES } from 'constants/endpoints'
+import { SCHEDULES } from 'constants/endpoints'
 
 export function getSchedules() {
     return axios.request({
@@ -38,9 +38,3 @@ export function createSchedule(body) {
     })
 }
 
-export function getResources() {
-    return axios.request({
-        method: 'get',
-        url: RESOURCES,
-    })
-}

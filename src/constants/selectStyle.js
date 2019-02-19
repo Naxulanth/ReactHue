@@ -6,7 +6,6 @@ export const selectStyle = {
       padding: 0,
     }),
     dropdownIndicator: (provided, state) => ({
-        width: '25%',
         height: '30px'
     }),
     container: (provided, state) => ({
