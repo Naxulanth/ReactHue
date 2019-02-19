@@ -72,19 +72,9 @@ class RoutineDetails extends Component {
                 </Col>
                 <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
-            <Row  className="vertical-center">
+            <Row className="vertical-center">
             <Col lg="3" sm="3" md="3" xl="3"/>
-            <Col className="day-picker-col" lg="4" sm="4" md="4" xl="4">
-            <DayPicker days={getDays}/>
-            </Col>
-            <Col lg="2" sm="2" md="2" xl="2">
-            <TimePicker placeholder={'Pick time'} showSecond={false} use12Hours allowEmpty={false}/>
-            </Col>
-            <Col lg="3" sm="3" md="3" xl="3"/>
-            </Row>
-            <Row>
-            <Col lg="3" sm="3" md="3" xl="3"/>
-            <Col className="vertical-center center" lg="3" sm="3" md="3" xl="3">
+            <Col className="center" lg="3" sm="3" md="3" xl="3">
             <Select
             placeholder={"Fade"}
             value={fadeSelect}
@@ -93,7 +83,17 @@ class RoutineDetails extends Component {
             options={type === "wake" ? wakeFade : type === "sleep" ? sleepFade : otherFade}
             />
             </Col>
+            <Col lg="2" sm="2" md="2" xl="2">
+            <TimePicker placeholder={'Pick time'} showSecond={false} use12Hours allowEmpty={false}/>
+            </Col>
                 <Col lg="6" sm="6" md="6" xl="6"/>
+            </Row>
+            <Row  className="vertical-center">
+            <Col lg="3" sm="3" md="3" xl="3"/>
+            <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
+            <DayPicker days={getDays}/>
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             <Row>
             <Col lg="3" sm="3" md="3" xl="3"/>
