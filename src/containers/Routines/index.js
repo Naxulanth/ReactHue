@@ -6,6 +6,7 @@ import Button from 'components/Button'
 import Routine from 'containers/Routine'
 import RoutineDetails from 'containers/RoutineDetails'
 import TimerDetails from 'containers/TimerDetails'
+import Animate from 'components/Animate'
 import uuidv4 from 'uuid/v4';
 import './style.css';
 
@@ -58,12 +59,7 @@ class Routines extends Component {
         const { routines, creator } = this.state;
         const { type, schedules } = this.props;
         const { handleCreator } = this;
-        const details = type === "timers" ? <TimerDetails/> : <RoutineDetails type={type}/>
-        const create = creator ? ( <Row>
-        <Col sm="12" md="12" lg="12" xl="12">
-        {details}
-        </Col>
-        </Row> ) : null;
+        const details = type === "timers" ? <Animate pose={creator ? 'visible' : 'hidden'}><TimerDetails/></Animate> : <Animate pose={creator ? 'visible' : 'hidden'}><RoutineDetails type={type}/></Animate>
         if (schedules && schedules[type]) {
             return (
                 <div className={"routines-main " + type}>
@@ -75,7 +71,7 @@ class Routines extends Component {
                         <Button onClick={handleCreator} width="true">{creator ? "Cancel" : "Create"}</Button>
                         </Col>
                     </Row>
-                    {create}
+                    {details}
                     {routines}
                 </div>
             );
