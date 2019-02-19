@@ -25,7 +25,8 @@ class RoutineDetails extends Component {
             name: '',
             days: {},
             rooms: {},
-            fadeSelect: ''
+            fadeSelect: '',
+            home: false
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleName = this.handleName.bind(this);
@@ -58,12 +59,22 @@ class RoutineDetails extends Component {
 
     handleCheck(e) {
         const name = e.target.getAttribute('name')
-        const { rooms } = this.state;
+        const { rooms, home } = this.state;
         let tempRooms = rooms;
+        console.log(name)
+        if (name === "home") {
+            this.setState ({
+                home: !home,
+                rooms: {}
+            })
+        }
+        else {
         tempRooms[name] = !rooms[name]
 		this.setState ({
-            rooms: tempRooms
-		})
+            rooms: tempRooms,
+            home: false
+        })
+    }
 	}
 
     getDays(days) {
@@ -74,7 +85,7 @@ class RoutineDetails extends Component {
 
     render() {
         const { handleSubmit, handleName, getDays, handleFade, handleCheck } = this;
-        const { name, fadeSelect, days, rooms } = this.state;
+        const { name, fadeSelect, days, rooms, home } = this.state;
         const { type, roomList } = this.props;
         return (
             <div className="routine-details">
@@ -109,7 +120,8 @@ class RoutineDetails extends Component {
             <Col lg="3" sm="3" md="3" xl="3"/>
             </Row>
             <Row className="vertical-center center">
-            <Col>
+            <Col lg="12" sm="12" md="12" xl="12">
+            <Checkbox name={"home"} onChange={handleCheck} checked={home}>Home</Checkbox>
                 {roomList ? Object.keys(roomList).map( roomKey => {
                 const room = roomList[roomKey]
                 return <Checkbox name={room.name} onChange={handleCheck} checked={!!rooms[room.name]}>{room.name}</Checkbox>
