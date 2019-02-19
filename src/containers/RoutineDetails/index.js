@@ -84,9 +84,7 @@ class RoutineDetails extends Component {
   }
 
   getDays(days) {
-    this.setState({
-      days
-    });
+    this.setState({ days });
   }
 
   render() {
