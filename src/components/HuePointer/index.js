@@ -1,6 +1,5 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
-const HuePointer = styled.div`
-    `;
+const HuePointer = styled.div``;
 
 export default HuePointer;

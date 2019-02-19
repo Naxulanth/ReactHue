@@ -1,139 +1,156 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
-import axios from 'axios';
-import validator from 'validator';
-import TextInput from 'components/TextInput';
-import Button from 'components/Button';
-import './style.css'
-import queryString from 'query-string';
-import { user, bridge } from 'constants/localStorage';
+import React, { Component } from "react";
+import { Row, Col } from "reactstrap";
+import axios from "axios";
+import validator from "validator";
+import TextInput from "components/TextInput";
+import Button from "components/Button";
+import "./style.css";
+import queryString from "query-string";
+import { user, bridge } from "constants/localStorage";
+
 
 class Config extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ip: "",
+      username: "",
+      text: "",
+      redirect: false
+    };
+    this.handleIPInput = this.handleIPInput.bind(this);
+    this.handleUsernameInput = this.handleUsernameInput.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            ip: '',
-            username: '',
-            text: '',
-            redirect: false,
-        }
-        this.handleIPInput = this.handleIPInput.bind(this)
-        this.handleUsernameInput = this.handleUsernameInput.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+  componentWillMount() {
+    let localUser = localStorage.getItem(user);
+    let localBridge = localStorage.getItem(bridge);
+    this.setState({
+      username: localUser ? localUser : "",
+      ip: localBridge ? localBridge : ""
+    });
+  }
 
-    componentWillMount() {
-        let localUser = localStorage.getItem(user);
-        let localBridge = localStorage.getItem(bridge);
-        this.setState({
-            username: localUser ? localUser : '',
-            ip: localBridge ? localBridge : '',
+  handleIPInput(e) {
+    this.setState({ ip: e.target.value });
+  }
+
+  handleUsernameInput(e) {
+    this.setState({ username: e.target.value });
+  }
+
+  handleSubmit() {
+    const { ip, username } = this.state;
+    if (!validator.isIP(ip)) {
+      this.setState({
+        text: "IP validation failed (don't use http/https)"
+      });
+    } else {
+      this.setState({
+        text: "Testing..."
+      });
+      axios
+        .get(
+          "http://" + this.state.ip + "/api/" + this.state.username + "/lights"
+        )
+        .then(res => {
+          localStorage.setItem(user, username);
+          localStorage.setItem(bridge, ip);
+          if (res.data && res.data[0] && res.data[0].error) {
+            this.setState({
+              text: "Unauthorized user"
+            });
+          } else {
+            this.setState({
+              text: "Success, redirecting..."
+            });
+            setTimeout(() => {
+              this.setState({
+                redirect: true
+              });
+            }, 2000);
+          }
         })
+        .catch(e => {
+          this.setState({
+            text: "Unable to reach bridge"
+          });
+        });
     }
+  }
 
-    handleIPInput(e) {
-        this.setState({ ip: e.target.value })
-    }
-
-    handleUsernameInput(e) {
-        this.setState({ username: e.target.value })
-    }
-
-    handleSubmit() {
-        const { ip, username } = this.state;
-        if (!validator.isIP(ip)) {
-            this.setState({
-                text: "IP validation failed (don't use http/https)"
-            })
-        }
-        else {
-            this.setState({
-                text: 'Testing...'
-            })
-            axios.get('http://' + this.state.ip + '/api/' + this.state.username + '/lights').then((res) => {
-                localStorage.setItem(user, username);
-                localStorage.setItem(bridge, ip);
-                if (res.data && res.data[0] && res.data[0].error) {
-                    this.setState({
-                        text: 'Unauthorized user'
-                    })
-                }
-                else {
-                    this.setState({
-                        text: 'Success, redirecting...',
-                    })
-                    setTimeout(() => {
-                        this.setState({
-                            redirect: true,
-                        })
-                    }, 2000);
-                }
-            }).catch((e) => {
-                this.setState({
-                    text: 'Unable to reach bridge'
-                })
-            })
-        }
-    }
-
-    render() {
-        const { ip, username, text, redirect } = this.state;
-        const { handleIPInput, handleUsernameInput, handleSubmit } = this;
-        if (redirect) return (window.location.href = "/")
-        return (
-            <div className="config">
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        Active Bridge: {queryString.parse(window.location.search)['bridge'] ? queryString.parse(window.location.search)['bridge'] : 1 }
-                    </Col>
-                </Row>
-                <Row>
-                    <Col>
-                    <div className="bridge-switch">
-                        Switch to Bridge: 
-                        <a className="bridge-link" href='/'>1</a>
-                        <a className="bridge-link" href='/?bridge=2'>2</a>
-                        <a className="bridge-link" href='/?bridge=3'>3</a>
-                        <a className="bridge-link" href='/?bridge=4'>4</a>
-                        <a className="bridge-link" href='/?bridge=5'>5</a>
-                        </div>
-                    </Col>
-                    </Row>
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        Bridge IP
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        <TextInput value={ip} onChange={handleIPInput} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        Username
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        <TextInput value={username} onChange={handleUsernameInput} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col className="center" lg="12" sm="12" md="12" xl="12">
-                        <Button onClick={handleSubmit} className="submit">Submit</Button>
-                    </Col>
-                </Row>
-                <Row>
-                    <Col lg="12" sm="12" md="12" xl="12">
-                        <div>{text}</div>
-                    </Col>
-                </Row>
-            </div >
-        );
-    }
+  render() {
+    const { ip, username, text, redirect } = this.state;
+    const { handleIPInput, handleUsernameInput, handleSubmit } = this;
+    if (redirect) return (window.location.href = "/");
+    return (
+      <div className="config">
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            Active Bridge:{" "}
+            {queryString.parse(window.location.search)["bridge"]
+              ? queryString.parse(window.location.search)["bridge"]
+              : 1}
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <div className="bridge-switch">
+              Switch to Bridge:
+              <a className="bridge-link" href="/">
+                1
+              </a>
+              <a className="bridge-link" href="/?bridge=2">
+                2
+              </a>
+              <a className="bridge-link" href="/?bridge=3">
+                3
+              </a>
+              <a className="bridge-link" href="/?bridge=4">
+                4
+              </a>
+              <a className="bridge-link" href="/?bridge=5">
+                5
+              </a>
+            </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            Bridge IP
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            <TextInput value={ip} onChange={handleIPInput} />
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            Username
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            <TextInput value={username} onChange={handleUsernameInput} />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="center" lg="12" sm="12" md="12" xl="12">
+            <Button onClick={handleSubmit} className="submit">
+              Submit
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            <div>{text}</div>
+          </Col>
+        </Row>
+      </div>
+    );
+  }
 }
-
 
 export default Config;

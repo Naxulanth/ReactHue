@@ -1,25 +1,25 @@
-import axios from 'axios'
-import { LIGHTS } from 'constants/endpoints'
+import axios from "axios";
+import { LIGHTS } from "constants/endpoints";
 
 export function getLights() {
-    return axios.request({
-        method: 'get',
-        url: LIGHTS,
-    })
+  return axios.request({
+    method: "get",
+    url: LIGHTS
+  });
 }
 
 export function modifyLight(id, body) {
-    return axios.request({
-        method: 'put',
-        url: LIGHTS + '/' + id + '/state',
-        data: JSON.stringify(body)
-    })
+  return axios.request({
+    method: "put",
+    url: LIGHTS + "/" + id + "/state",
+    data: JSON.stringify(body)
+  });
 }
 
 export function modifyLightAttr(id, body) {
-    return axios.request({
-        method: 'put',
-        url: LIGHTS + '/' + id + '/',
-        data: JSON.stringify(body)
-    })
+  return axios.request({
+    method: "put",
+    url: LIGHTS + "/" + id + "/",
+    data: JSON.stringify(body)
+  });
 }
