@@ -22,7 +22,16 @@ export const SCHEDULE_GET = createRequestTypes('SCHEDULE_GET');
 export const SCHEDULE_CREATE = createRequestTypes('SCHEDULE_CREATE');
 
 export const RESOURCES_GET = createRequestTypes('RESOURCES_GET');
+export const RESOURCE_CREATE = createRequestTypes('RESOURCE_CREATE');
+export const RESOURCE_PUT = createRequestTypes('RESOURCE_PUT');
+export const RESOURCE_DELETE = createRequestTypes('RESOURCE_DELETE');
 
 export const SENSORS_GET = createRequestTypes('SENSORS_GET');
+export const SENSOR_CREATE = createRequestTypes('SENSOR_CREATE');
+export const SENSOR_PUT = createRequestTypes('SENSOR_PUT');
+export const SENSOR_DELETE = createRequestTypes('SENSOR_DELETE');
 
 export const RULES_GET = createRequestTypes('RULES_GET');
+export const RULE_CREATE = createRequestTypes('RULE_GET');
+export const RULE_PUT = createRequestTypes('RULE_PUT');
+export const RULE_DELETE = createRequestTypes('RULE_DELETE');
