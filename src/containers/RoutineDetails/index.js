@@ -37,12 +37,26 @@ class RoutineDetails extends Component {
     this.getDays = this.getDays.bind(this);
     this.handleFade = this.handleFade.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
+    this.handleTime = this.handleTime.bind(this);
+    this.handleOffTime = this.handleOffTime.bind(this);
   }
 
   handleName(e) {
     this.setState({
       name: e.target.value
     });
+  }
+
+  handleTime(e) {
+    this.setState({
+      time: e
+    })
+  }
+
+  handleOffTime(e) {
+    this.setState({
+      timeOff: e
+    })
   }
 
   handleFade(e) {
@@ -91,7 +105,7 @@ class RoutineDetails extends Component {
   }
 
   render() {
-    const { handleSubmit, handleName, getDays, handleFade, handleCheck } = this;
+    const { handleSubmit, handleName, getDays, handleFade, handleCheck, handleOffTime, handleTime } = this;
     const { name, fadeSelect, days, rooms, home, time, timeOff } = this.state;
     const { type, roomList } = this.props;
     const wakeOnly = (
@@ -107,6 +121,7 @@ class RoutineDetails extends Component {
             use12Hours
             allowEmpty={false}
             value={timeOff}
+            onChange={handleOffTime}
           />
         </Col>
         <Col lg="3" sm="3" md="3" xl="3" />
@@ -149,6 +164,7 @@ class RoutineDetails extends Component {
               use12Hours
               allowEmpty={false}
               value={time}
+              onChange={handleTime}
             />
           </Col>
           <Col lg="6" sm="6" md="6" xl="6" />
