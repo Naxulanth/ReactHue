@@ -78,7 +78,6 @@ class RoomWidget extends Component {
     const { lights } = this.state;
     return (
       <div ref={this.main} className="room-widget">
-        <span className="test">
           <div className="child">
             <Row>
               <Col lg="12" sm="12" md="12" xl="12">
@@ -87,7 +86,6 @@ class RoomWidget extends Component {
             </Row>
             {lights}
           </div>
-        </span>
       </div>
     );
   }

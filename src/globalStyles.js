@@ -40,6 +40,16 @@ const GlobalStyle = createGlobalStyle`
     align-items: center;
     margin-bottom: 15px;
 }
+
+.child {
+    height: 100%;
+    margin-right: -50px;
+    /* maximum width of scrollbar */
+    padding-right: 35px;
+    /* maximum width of scrollbar */
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
   
 `;
 

@@ -101,7 +101,6 @@ export function* getSchedules() {
     yield (schedules["wake"] = wake);
     yield (schedules["sleep"] = sleep);
     yield put(actions.getSchedules.success(schedules));
-    yield call(renew);
   } catch (e) {
     yield put(actions.getSchedules.failure(e));
   }

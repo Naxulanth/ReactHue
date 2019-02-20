@@ -57,12 +57,14 @@ class WidgetHeader extends Component {
           </Col>
           <Col lg="1" />
         </Row>
+        <div style={{ pointerEvents: room[roomId].state.any_on ? "auto" : "none" }}>
         <Animate pose={room[roomId].state.any_on ? "visible" : "hidden"}>
           <LightDetails lightId={roomId.toString()} room />
         </Animate>
         <Animate pose={room[roomId].state.any_on ? "visible" : "hidden"}>
           <SceneWidget roomId={roomId.toString()} />
         </Animate>
+        </div>
       </div>
     );
   }

@@ -71,7 +71,8 @@ class Routines extends Component {
     if (schedules && schedules[type]) {
       return (
         <div className={"routines-main " + type}>
-          <Row className="vertical-center">
+        <div className="child">
+          <Row className="vertical-center push-bottom">
             <Col sm="8" md="8" lg="8" xl="8">
               <RoutineTitle>
                 {" "}
@@ -88,6 +89,7 @@ class Routines extends Component {
             {details}
           </div>
           {routines}
+        </div>
         </div>
       );
     } else return null;

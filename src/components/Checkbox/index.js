@@ -27,7 +27,7 @@ class CheckboxComponent extends Component {
                 onChange={onChange}
                 disabled={this.state.disabled}
               />
-              <span class="checkmark" />
+              <span className="checkmark" />
             </label>
           </Col>
         </Row>

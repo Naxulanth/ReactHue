@@ -28,7 +28,9 @@ class RoutineDetails extends Component {
       days: {},
       rooms: {},
       fadeSelect: "",
-      home: false
+      time: null,
+      home: false,
+      timeOff: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -57,11 +59,12 @@ class RoutineDetails extends Component {
       createResource,
       createSensor
     } = this.props;
-    const { name, days, rooms, home } = this.state;
+    const { name, days, rooms, home, time, timeOff } = this.state;
     let obj = {};
     obj.description = type;
     obj.name = name;
     obj.status = "enabled";
+    if (type === "wake") obj.timeOff = timeOff;
   }
 
   handleCheck(e) {
@@ -89,8 +92,26 @@ class RoutineDetails extends Component {
 
   render() {
     const { handleSubmit, handleName, getDays, handleFade, handleCheck } = this;
-    const { name, fadeSelect, days, rooms, home } = this.state;
+    const { name, fadeSelect, days, rooms, home, time, timeOff } = this.state;
     const { type, roomList } = this.props;
+    const wakeOnly = (
+      <Row className="vertical-center">
+        <Col lg="3" sm="3" md="3" xl="3" />
+        <Col lg="3" sm="3" md="3" xl="3">
+          Turn light(s) off
+        </Col>
+        <Col lg="3" sm="3" md="3" xl="3">
+          <TimePicker
+            placeholder={"Pick time"}
+            showSecond={false}
+            use12Hours
+            allowEmpty={false}
+            value={timeOff}
+          />
+        </Col>
+        <Col lg="3" sm="3" md="3" xl="3" />
+      </Row>
+    );
     return (
       <div className="routine-details">
         <Row>
@@ -127,8 +148,15 @@ class RoutineDetails extends Component {
               showSecond={false}
               use12Hours
               allowEmpty={false}
+              value={time}
             />
           </Col>
+          <Col lg="6" sm="6" md="6" xl="6" />
+        </Row>
+        <Row className="vertical-center">
+          <Col lg="3" sm="3" md="3" xl="3" />
+          <Col className="center" lg="3" sm="3" md="3" xl="3" />
+          <Col lg="3" sm="3" md="3" xl="3" />
           <Col lg="6" sm="6" md="6" xl="6" />
         </Row>
         <Row className="vertical-center">
@@ -159,6 +187,7 @@ class RoutineDetails extends Component {
               : null}
           </Col>
         </Row>
+        {type === "wake" ? wakeOnly : null}
         <Row>
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="center" lg="6" sm="6" md="6" xl="6">
@@ -172,8 +201,7 @@ class RoutineDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  roomList: state.rooms.list,
-  
+  roomList: state.rooms.list
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -22,8 +22,12 @@
     margin-bottom: 30px;
     padding: 30px;
     overflow: hidden;
-  }
+}
 
-  .align-right {
-      text-align: right;
-  }
+.align-right {
+    text-align: right;
+}
+
+.push-bottom {
+    margin-top: 10px;
+}
