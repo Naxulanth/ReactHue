@@ -12,6 +12,13 @@ import { createSchedule } from "actions/schedules";
 import { createResource } from "actions/resources";
 import { createRule } from "actions/rules";
 import { createSensor } from "actions/sensors";
+import { createScene } from "actions/scenes";
+import {
+  wakeSensor,
+  sleepSensor,
+  timerSensor,
+  otherSensor
+} from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade } from "constants/fade";
@@ -72,14 +79,22 @@ class RoutineDetails extends Component {
       createSchedule,
       createRule,
       createResource,
-      createSensor
+      createSensor,
+      createScene
     } = this.props;
     const { name, days, rooms, home, time, timeOff } = this.state;
     let obj = {};
     obj.description = type;
     obj.name = name;
     obj.status = "enabled";
-    if (type === "wake") obj.timeOff = timeOff;
+    if (type === "wake") {
+      obj.timeOff = timeOff;
+      createSensor(wakeSensor);
+    }
+    // scene
+    // schedule
+    // rule
+    // resource
   }
 
   handleCheck(e) {
@@ -200,7 +215,8 @@ class RoutineDetails extends Component {
               ? Object.keys(roomList).map(roomKey => {
                   const room = roomList[roomKey];
                   return (
-                    <Checkbox key={uuidv4()}
+                    <Checkbox
+                      key={uuidv4()}
                       name={room.name}
                       onChange={handleCheck}
                       checked={!!rooms[room.name]}
@@ -233,7 +249,8 @@ const mapDispatchToProps = dispatch => ({
   createSchedule: bindActionCreators(createSchedule.request, dispatch),
   createResource: bindActionCreators(createResource.request, dispatch),
   createRule: bindActionCreators(createRule.request, dispatch),
-  createSensor: bindActionCreators(createSensor.request, dispatch)
+  createSensor: bindActionCreators(createSensor.request, dispatch),
+  createScene: bindActionCreators(createScene.request, dispatch)
 });
 
 export default connect(
