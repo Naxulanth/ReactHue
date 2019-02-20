@@ -5,17 +5,25 @@ import { getSchedules } from "actions/schedules";
 import { getResources } from "actions/resources";
 import { getRules } from "actions/rules";
 import { getSensors } from "actions/sensors";
+import { getRooms } from "actions/rooms";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import "./style.css";
 
 class RoutinesScene extends Component {
   componentDidMount() {
-    const { getSchedules, getResources, getRules, getSensors } = this.props;
+    const {
+      getSchedules,
+      getResources,
+      getRules,
+      getSensors,
+      getRooms
+    } = this.props;
     getSchedules();
     getResources();
     getRules();
     getSensors();
+    getRooms();
   }
 
   render() {
@@ -50,7 +58,8 @@ const mapDispatchToProps = dispatch => ({
   getSchedules: bindActionCreators(getSchedules.request, dispatch),
   getResources: bindActionCreators(getResources.request, dispatch),
   getRules: bindActionCreators(getRules.request, dispatch),
-  getSensors: bindActionCreators(getSensors.request, dispatch)
+  getSensors: bindActionCreators(getSensors.request, dispatch),
+  getRooms: bindActionCreators(getRooms.request, dispatch)
 });
 
 export default connect(

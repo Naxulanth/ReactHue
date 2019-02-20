@@ -1,6 +1,4 @@
-import React, { Component, Fragment } from "react";
-import { CustomPicker } from "react-color";
-import styled from "styled-components";
+import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import "./style.css";
 

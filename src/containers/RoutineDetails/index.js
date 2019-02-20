@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import uuidv4 from "uuid/v4";
 import PropTypes from "prop-types";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
@@ -50,13 +51,13 @@ class RoutineDetails extends Component {
   handleTime(e) {
     this.setState({
       time: e
-    })
+    });
   }
 
   handleOffTime(e) {
     this.setState({
       timeOff: e
-    })
+    });
   }
 
   handleFade(e) {
@@ -105,7 +106,15 @@ class RoutineDetails extends Component {
   }
 
   render() {
-    const { handleSubmit, handleName, getDays, handleFade, handleCheck, handleOffTime, handleTime } = this;
+    const {
+      handleSubmit,
+      handleName,
+      getDays,
+      handleFade,
+      handleCheck,
+      handleOffTime,
+      handleTime
+    } = this;
     const { name, fadeSelect, days, rooms, home, time, timeOff } = this.state;
     const { type, roomList } = this.props;
     const wakeOnly = (
@@ -191,7 +200,7 @@ class RoutineDetails extends Component {
               ? Object.keys(roomList).map(roomKey => {
                   const room = roomList[roomKey];
                   return (
-                    <Checkbox
+                    <Checkbox key={uuidv4()}
                       name={room.name}
                       onChange={handleCheck}
                       checked={!!rooms[room.name]}
