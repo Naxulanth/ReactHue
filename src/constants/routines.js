@@ -47,7 +47,7 @@ export const sleepSensor = {
 export const wakeSensor = {
   state: {
     flag: false,
-    lastupdated: "2019-02-18T03:30:00"
+    lastupdated: "none"
   },
   config: {
     on: true,
