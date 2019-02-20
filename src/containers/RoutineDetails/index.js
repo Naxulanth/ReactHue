@@ -91,6 +91,12 @@ class RoutineDetails extends Component {
       obj.timeOff = timeOff;
       createSensor(wakeSensor);
     }
+    else if (type === "sleep") {
+
+    }
+    else if (type === "routines") {
+
+    }
     // scene
     // schedule
     // rule
