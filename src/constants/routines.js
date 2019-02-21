@@ -1,6 +1,7 @@
 import shortid from "shortid";
 import { SENSORS, GROUPS } from "constants/endpoints";
 import { user } from "constants/localStorage";
+import { absolute } from "utils/date";
 
 export const timerSensor = {
   state: {
@@ -116,16 +117,11 @@ export function sceneObject(init, type, lights, group) {
   if (type === "wake") {
     name = "Wake Up " + init ? "init" : "end";
     sceneType = "LightScene";
-  }
-  else if (type === "sleep") {
+  } else if (type === "sleep") {
     name = "Go to sleep " + init ? "start" : "end";
     sceneType = "LightScene";
-  }
-  else if (type === "routines") {
-
-  }
-  else if (type === "timers") {
-
+  } else if (type === "routines") {
+  } else if (type === "timers") {
   }
   let obj = {
     name: name,
@@ -140,12 +136,11 @@ export function sceneObject(init, type, lights, group) {
     version: 2
   };
   if (sceneType === "GroupScene") {
-    obj['group'] = group;
+    obj["group"] = group;
   }
 
-  return obj
+  return obj;
 }
-
 
 export function resourceObject(name, type) {
   let classid = null;
@@ -155,13 +150,55 @@ export function resourceObject(name, type) {
   else classid = 4;
   let resource = {};
   resource.name = name;
-  resource.description = name + ' behavior'
-  resource.owner = localStorage.getItem(user)
+  resource.description = name + " behavior";
+  resource.owner = localStorage.getItem(user);
   resource.recycle = false;
   resource.links = [];
-  resource.classid = classid
+  resource.classid = classid;
 }
 
-export function ruleObject() {
-  
+export function ruleObject(
+  name,
+  createdSensor,
+  createdScene,
+  groups,
+  createdSchedule
+) {
+  let obj = {
+    name: name + " rule",
+    owner: localStorage.getItem(user),
+    created: absolute(new Date()),
+    lasttriggered: "none",
+    timestriggered: 0,
+    status: "enabled",
+    recycle: true,
+    conditions: [
+      {
+        address: "/sensors/25/state/flag",
+        operator: "eq",
+        value: "true"
+      },
+      {
+        address: "/sensors/25/state/flag",
+        operator: "dx"
+      }
+    ],
+    actions: [
+      {
+        address: "/sensors/25/state",
+        method: "PUT",
+        body: {
+          flag: false
+        }
+      },
+      {
+        address: "/groups/1/action",
+        method: "PUT",
+        body: {
+          scene: "gbUmfVHl0wFHIsi"
+        }
+      }
+    ]
+  };
+  return obj;
 }

@@ -133,10 +133,10 @@ class RoutineDetails extends Component {
     obj.status = "disabled";
     obj.recycle = "true";
     obj.autodelete = "false";
+    obj.created = absolute(new Date(), null);
     // 1) absolute time, 2) randomized time, 3) recurring time, 4) recurring randomized
     // 4) intervals, 5) timers
     // fade time into lightstates scene edit
-    obj.created = absolute(new Date(), null);
     if ( // recurring time
       Object.keys(days).some(function(day) {
         return days[day];
@@ -162,13 +162,17 @@ class RoutineDetails extends Component {
         })
       }
       else resource.links.push("/groups/" + 0)
+      createScene(sceneObject(true, type, lights));
       // create rule
       // resource push rule
-      createScene(sceneObject(true, type, lights));
       // fix scene lightstates / where does timeOff go?
+      // ifTimeoff exists, create new group, and remove a parameter from rules
       // resource push scene
       createScene(sceneObject(false, type, lights));
+      // create rule
+      // resource push rule
       // fix scene lightstates / where does timeOff go?
+      // ifTimeoff exists, create new group, and remove a parameter from rules
       // resource push scene
       obj.command = groupObject(createdScene);
       createSchedule(obj);
