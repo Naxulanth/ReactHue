@@ -22,7 +22,8 @@ import {
   sensorObject,
   groupObject,
   sceneObject,
-  resourceObject
+  resourceObject,
+  ruleObject,
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
@@ -91,7 +92,7 @@ class RoutineDetails extends Component {
       createScene,
       createdSensor,
       createdScene,
-      createdSchedule
+      createdSchedule,
     } = this.props;
     const {
       name,
@@ -124,6 +125,8 @@ class RoutineDetails extends Component {
     obj.status = "disabled";
     obj.recycle = "true";
     obj.autodelete = "false";
+    // 1) absolute time, 2) randomized time, 3) recurring time, 4) recurring randomized
+    // 4) intervals, 5) timers
     obj.created = calibrate(new Date(), null, type);
     if (
       Object.keys(days).some(function(day) {
@@ -143,8 +146,13 @@ class RoutineDetails extends Component {
       createSchedule(obj);
       resource.links.push("/schedules/" + createdSchedule);
       obj.description = shortId + "_trigger end scene";
-      obj.name = shortId;
-      // push group(s)
+      obj.name = shortId
+      if (rooms.length > 0) {
+        rooms.forEach(room => {
+          resource.links.push("/groups/" + room)
+        })
+      }
+      else resource.links.push("/groups/" + 0)
       // create rule
       // resource push rule
       createScene(sceneObject(true, type, lights));
@@ -159,6 +167,7 @@ class RoutineDetails extends Component {
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
+      // random times in /schedule, needs date calculating.
     }
   }
 

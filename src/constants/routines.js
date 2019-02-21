@@ -161,3 +161,7 @@ export function resourceObject(name, type) {
   resource.links = [];
   resource.classid = classid
 }
+
+export function ruleObject() {
+  
+}
