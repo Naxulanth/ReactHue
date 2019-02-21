@@ -21,7 +21,7 @@ const sensors = (state = [], action) => {
     case SENSOR_CREATE.SUCCESS:
       return {
         ...state,
-        createSensor: action.response.data
+        createdSensor: action.response.data[0].success.id
       };
     case SENSOR_CREATE.FAILURE:
       return state;

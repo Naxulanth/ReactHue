@@ -8,3 +8,4 @@ export const SCHEDULES = WRAPPER + '/schedules'
 export const RESOURCES = WRAPPER + '/resourcelinks'
 export const SENSORS = WRAPPER + '/sensors'
 export const RULES = WRAPPER + '/rules'
+

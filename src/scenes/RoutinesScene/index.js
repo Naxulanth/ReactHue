@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Routines from "containers/Routines";
 import { getSchedules } from "actions/schedules";
 import { getResources } from "actions/resources";
 import { getRules } from "actions/rules";
 import { getSensors } from "actions/sensors";
 import { getRooms } from "actions/rooms";
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { getLights } from "actions/lights";
 import "./style.css";
 
 class RoutinesScene extends Component {
@@ -17,13 +18,15 @@ class RoutinesScene extends Component {
       getResources,
       getRules,
       getSensors,
-      getRooms
+      getRooms,
+      getLights
     } = this.props;
     getSchedules();
     getResources();
     getRules();
     getSensors();
     getRooms();
+    getLights();
   }
 
   render() {
@@ -59,7 +62,8 @@ const mapDispatchToProps = dispatch => ({
   getResources: bindActionCreators(getResources.request, dispatch),
   getRules: bindActionCreators(getRules.request, dispatch),
   getSensors: bindActionCreators(getSensors.request, dispatch),
-  getRooms: bindActionCreators(getRooms.request, dispatch)
+  getRooms: bindActionCreators(getRooms.request, dispatch),
+  getLights: bindActionCreators(getLights.request, dispatch)
 });
 
 export default connect(

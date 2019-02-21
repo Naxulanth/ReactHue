@@ -48,7 +48,7 @@ const schedules = (state = [], action) => {
     case SCHEDULE_PUT.SUCCESS:
       return {
         ...state,
-        createdSchedule: action.response.data[0]
+        createdSchedule: action.response.data[0].success.id
       };
     case SCHEDULE_PUT.FAILURE:
       return state;

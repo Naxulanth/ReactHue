@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import shortid from "shortid";
 import uuidv4 from "uuid/v4";
 import PropTypes from "prop-types";
 import Button from "components/Button";
@@ -17,12 +18,17 @@ import {
   wakeSensor,
   sleepSensor,
   timerSensor,
-  otherSensor
+  otherSensor,
+  sensorObject,
+  groupObject,
+  sceneObject,
+  resourceObject
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
+import { calibrate } from "utils/date";
 import "./style.css";
 import moment from "moment";
 
@@ -34,11 +40,12 @@ class RoutineDetails extends Component {
     this.state = {
       name: "",
       days: {},
-      rooms: {},
+      rooms: [],
       fadeSelect: "",
       time: null,
       home: false,
-      timeOff: null
+      timeOff: null,
+      routineLights: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -47,6 +54,7 @@ class RoutineDetails extends Component {
     this.handleCheck = this.handleCheck.bind(this);
     this.handleTime = this.handleTime.bind(this);
     this.handleOffTime = this.handleOffTime.bind(this);
+    this.handleLightCheck = this.handleLightCheck.bind(this);
   }
 
   handleName(e) {
@@ -80,46 +88,108 @@ class RoutineDetails extends Component {
       createRule,
       createResource,
       createSensor,
-      createScene
+      createScene,
+      createdSensor,
+      createdScene
     } = this.props;
-    const { name, days, rooms, home, time, timeOff } = this.state;
+    const {
+      name,
+      days,
+      rooms,
+      home,
+      time,
+      timeOff,
+      routineLights
+    } = this.state;
+    const { roomList } = this.props;
     let obj = {};
-    obj.description = type;
-    obj.name = name;
-    obj.status = "enabled";
+    let resource = resourceObject(name);
+    let shortId = shortid
+      .characters(
+        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
+      )
+      .substr(0, 16);
+    let lights = [];
+    if (routineLights.length < 1) {
+      Object.keys(roomList).forEach(roomKey => {
+        if (Object.keys(rooms).includes(roomKey)) {
+          lights = lights.concat(roomList[roomKey].lights);
+        }
+      });
+    }
+    else {
+      lights = routineLights;
+    }
+    obj.status = "disabled";
+    obj.recycle = "true";
+    obj.autodelete = "false";
+    obj.created = calibrate(new Date(), null, type);
+    if (
+      Object.keys(days).some(function(day) {
+        return days[day];
+      })
+    ) {
+      obj.localtime = null; // fix this
+    } else {
+      obj.localtime = calibrate(time, null, type);
+    }
     if (type === "wake") {
-      obj.timeOff = timeOff;
       createSensor(wakeSensor);
+      resource.links.push("/sensors/" + createdSensor);
+      obj.description = shortId + "_start wake up";
+      obj.name = name;
+      obj.command = sensorObject(createdSensor);
+      createSchedule(obj);
+      // resource push sched
+      obj.description = shortId + "_trigger end scene";
+      obj.name = shortId;
+      createScene(sceneObject(true, type, lights));
+      // fix scene lightstates
+      // resource push scene
+      createScene(sceneObject(false, type, lights));
+      // fix scene lightstates
+      // resource push scene
+      obj.command = groupObject(createdScene);
+      createSchedule(obj);
+      // resource push sched
+      // create rule
+      // resource push rule
+    } else if (type === "sleep") {
+    } else if (type === "routines") {
+      // 1 scene for each group, group 0 for home
     }
-    else if (type === "sleep") {
-
-    }
-    else if (type === "routines") {
-
-    }
-    // scene
-    // schedule
-    // rule
-    // resource
   }
 
-  handleCheck(e) {
-    const name = e.target.getAttribute("name");
+  handleCheck(roomKey) {
     const { rooms, home } = this.state;
     let tempRooms = rooms;
-    console.log(name);
-    if (name === "home") {
+    if (!roomKey) {
       this.setState({
         home: !home,
-        rooms: {}
+        rooms: []
       });
     } else {
-      tempRooms[name] = !rooms[name];
+      let keyIndex = tempRooms.indexOf(roomKey);
+      if (keyIndex > -1) {
+        tempRooms.splice(keyIndex, 1);
+      } else tempRooms.push(roomKey);
       this.setState({
         rooms: tempRooms,
         home: false
       });
     }
+  }
+
+  handleLightCheck(lightKey) {
+    const { routineLights } = this.state;
+    let tempLights = routineLights;
+    let keyIndex = tempLights.indexOf(lightKey);
+    if (keyIndex > -1) {
+      tempLights.splice(keyIndex, 1);
+    } else tempLights.push(lightKey);
+    this.setState({
+      routineLights: tempLights
+    });
   }
 
   getDays(days) {
@@ -134,28 +204,64 @@ class RoutineDetails extends Component {
       handleFade,
       handleCheck,
       handleOffTime,
-      handleTime
+      handleTime,
+      handleLightCheck
     } = this;
-    const { name, fadeSelect, days, rooms, home, time, timeOff } = this.state;
-    const { type, roomList } = this.props;
+    const {
+      name,
+      fadeSelect,
+      days,
+      rooms,
+      home,
+      time,
+      timeOff,
+      routineLights
+    } = this.state;
+    const { type, roomList, lightList } = this.props;
     const wakeOnly = (
-      <Row className="vertical-center">
-        <Col lg="3" sm="3" md="3" xl="3" />
-        <Col lg="3" sm="3" md="3" xl="3">
-          Turn light(s) off
-        </Col>
-        <Col lg="3" sm="3" md="3" xl="3">
-          <TimePicker
-            placeholder={"Pick time"}
-            showSecond={false}
-            use12Hours
-            allowEmpty={false}
-            value={timeOff}
-            onChange={handleOffTime}
-          />
-        </Col>
-        <Col lg="3" sm="3" md="3" xl="3" />
-      </Row>
+      <Fragment>
+        <Row className="vertical-center center">
+          <Col lg="12" sm="12" md="12" xl="12">
+            {rooms.length > 0
+              ? rooms.map(roomKey => {
+                  const room = roomList[roomKey];
+                  return room.lights.map(lightKey => {
+                    const light = lightList[lightKey];
+                    return (
+                      <Checkbox
+                        key={uuidv4()}
+                        name={light.name}
+                        onChange={() => {
+                          handleLightCheck(lightKey);
+                        }}
+                        checked={routineLights.includes(lightKey)}
+                      >
+                        {light.name}
+                      </Checkbox>
+                    );
+                  });
+                })
+              : null}
+          </Col>
+        </Row>
+        <Row className="vertical-center">
+          <Col lg="3" sm="3" md="3" xl="3" />
+          <Col lg="3" sm="3" md="3" xl="3">
+            Turn light(s) off
+          </Col>
+          <Col lg="3" sm="3" md="3" xl="3">
+            <TimePicker
+              placeholder={"Pick time"}
+              showSecond={false}
+              use12Hours
+              allowEmpty={false}
+              value={timeOff}
+              onChange={handleOffTime}
+            />
+          </Col>
+          <Col lg="3" sm="3" md="3" xl="3" />
+        </Row>
+      </Fragment>
     );
     return (
       <div className="routine-details">
@@ -214,7 +320,13 @@ class RoutineDetails extends Component {
         </Row>
         <Row className="vertical-center center">
           <Col lg="12" sm="12" md="12" xl="12">
-            <Checkbox name={"home"} onChange={handleCheck} checked={home}>
+            <Checkbox
+              name={"home"}
+              onChange={() => {
+                handleCheck();
+              }}
+              checked={home}
+            >
               Home
             </Checkbox>
             {roomList
@@ -224,8 +336,10 @@ class RoutineDetails extends Component {
                     <Checkbox
                       key={uuidv4()}
                       name={room.name}
-                      onChange={handleCheck}
-                      checked={!!rooms[room.name]}
+                      onChange={() => {
+                        handleCheck(roomKey);
+                      }}
+                      checked={rooms.includes(roomKey)}
                     >
                       {room.name}
                     </Checkbox>
@@ -248,7 +362,10 @@ class RoutineDetails extends Component {
 }
 
 const mapStateToProps = state => ({
-  roomList: state.rooms.list
+  roomList: state.rooms.list,
+  lightList: state.lights.list,
+  createdSensor: state.sensors.createdSensor,
+  createdScene: state.scenes.createdScene
 });
 
 const mapDispatchToProps = dispatch => ({

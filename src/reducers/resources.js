@@ -21,7 +21,7 @@ const resources = (state = [], action) => {
     case RESOURCE_CREATE.SUCCESS:
       return {
         ...state,
-        createdResource: action.response.data
+        createdResource: action.response.data[0].success.id
       };
     case RESOURCE_CREATE.FAILURE:
       return state;

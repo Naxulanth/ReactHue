@@ -1,4 +1,6 @@
 import shortid from "shortid";
+import { SENSORS, GROUPS } from "constants/endpoints";
+import { user } from "constants/localStorage";
 
 export const timerSensor = {
   state: {
@@ -87,3 +89,70 @@ export const otherSensor = {
     .substr(0, 16),
   recycle: true
 };
+
+export function sensorObject(createdSensor) {
+  return {
+    address: SENSORS + "/" + createdSensor + "/state",
+    body: {
+      flag: true
+    },
+    method: "PUT"
+  };
+}
+
+export function groupObject(scene) {
+  return {
+    address: GROUPS + "/0/action",
+    body: {
+      scene: scene
+    },
+    method: "PUT"
+  };
+}
+
+export function sceneObject(init, type, lights, group) {
+  let name = "";
+  let sceneType = "";
+  if (type === "wake") {
+    name = "Wake Up " + init ? "init" : "end";
+    sceneType = "LightScene";
+  }
+  else if (type === "sleep") {
+    name = "Go to sleep " + init ? "start" : "end";
+    sceneType = "LightScene";
+  }
+  else if (type === "routines") {
+
+  }
+  else if (type === "timers") {
+
+  }
+  let obj = {
+    name: name,
+    type: sceneType,
+    lights: lights,
+    owner: localStorage.getItem(user),
+    recycle: true,
+    locked: true,
+    appdata: {},
+    picture: "",
+    lastupdated: new Date(),
+    version: 2
+  };
+  if (sceneType === "GroupScene") {
+    obj['group'] = group;
+  }
+
+  return obj
+}
+
+
+export function resourceObject(name) {
+  let resource = {};
+  resource.name = name;
+  resource.description = name + ' behavior'
+  resource.type = "Link"
+  resource.owner = localStorage.getItem(user)
+  resource.recycle = false;
+  resource.links = [];
+}

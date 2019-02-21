@@ -21,7 +21,7 @@ const rules = (state = [], action) => {
     case RULE_CREATE.SUCCESS:
       return {
         ...state,
-        createRule: action.response.data
+        createdRule: action.response.data[0].success.id
       };
     case RULE_CREATE.FAILURE:
       return state;
