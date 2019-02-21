@@ -147,12 +147,17 @@ export function sceneObject(init, type, lights, group) {
 }
 
 
-export function resourceObject(name) {
+export function resourceObject(name, type) {
+  let classid = null;
+  if (type === "wake") classid = 1;
+  else if (type === "sleep") classid = 2;
+  else if (type === "routines") classid = 3;
+  else classid = 4;
   let resource = {};
   resource.name = name;
   resource.description = name + ' behavior'
-  resource.type = "Link"
   resource.owner = localStorage.getItem(user)
   resource.recycle = false;
   resource.links = [];
+  resource.classid = classid
 }

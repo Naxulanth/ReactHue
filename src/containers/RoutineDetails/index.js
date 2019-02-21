@@ -90,7 +90,8 @@ class RoutineDetails extends Component {
       createSensor,
       createScene,
       createdSensor,
-      createdScene
+      createdScene,
+      createdSchedule
     } = this.props;
     const {
       name,
@@ -103,7 +104,7 @@ class RoutineDetails extends Component {
     } = this.state;
     const { roomList } = this.props;
     let obj = {};
-    let resource = resourceObject(name);
+    let resource = resourceObject(name, type);
     let shortId = shortid
       .characters(
         "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
@@ -140,20 +141,21 @@ class RoutineDetails extends Component {
       obj.name = name;
       obj.command = sensorObject(createdSensor);
       createSchedule(obj);
-      // resource push sched
+      resource.links.push("/schedules/" + createdSchedule);
       obj.description = shortId + "_trigger end scene";
       obj.name = shortId;
+      // push group(s)
+      // create rule
+      // resource push rule
       createScene(sceneObject(true, type, lights));
-      // fix scene lightstates
+      // fix scene lightstates / where does timeOff go?
       // resource push scene
       createScene(sceneObject(false, type, lights));
-      // fix scene lightstates
+      // fix scene lightstates / where does timeOff go?
       // resource push scene
       obj.command = groupObject(createdScene);
       createSchedule(obj);
       // resource push sched
-      // create rule
-      // resource push rule
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
@@ -365,7 +367,8 @@ const mapStateToProps = state => ({
   roomList: state.rooms.list,
   lightList: state.lights.list,
   createdSensor: state.sensors.createdSensor,
-  createdScene: state.scenes.createdScene
+  createdScene: state.scenes.createdScene,
+  createdSchedule: state.schedules.createdSchedule,
 });
 
 const mapDispatchToProps = dispatch => ({
