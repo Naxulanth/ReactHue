@@ -29,7 +29,7 @@ import Checkbox from "components/Checkbox";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
-import { calibrate } from "utils/date";
+import { absolute } from "utils/date";
 import "./style.css";
 import moment from "moment";
 
@@ -127,15 +127,16 @@ class RoutineDetails extends Component {
     obj.autodelete = "false";
     // 1) absolute time, 2) randomized time, 3) recurring time, 4) recurring randomized
     // 4) intervals, 5) timers
-    obj.created = calibrate(new Date(), null, type);
-    if (
+    // fade time into lightstates scene edit
+    obj.created = absolute(new Date(), null);
+    if ( // recurring time
       Object.keys(days).some(function(day) {
         return days[day];
       })
     ) {
       obj.localtime = null; // fix this
-    } else {
-      obj.localtime = calibrate(time, null, type);
+    } else { // absolute time
+      obj.localtime = absolute(time, null);
     }
     if (type === "wake") {
       createSensor(wakeSensor);
@@ -265,7 +266,7 @@ class RoutineDetails extends Component {
               placeholder={"Pick time"}
               showSecond={false}
               use12Hours
-              allowEmpty={false}
+              allowEmpty={true}
               value={timeOff}
               onChange={handleOffTime}
             />
