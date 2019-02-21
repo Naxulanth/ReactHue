@@ -58,6 +58,14 @@ class RoutineDetails extends Component {
     this.handleLightCheck = this.handleLightCheck.bind(this);
   }
 
+  componentDidMount() {
+    if (this.props.scheduleId) { // edit mode
+      this.setState({
+        
+      })
+    }
+  }
+
   handleName(e) {
     this.setState({
       name: e.target.value
