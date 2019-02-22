@@ -265,14 +265,24 @@ export function createLightstates(lights, fade, type, init) {
     on: true,
     bri: 1,
     ct: 447,
-    transitiontime: parseInt(fade) - 1 * 6
+  };
+  let sleepInit = {
+    bri: 144,
+    ct: 447,
+    transitiontime: 600
+  };
+  let sleepEnd = {
+    on: false,
+    bri: 1,
+    ct: 447,
+    transitiontime: parseInt(fade) - 1 * 60
   };
   if (type === "wake") {
     if (init) obj = wakeInit;
-    else obj = wakeEnd
-  }
-  else if (type === "sleep") {
-    
+    else obj = wakeEnd;
+  } else if (type === "sleep") {
+    if (init) obj = sleepInit;
+    else obj = sleepEnd;
   }
   lights.forEach(light => {
     result[light] = obj;
