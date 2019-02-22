@@ -18,3 +18,11 @@ export function absolute(localtime, time) {
   console.log(localtime);
   return localtime;
 }
+
+export function recurring(time) {
+
+}
+
+export function randomized(time) {
+
+}
