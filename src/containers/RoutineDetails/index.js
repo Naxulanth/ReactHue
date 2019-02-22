@@ -13,7 +13,7 @@ import { createSchedule } from "actions/schedules";
 import { createResource } from "actions/resources";
 import { createRule } from "actions/rules";
 import { createSensor } from "actions/sensors";
-import { createScene } from "actions/scenes";
+import { createScene, modifyScene } from "actions/scenes";
 import {
   wakeSensor,
   sleepSensor,
@@ -23,7 +23,7 @@ import {
   groupObject,
   sceneObject,
   resourceObject,
-  ruleObject,
+  ruleObject
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
@@ -59,10 +59,9 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    if (this.props.scheduleId) { // edit mode
-      this.setState({
-        
-      })
+    if (this.props.scheduleId) {
+      // edit mode
+      this.setState({});
     }
   }
 
@@ -100,7 +99,7 @@ class RoutineDetails extends Component {
       createScene,
       createdSensor,
       createdScene,
-      createdSchedule,
+      createdSchedule
     } = this.props;
     const {
       name,
@@ -126,8 +125,7 @@ class RoutineDetails extends Component {
           lights = lights.concat(roomList[roomKey].lights);
         }
       });
-    }
-    else {
+    } else {
       lights = routineLights;
     }
     obj.status = "disabled";
@@ -138,13 +136,15 @@ class RoutineDetails extends Component {
     // 1) absolute time, 2) randomized time, 3) recurring time, 4) recurring randomized
     // 4) intervals, 5) timers
     // fade time into lightstates scene edit
-    if ( // recurring time
+    if (
+      // recurring time
       Object.keys(days).some(function(day) {
         return days[day];
       })
     ) {
       obj.localtime = null; // fix this
-    } else { // absolute time
+    } else {
+      // absolute time
       obj.localtime = absolute(time, null);
     }
     if (type === "wake") {
@@ -156,24 +156,35 @@ class RoutineDetails extends Component {
       createSchedule(obj);
       resource.links.push("/schedules/" + createdSchedule);
       obj.description = shortId + "_trigger end scene";
-      obj.name = shortId
+      obj.name = shortId;
       if (rooms.length > 0) {
         rooms.forEach(room => {
-          resource.links.push("/groups/" + room)
-        })
-      }
-      else resource.links.push("/groups/" + 0)
+          resource.links.push("/groups/" + room);
+        });
+      } else resource.links.push("/groups/" + 0);
       createScene(sceneObject(false, type, lights));
-      resource.links.push("/scenes/" + createdScene)
+      modifyScene(createdScene, {});
+      resource.links.push("/scenes/" + createdScene);
       obj.command = groupObject(createdScene);
       createSchedule(obj);
       createScene(sceneObject(true, type, lights));
-      resource.links.push("/scenes/" + createdScene)
+      modifyScene(createdScene, {});
+      resource.links.push("/scenes/" + createdScene);
       // fix scene lightstates depending on fade etc...
       // ifTimeoff exists, create new group, and remove a parameter from rules
-      createRule(ruleObject(name, createdSensor, createdScene, groups, createdSchedule, true, timeOff))
-      resource.links.push("/schedules/" + createdSchedule)
-      resource.links.push("/rules/" + createdRule)
+      createRule(
+        ruleObject(
+          name,
+          createdSensor,
+          createdScene,
+          groups,
+          createdSchedule,
+          true,
+          timeOff
+        )
+      );
+      resource.links.push("/schedules/" + createdSchedule);
+      resource.links.push("/rules/" + createdRule);
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
@@ -387,7 +398,7 @@ const mapStateToProps = state => ({
   lightList: state.lights.list,
   createdSensor: state.sensors.createdSensor,
   createdScene: state.scenes.createdScene,
-  createdSchedule: state.schedules.createdSchedule,
+  createdSchedule: state.schedules.createdSchedule
 });
 
 const mapDispatchToProps = dispatch => ({
