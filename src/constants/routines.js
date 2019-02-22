@@ -162,43 +162,94 @@ export function ruleObject(
   createdSensor,
   createdScene,
   groups,
-  createdSchedule
+  createdSchedule,
+  init,
+  endTime
 ) {
-  let obj = {
-    name: name + " rule",
-    owner: localStorage.getItem(user),
-    created: absolute(new Date()),
-    lasttriggered: "none",
-    timestriggered: 0,
-    status: "enabled",
-    recycle: true,
-    conditions: [
+  let dx = {
+    address: "/sensors/" + createdSensor + "/state/flag",
+    operator: "dx"
+  };
+}
+let actionSensor = {
+  address: "/sensors/" + createdSensor + "/state",
+  method: "PUT",
+  body: {
+    flag: false
+  }
+};
+let ddx = {
+  address: "/sensors/" + createdSensor + "/state/flag",
+  operator: "ddx",
+  value: endTime // fix this date format
+};
+let wakeSchedule = {
+  address: "/schedules/" + createdSchedule,
+  method: "PUT",
+  body: {
+    status: "enabled"
+  }
+};
+function addScenes(obj, groups) {
+  if (groups.length < 1) {
+    obj.actions.push(
       {
-        address: "/sensors/25/state/flag",
-        operator: "eq",
-        value: "true"
-      },
-      {
-        address: "/sensors/25/state/flag",
-        operator: "dx"
-      }
-    ],
-    actions: [
-      {
-        address: "/sensors/25/state",
-        method: "PUT",
-        body: {
-          flag: false
-        }
-      },
-      {
-        address: "/groups/1/action",
+        address: "/groups/0/action",
         method: "PUT",
         body: {
           scene: "gbUmfVHl0wFHIsi"
         }
+    )
+  }
+}
+  else groups.forEach(group => {
+    let scene = {
+      address: "/groups/" + group + "/action",
+      method: "PUT",
+      body: {
+        scene: createdScene
       }
-    ]
-  };
+    };
+    obj.actions.push(scene)
+  });
+}
+let obj = {
+  name: name + " rule",
+  owner: localStorage.getItem(user),
+  created: absolute(new Date()),
+  lasttriggered: "none",
+  timestriggered: 0,
+  status: "enabled",
+  recycle: true,
+  conditions: [
+    {
+      address: "/sensors/" + createdSensor + "/state/flag",
+      operator: "eq",
+      value: "true"
+    }
+  ],
+  actions: [
+    {
+      address: "/sensors" + createdSensor + "state",
+      method: "PUT",
+      body: {
+        flag: false
+      }
+    }
+  ]
+};
+if (type === "wake") {
+  obj.actions.push(wakeSchedule);
+}
+if (init && (type === "timers" || type === "routines")) {
+  obj.conditions.push(dx);
+}
+if (!init) {
+  obj.conditions.push(ddx);
+  if (!init || (type !== "sleep" && type !== "routines")) {
+    obj.actions.push(actionSensor);
+  }
+  addScenes(obj, groups);
+  // timeoff needs fixing.
   return obj;
 }

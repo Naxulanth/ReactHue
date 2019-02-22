@@ -134,6 +134,7 @@ class RoutineDetails extends Component {
     obj.recycle = "true";
     obj.autodelete = "false";
     obj.created = absolute(new Date(), null);
+    if (timeOff) obj.timeOff = timeOff;
     // 1) absolute time, 2) randomized time, 3) recurring time, 4) recurring randomized
     // 4) intervals, 5) timers
     // fade time into lightstates scene edit
@@ -162,25 +163,21 @@ class RoutineDetails extends Component {
         })
       }
       else resource.links.push("/groups/" + 0)
-      createScene(sceneObject(true, type, lights));
-      // create rule
-      // resource push rule
-      // fix scene lightstates / where does timeOff go?
-      // ifTimeoff exists, create new group, and remove a parameter from rules
-      // resource push scene
       createScene(sceneObject(false, type, lights));
-      // create rule
-      // resource push rule
-      // fix scene lightstates / where does timeOff go?
-      // ifTimeoff exists, create new group, and remove a parameter from rules
-      // resource push scene
+      resource.links.push("/scenes/" + createdScene)
       obj.command = groupObject(createdScene);
       createSchedule(obj);
-      // resource push sched
+      createScene(sceneObject(true, type, lights));
+      resource.links.push("/scenes/" + createdScene)
+      // fix scene lightstates depending on fade etc...
+      // ifTimeoff exists, create new group, and remove a parameter from rules
+      createRule(ruleObject(name, createdSensor, createdScene, groups, createdSchedule, true, timeOff))
+      resource.links.push("/schedules/" + createdSchedule)
+      resource.links.push("/rules/" + createdRule)
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
-      // random times in /schedule, needs date calculating.
+      // random times in /schedule, needs date calculating. turn rooms off at @ rules routine end
     }
   }
 
