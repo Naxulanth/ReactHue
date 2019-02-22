@@ -23,7 +23,8 @@ import {
   groupObject,
   sceneObject,
   resourceObject,
-  ruleObject
+  ruleObject,
+  createLightstates
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
@@ -163,12 +164,18 @@ class RoutineDetails extends Component {
         });
       } else resource.links.push("/groups/" + 0);
       createScene(sceneObject(false, type, lights));
-      modifyScene(createdScene, {});
+      modifyScene(
+        createdScene,
+        createLightstates(lights, fadeSelect, type, false)
+      );
       resource.links.push("/scenes/" + createdScene);
       obj.command = groupObject(createdScene);
       createSchedule(obj);
       createScene(sceneObject(true, type, lights));
-      modifyScene(createdScene, {});
+      modifyScene(
+        createdScene,
+        createLightstates(lights, fadeSelect, type, true)
+      );
       resource.links.push("/scenes/" + createdScene);
       // fix scene lightstates depending on fade etc...
       // ifTimeoff exists, create new group, and remove a parameter from rules

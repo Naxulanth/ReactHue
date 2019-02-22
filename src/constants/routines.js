@@ -192,26 +192,24 @@ let wakeSchedule = {
 };
 function addScenes(obj, groups) {
   if (groups.length < 1) {
-    obj.actions.push(
-      {
-        address: "/groups/0/action",
-        method: "PUT",
-        body: {
-          scene: "gbUmfVHl0wFHIsi"
-        }
-    )
-  }
-}
-  else groups.forEach(group => {
-    let scene = {
-      address: "/groups/" + group + "/action",
+    obj.actions.push({
+      address: "/groups/0/action",
       method: "PUT",
       body: {
-        scene: createdScene
+        scene: "gbUmfVHl0wFHIsi"
       }
-    };
-    obj.actions.push(scene)
-  });
+    });
+  } else
+    groups.forEach(group => {
+      let scene = {
+        address: "/groups/" + group + "/action",
+        method: "PUT",
+        body: {
+          scene: createdScene
+        }
+      };
+      obj.actions.push(scene);
+    });
 }
 let obj = {
   name: name + " rule",
@@ -252,4 +250,32 @@ if (!init) {
   addScenes(obj, groups);
   // timeoff needs fixing.
   return obj;
+}
+
+export function createLightstates(lights, fade, type, init) {
+  let result = {};
+  let obj = {};
+  let wakeEnd = {
+    on: true,
+    bri: 254,
+    ct: 447,
+    transitiontime: parseInt(fade) - 1 * 60
+  };
+  let wakeInit = {
+    on: true,
+    bri: 1,
+    ct: 447,
+    transitiontime: parseInt(fade) - 1 * 6
+  };
+  if (type === "wake") {
+    if (init) obj = wakeInit;
+    else obj = wakeEnd
+  }
+  else if (type === "sleep") {
+    
+  }
+  lights.forEach(light => {
+    result[light] = obj;
+  });
+  return result;
 }
