@@ -164,13 +164,13 @@ export function ruleObject(
   groups,
   createdSchedule,
   init,
-  endTime
+  endTime,
+  type
 ) {
   let dx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"
   };
-}
 let actionSensor = {
   address: "/sensors/" + createdSensor + "/state",
   method: "PUT",
@@ -251,6 +251,7 @@ if (!init) {
   // timeoff needs fixing.
   return obj;
 }
+}
 
 export function createLightstates(lights, fade, type, init) {
   let result = {};
@@ -264,7 +265,7 @@ export function createLightstates(lights, fade, type, init) {
   let wakeInit = {
     on: true,
     bri: 1,
-    ct: 447,
+    ct: 447
   };
   let sleepInit = {
     bri: 144,
@@ -283,6 +284,8 @@ export function createLightstates(lights, fade, type, init) {
   } else if (type === "sleep") {
     if (init) obj = sleepInit;
     else obj = sleepEnd;
+  } else if (type === "routines") {
+  } else if (type === "timers") {
   }
   lights.forEach(light => {
     result[light] = obj;

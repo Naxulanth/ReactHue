@@ -38,7 +38,8 @@ const GlobalStyle = createGlobalStyle`
 
   .vertical-center {
     align-items: center;
-    margin-bottom: 15px;
+    margin-top: 7.5px !important;
+    margin-bottom: 7.5px !important;
 }
 
 .child {

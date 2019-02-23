@@ -28,7 +28,7 @@ import {
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
-import { wakeFade, sleepFade, otherFade } from "constants/fade";
+import { wakeFade, sleepFade, otherFade, adjustment } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
 import { absolute } from "utils/date";
 import "./style.css";
@@ -47,7 +47,8 @@ class RoutineDetails extends Component {
       time: null,
       home: false,
       timeOff: null,
-      routineLights: []
+      routineLights: [],
+      adjustmentSelect: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -57,6 +58,7 @@ class RoutineDetails extends Component {
     this.handleTime = this.handleTime.bind(this);
     this.handleOffTime = this.handleOffTime.bind(this);
     this.handleLightCheck = this.handleLightCheck.bind(this);
+    this.handleAdjustment = this.handleAdjustment.bind(this);
   }
 
   componentDidMount() {
@@ -90,6 +92,12 @@ class RoutineDetails extends Component {
     });
   }
 
+  handleAdjustment(e) {
+    this.setState({
+      adjustmentSelect: e
+    });
+  }
+
   handleSubmit(e) {
     const {
       type,
@@ -100,7 +108,8 @@ class RoutineDetails extends Component {
       createScene,
       createdSensor,
       createdScene,
-      createdSchedule
+      createdSchedule,
+      createdRule
     } = this.props;
     const {
       name,
@@ -109,7 +118,9 @@ class RoutineDetails extends Component {
       home,
       time,
       timeOff,
-      routineLights
+      routineLights,
+      fadeSelect,
+      groups
     } = this.state;
     const { roomList } = this.props;
     let obj = {};
@@ -187,7 +198,8 @@ class RoutineDetails extends Component {
           groups,
           createdSchedule,
           true,
-          timeOff
+          timeOff,
+          type
         )
       );
       resource.links.push("/schedules/" + createdSchedule);
@@ -244,7 +256,8 @@ class RoutineDetails extends Component {
       handleCheck,
       handleOffTime,
       handleTime,
-      handleLightCheck
+      handleLightCheck,
+      handleAdjustment
     } = this;
     const {
       name,
@@ -254,9 +267,36 @@ class RoutineDetails extends Component {
       home,
       time,
       timeOff,
-      routineLights
+      routineLights,
+      adjustmentSelect
     } = this.state;
     const { type, roomList, lightList } = this.props;
+    const adjustmentField = (
+      <Fragment>
+        <Select
+          placeholder={"Random times"}
+          value={adjustmentSelect}
+          onChange={handleAdjustment}
+          styles={selectStyle}
+          options={adjustment}
+        />
+        <Row className="vertical-center">
+          <Col lg="5" sm="5" md="5" xl="5">
+            Turn light(s) off
+          </Col>
+          <Col lg="7" sm="7" md="7" xl="7">
+            <TimePicker
+              placeholder={"Pick time"}
+              showSecond={false}
+              use12Hours
+              allowEmpty={true}
+              value={timeOff}
+              onChange={handleOffTime}
+            />
+          </Col>
+        </Row>
+      </Fragment>
+    );
     const wakeOnly = (
       <Fragment>
         <Row className="vertical-center center">
@@ -346,9 +386,10 @@ class RoutineDetails extends Component {
         </Row>
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
-          <Col className="center" lg="3" sm="3" md="3" xl="3" />
+          <Col className="center" lg="6" sm="6" md="6" xl="6">
+            {type === "routines" ? adjustmentField : null}
+          </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
-          <Col lg="6" sm="6" md="6" xl="6" />
         </Row>
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
