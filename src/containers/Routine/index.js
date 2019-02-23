@@ -63,7 +63,7 @@ class Routine extends Component {
     const { details } = this.state;
     if (schedules && schedules[type]) {
       return (
-        <Fragment className="routine-single">
+        <div className="routine-single">
           <Row>
             <Col lg="1" />
             <Col sm="7" md="7" lg="7" xl="7">
@@ -85,7 +85,7 @@ class Routine extends Component {
               {details ? <RoutineDetails edit /> : null}
             </Col>
           </Row>
-        </Fragment>
+        </div>
       );
     } else return null;
   }
