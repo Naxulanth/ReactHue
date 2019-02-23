@@ -38,8 +38,8 @@ const GlobalStyle = createGlobalStyle`
 
   .vertical-center {
     align-items: center;
-    margin-top: 7.5px !important;
-    margin-bottom: 7.5px !important;
+    margin-top: 7.5px;
+    margin-bottom: 7.5px;
 }
 
 .child {
@@ -50,6 +50,10 @@ const GlobalStyle = createGlobalStyle`
     /* maximum width of scrollbar */
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+.last {
+  margin-bottom: 15px !important;
 }
   
 `;

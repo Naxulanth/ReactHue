@@ -323,7 +323,7 @@ class RoutineDetails extends Component {
               : null}
           </Col>
         </Row>
-        <Row className="vertical-center">
+        <Row className="vertical-center last">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col lg="3" sm="3" md="3" xl="3">
             Turn light(s) off

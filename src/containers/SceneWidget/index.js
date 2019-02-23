@@ -184,7 +184,7 @@ class SceneWidget extends Component {
     if (roomScenes.length > 0) {
       return (
         <div ref={this.main} className="scene-widget">
-          <Row>
+          <Row className="vertical-center">
             <Col lg="1" />
             <Col className="center" lg="10">
               <Select
@@ -201,6 +201,12 @@ class SceneWidget extends Component {
                 })}
                 placeholder={"Select scene..."}
               />
+            </Col>
+            <Col lg="1" />
+          </Row>
+          <Row className="vertical-center last">
+            <Col lg="1" />
+            <Col className="center" lg="10">
               {modifyButton}
               {deleteButton}
               {modifyText}
@@ -209,6 +215,12 @@ class SceneWidget extends Component {
                 value={sceneName}
                 onChange={this.handleSceneText}
               />
+            </Col>
+            <Col lg="1" />
+          </Row>
+          <Row className="vertical-center">
+            <Col lg="1" />
+            <Col className="center" lg="10">
               <Button onClick={this.handleSave}>Save</Button>
             </Col>
             <Col lg="1" />
