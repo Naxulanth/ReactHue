@@ -208,7 +208,6 @@ class RoutineDetails extends Component {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
       // random times in /schedule, needs date calculating. turn rooms off at @ rules routine end
-      // theres a check for rnandom times somewhere, need to find it, changing the string not enough
     }
     else if (type === "timers") {
 
@@ -274,7 +273,7 @@ class RoutineDetails extends Component {
       routineLights,
       adjustmentSelect
     } = this.state;
-    const { type, roomList, lightList } = this.props;
+    const { type, roomList, lightList, edit } = this.props;
     const adjustmentField = (
       <Fragment>
         <Select
@@ -436,7 +435,7 @@ class RoutineDetails extends Component {
         <Row className="vertical-center center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col lg="6" sm="6" md="6" xl="6">
-            <Button onClick={handleSubmit}> Create </Button>
+            <Button onClick={handleSubmit}> {edit ? "Submit" : "Create"} </Button>
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>

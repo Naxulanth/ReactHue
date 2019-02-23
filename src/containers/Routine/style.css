@@ -1,3 +1,7 @@
 .routine-single {
     margin-bottom: 15px;
 }
+
+.routine-edit {
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { setSchedule } from "actions/schedules";
@@ -7,12 +7,16 @@ import Toggle from "components/Toggle";
 import { absolute } from "utils/date";
 import { objectToArray } from "utils";
 import "./style.css";
+import RoutineDetails from "../RoutineDetails";
 
 class Routine extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      details: false
+    };
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleDetails = this.handleDetails.bind(this);
     this.findName = this.findName.bind(this);
   }
 
@@ -23,6 +27,13 @@ class Routine extends Component {
     setSchedule(id, {
       status: schedules[type][id].status === "enabled" ? "disabled" : "enabled",
       localtime: localTime
+    });
+  }
+
+  handleDetails() {
+    const { details } = this.state;
+    this.setState({
+      details: !details
     });
   }
 
@@ -47,24 +58,34 @@ class Routine extends Component {
   }
 
   render() {
-    const { handleToggle, findName } = this;
+    const { handleToggle, findName, handleDetails } = this;
     const { schedules, type, id } = this.props;
+    const { details } = this.state;
     if (schedules && schedules[type]) {
       return (
-        <Row className="routine-single">
-          <Col lg="1" />
-          <Col sm="7" md="7" lg="7" xl="7">
-            {type === "sleep" ? findName() : schedules[type][id].name}
-          </Col>
-          <Col lg="3">
-            <Toggle
-              id={id}
-              checked={schedules[type][id].status === "enabled"}
-              onChange={handleToggle}
-            />
-          </Col>
-          <Col lg="1" />
-        </Row>
+        <Fragment className="routine-single">
+          <Row>
+            <Col lg="1" />
+            <Col sm="7" md="7" lg="7" xl="7">
+              <span className="routine-edit" onClick={handleDetails}>
+                {type === "sleep" ? findName() : schedules[type][id].name}
+              </span>
+            </Col>
+            <Col lg="3">
+              <Toggle
+                id={id}
+                checked={schedules[type][id].status === "enabled"}
+                onChange={handleToggle}
+              />
+            </Col>
+            <Col lg="1" />
+          </Row>
+          <Row>
+            <Col sm="12" md="12" lg="12" xl="12">
+              {details ? <RoutineDetails edit /> : null}
+            </Col>
+          </Row>
+        </Fragment>
       );
     } else return null;
   }
