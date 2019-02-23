@@ -2,7 +2,6 @@ import styled from "styled-components";
 
 const TextInput = styled.input`
   font-size: 18px;
-  margin-top: 15px;
   padding: 5px;
   width: 100%;
   height: auto;

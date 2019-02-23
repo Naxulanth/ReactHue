@@ -208,6 +208,10 @@ class RoutineDetails extends Component {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
       // random times in /schedule, needs date calculating. turn rooms off at @ rules routine end
+      // theres a check for rnandom times somewhere, need to find it, changing the string not enough
+    }
+    else if (type === "timers") {
+
     }
   }
 
@@ -344,7 +348,7 @@ class RoutineDetails extends Component {
     );
     return (
       <div className="routine-details">
-        <Row>
+        <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="center" lg="6" sm="6" md="6" xl="6">
             <TextInput
@@ -386,7 +390,7 @@ class RoutineDetails extends Component {
         </Row>
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
-          <Col className="center" lg="6" sm="6" md="6" xl="6">
+          <Col lg="6" sm="6" md="6" xl="6">
             {type === "routines" ? adjustmentField : null}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
@@ -429,9 +433,9 @@ class RoutineDetails extends Component {
           </Col>
         </Row>
         {type === "wake" ? wakeOnly : null}
-        <Row>
+        <Row className="vertical-center center">
           <Col lg="3" sm="3" md="3" xl="3" />
-          <Col className="center" lg="6" sm="6" md="6" xl="6">
+          <Col lg="6" sm="6" md="6" xl="6">
             <Button onClick={handleSubmit}> Create </Button>
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />

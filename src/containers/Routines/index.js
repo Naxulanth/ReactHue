@@ -5,7 +5,6 @@ import { Row, Col } from "reactstrap";
 import Button from "components/Button";
 import Routine from "containers/Routine";
 import RoutineDetails from "containers/RoutineDetails";
-import TimerDetails from "containers/TimerDetails";
 import Animate from "components/Animate";
 import uuidv4 from "uuid/v4";
 import "./style.css";
@@ -58,38 +57,33 @@ class Routines extends Component {
     const { routines, creator } = this.state;
     const { type, schedules } = this.props;
     const { handleCreator } = this;
-    const details =
-      type === "timers" ? (
-        <Animate pose={creator ? "visible" : "hidden"}>
-          <TimerDetails />
-        </Animate>
-      ) : (
-        <Animate pose={creator ? "visible" : "hidden"}>
-          <RoutineDetails type={type} />
-        </Animate>
-      );
+    const details = (
+      <Animate pose={creator ? "visible" : "hidden"}>
+        <RoutineDetails type={type} />
+      </Animate>
+    );
     if (schedules && schedules[type]) {
       return (
         <div className={"routines-main " + type}>
-        <div className="child">
-          <Row className="vertical-center push-bottom">
-            <Col sm="8" md="8" lg="8" xl="8">
-              <RoutineTitle>
-                {" "}
-                {type.charAt(0).toUpperCase() + type.slice(1)}{" "}
-              </RoutineTitle>
-            </Col>
-            <Col className="align-right" sm="4" md="4" lg="4" xl="4">
-              <Button onClick={handleCreator} width="true">
-                {creator ? "Cancel" : "Create"}
-              </Button>
-            </Col>
-          </Row>
-          <div style={{ pointerEvents: creator ? "auto" : "none" }}>
-            {details}
+          <div className="child">
+            <Row className="vertical-center push-bottom">
+              <Col sm="8" md="8" lg="8" xl="8">
+                <RoutineTitle>
+                  {" "}
+                  {type.charAt(0).toUpperCase() + type.slice(1)}{" "}
+                </RoutineTitle>
+              </Col>
+              <Col className="align-right" sm="4" md="4" lg="4" xl="4">
+                <Button onClick={handleCreator} width="true">
+                  {creator ? "Cancel" : "Create"}
+                </Button>
+              </Col>
+            </Row>
+            <div style={{ pointerEvents: creator ? "auto" : "none" }}>
+              {details}
+            </div>
+            {routines}
           </div>
-          {routines}
-        </div>
         </div>
       );
     } else return null;
