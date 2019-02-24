@@ -316,4 +316,5 @@ export function roomObject(lights) {
       colormode: "ct"
     }
   };
+  return obj;
 }
