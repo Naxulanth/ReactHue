@@ -21,7 +21,7 @@ export const modifyRoomAttr = {
 };
 
 export const createRoom = {
-  request: body => action(ROOMS_PUT_ATTR.REQUEST, { body }),
-  success: response => action(ROOMS_PUT_ATTR.SUCCESS, { response }),
-  failure: error => action(ROOMS_PUT_ATTR.FAILURE, { error })
+  request: body => action(ROOMS_CREATE.REQUEST, { body }),
+  success: response => action(ROOMS_CREATE.SUCCESS, { response }),
+  failure: error => action(ROOMS_CREATE.FAILURE, { error })
 };

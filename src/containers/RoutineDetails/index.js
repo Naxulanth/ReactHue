@@ -14,7 +14,7 @@ import { createResource } from "actions/resources";
 import { createRule } from "actions/rules";
 import { createRoom } from "actions/rooms";
 import { createSensor } from "actions/sensors";
-import { createScene, modifyScene, getScenes } from "actions/scenes";
+import { createScene, modifyScene } from "actions/scenes";
 import {
   wakeSensor,
   sleepSensor,
@@ -129,7 +129,9 @@ class RoutineDetails extends Component {
       createdSensor,
       createdScene,
       createdSchedule,
-      createdRule
+      createdRule,
+      createdRoom,
+      createRoom
     } = this.props;
     const {
       name,
@@ -163,17 +165,18 @@ class RoutineDetails extends Component {
     obj.status = "disabled";
     obj.recycle = "true";
     obj.autodelete = "false";
-    obj.created = absolute(new Date());
+    obj.created = absolute(new Date(), null, true);
+    createResource(name, type);
     if (
       // recurring time
       Object.keys(days).some(function(day) {
         return days[day];
       })
     ) {
-      obj.localtime = recur(absolute(time), days);
+      obj.localtime = recur(absolute(time, null, true), days);
     } else {
       // absolute time
-      obj.localtime = absolute(time);
+      obj.localtime = absolute(time, null, true);
     }
     if (type === "wake") {
       createSensor(wakeSensor);
@@ -204,7 +207,6 @@ class RoutineDetails extends Component {
         createLightstates(lights, fadeSelect, type, true)
       );
       resource.links.push("/scenes/" + createdScene);
-      // if Timeoff exists, create new group, and remove a parameter from rules
       createRule(
         ruleObject(
           name,
@@ -247,7 +249,6 @@ class RoutineDetails extends Component {
 
   handleCheck(roomKey) {
     const { rooms, home, roomScenes } = this.state;
-    const { type } = this.props;
     let tempRooms = rooms.slice();
     let tempScenes = roomScenes;
     if (!roomKey) {
@@ -288,7 +289,6 @@ class RoutineDetails extends Component {
 
   handleScene(e, roomKey) {
     const { roomScenes } = this.state;
-    const { scenes } = this.props;
     let tempScenes = roomScenes;
     tempScenes[roomKey] = e;
     this.setState({
@@ -297,7 +297,7 @@ class RoutineDetails extends Component {
   }
 
   sceneSelect() {
-    const { roomList, scenes } = this.props;
+    const { roomList } = this.props;
     const { roomScenes, rooms } = this.state;
     let sceneSelects = {};
     rooms.forEach(roomKey => {
@@ -333,7 +333,6 @@ class RoutineDetails extends Component {
 
   getRoomScenes(room) {
     const { scenes } = this.props;
-    let roomScenes = [];
     return selectifyScenes(scenes, room);
   }
 
@@ -347,22 +346,20 @@ class RoutineDetails extends Component {
       handleOffTime,
       handleTime,
       handleLightCheck,
-      handleAdjustment,
-      sceneSelect
+      handleAdjustment
     } = this;
     const {
       name,
       fadeSelect,
-      days,
       rooms,
       home,
       time,
       timeOff,
       routineLights,
       adjustmentSelect,
-      sceneSelectors,
-      roomScenes
+      sceneSelectors
     } = this.state;
+    console.log(new Date(time));
     const { type, roomList, lightList, edit } = this.props;
     const adjustmentField = (
       <Fragment>

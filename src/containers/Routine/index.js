@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { setSchedule } from "actions/schedules";

@@ -164,7 +164,7 @@ export function ruleObject(
   groups,
   createdSchedule,
   init,
-  endTime,
+  timeOff,
   type
 ) {
   let dx = {
@@ -181,7 +181,7 @@ export function ruleObject(
   let ddx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "ddx",
-    value: endTime // fix this date format (PT time difference)
+    value: timeOff // fix this date format (PT time difference)
   };
   let wakeSchedule = {
     address: "/schedules/" + createdSchedule,
@@ -193,7 +193,7 @@ export function ruleObject(
   let obj = {
     name: name + " rule",
     owner: localStorage.getItem(user),
-    created: absolute(new Date()),
+    created: absolute(new Date(), null, true),
     lasttriggered: "none",
     timestriggered: 0,
     status: "enabled",
@@ -227,7 +227,7 @@ export function ruleObject(
   if (!timeOff && (!init || (type !== "sleep" && type !== "routines"))) {
     obj.actions.push(actionSensor);
   }
-  if (!(!init && type === "wake")) addScenes(obj, groups);
+  if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
   return obj;
 }
 
@@ -271,13 +271,13 @@ export function createLightstates(lights, fade, type, init) {
   return result;
 }
 
-function addScenes(obj, groups) {
+function addScenes(obj, groups, createdScene) {
   if (groups.length < 1) {
     obj.actions.push({
       address: "/groups/0/action",
       method: "PUT",
       body: {
-        scene: "gbUmfVHl0wFHIsi"
+        scene: createdScene
       }
     });
   } else

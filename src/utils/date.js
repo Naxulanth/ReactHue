@@ -1,11 +1,13 @@
-export function absolute(localtime, time) {
+export function absolute(localtime, time, raw) {
   let today = new Date();
   let offset = today.getTimezoneOffset() / 60;
-  if (!localtime) {
-    localtime = new Date(unrecur(unrandomize(time)) + "Z");
-    localtime.setUTCHours(localtime.getUTCHours() - offset);
-  } else {
-    localtime = new Date(unrecur(unrandomize(localtime)) + "Z");
+  if (!raw) {
+    if (!localtime) {
+      localtime = new Date(unrecur(unrandomize(time)) + "Z");
+      localtime.setUTCHours(localtime.getUTCHours() - offset);
+    } else {
+      localtime = new Date(unrecur(unrandomize(localtime)) + "Z");
+    }
   }
   localtime.setDate(today.getDate());
   localtime.setMonth(today.getMonth());
@@ -34,7 +36,7 @@ export function recur(time, days) {
   });
   acc = ("000" + acc).slice(-4);
   let prefix = "W" + acc + "/";
-  return acc + time;
+  return prefix + time;
 }
 export function randomize(time, interval) {
   if (interval == 60) return time + "A01:00:00";

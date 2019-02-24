@@ -62,6 +62,6 @@ export function* createRoom({ body }) {
   }
 }
 
-export function* watchcreateRoom() {
+export function* watchCreateRoom() {
   yield takeLatest(ROOMS_CREATE.REQUEST, createRoom);
 }
