@@ -38,12 +38,12 @@ export function* createRoutine({ body }) {
   try {
     let state = body.state;
     let props = body.props;
-    let obj = {};
+    let firstSchedule = {};
     let resource = resourceObject(state.name, props.type);
     shortid.characters(
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
     );
-    let shortId = shortid.generate()
+    let shortId = shortid.generate();
     let lights = [];
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
@@ -54,34 +54,38 @@ export function* createRoutine({ body }) {
     } else {
       lights = state.routineLights;
     }
-    obj.status = "disabled";
-    obj.recycle = true;
-    obj.autodelete = false;
+    firstSchedule.status = "disabled";
+    firstSchedule.recycle = true;
+    firstSchedule.autodelete = false;
     if (
       // recurring time
       Object.keys(state.days).some(function(day) {
         return state.days[day];
       })
     ) {
-      obj.localtime = recur(absolute(state.time, null, true), state.days);
+      firstSchedule.localtime = recur(
+        absolute(state.time, null, true),
+        state.days
+      );
     } else {
       // absolute time
-      obj.localtime = absolute(state.time, null, true);
+      firstSchedule.localtime = absolute(state.time, null, true);
     }
     if (props.type === "wake") {
       const sensor = yield call(sensorsApi.createSensor, wakeSensor);
       yield put(sensorsActions.createSensor.success(sensor));
       let sensorId = sensor.data[0].success.id;
       resource.links.push("/sensors/" + sensorId);
-      obj.description = shortId + "_start wake up";
-      obj.name = state.name;
-      obj.command = sensorObject(sensorId);
-      const schedule = yield call(schedulesApi.createSchedule, obj);
-      yield put(schedulesActions.createSchedule.success(schedule));
-      let scheduleId = schedule.data[0].success.id;
-      resource.links.push("/schedules/" + scheduleId);
-      obj.description = shortId + "_trigger end scene";
-      obj.name = shortId;
+      firstSchedule.description = shortId + "_start wake up";
+      firstSchedule.name = state.name;
+      firstSchedule.command = sensorObject(sensorId);
+      const firstScheduleData = yield call(schedulesApi.createSchedule, firstSchedule);
+      yield put(schedulesActions.createSchedule.success(firstScheduleData));
+      let firstScheduleId = firstScheduleData.data[0].success.id;
+      resource.links.push("/schedules/" + firstScheduleId);
+      let secondSchedule = Object.assign({}, firstSchedule);
+      secondSchedule.description = shortId + "_trigger end scene";
+      secondSchedule.name = shortId;
     }
   } catch (e) {}
 }
