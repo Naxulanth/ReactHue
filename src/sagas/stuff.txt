@@ -1,0 +1,59 @@
+
+      if (rooms.length > 0) {
+        rooms.forEach(room => {
+          resource.links.push("/groups/" + room);
+        });
+      } else resource.links.push("/groups/" + 0);
+      createScene(sceneObject(false, type, lights));
+      modifyScene(
+        createdScene,
+        createLightstates(lights, fadeSelect, type, false)
+      );
+      resource.links.push("/scenes/" + createdScene);
+      obj.command = groupObject(createdScene);
+      createSchedule(obj);
+      createScene(sceneObject(true, type, lights));
+      modifyScene(
+        createdScene,
+        createLightstates(lights, fadeSelect, type, true)
+      );
+      resource.links.push("/scenes/" + createdScene);
+      createRule(
+        ruleObject(
+          name,
+          createdSensor,
+          createdScene,
+          rooms,
+          createdSchedule,
+          true,
+          timeOff,
+          type
+        )
+      );
+      resource.links.push("/schedules/" + createdSchedule);
+      resource.links.push("/rules/" + createdRule);
+      if (timeOff) {
+        createRoom(roomObject(lights));
+        createRule(
+          ruleObject(
+            name,
+            createdSensor,
+            createdScene,
+            createdRoom,
+            createdSchedule,
+            false,
+            timeOff,
+            type
+          )
+        );
+        resource.links.push("/rules/" + createdRule);
+        resource.links.push("/groups/" + createdRoom);
+      }
+      createResource(resource);
+    } else if (type === "sleep") {
+    } else if (type === "routines") {
+      // clone scenes in roomScenes and pass
+      // 1 scene for each group, group 0 for home
+      // turn rooms off at @ rules routine end
+    } else if (type === "timers") {
+    }

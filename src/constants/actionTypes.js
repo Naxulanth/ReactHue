@@ -36,3 +36,5 @@ export const RULES_GET = createRequestTypes("RULES_GET");
 export const RULE_CREATE = createRequestTypes("RULE_GET");
 export const RULE_PUT = createRequestTypes("RULE_PUT");
 export const RULE_DELETE = createRequestTypes("RULE_DELETE");
+
+export const ROUTINE_CREATE = createRequestTypes("ROUTINE_CREATE");

@@ -29,6 +29,7 @@ import {
 import { watchGetResources } from "./resources";
 import { watchGetRules } from "./rules";
 import { watchGetSensors } from "./sensors";
+import { watchCreateRoutine } from "./routines";
 
 export default function* root() {
   yield fork(watchGetLights);
@@ -52,4 +53,5 @@ export default function* root() {
   yield fork(watchGetRules);
   yield fork(watchGetSensors);
   yield fork(watchCreateRoom);
+  yield fork(watchCreateRoutine);
 }

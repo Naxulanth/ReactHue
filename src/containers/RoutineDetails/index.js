@@ -2,38 +2,19 @@ import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import shortid from "shortid";
+import { call, put, takeLatest } from "redux-saga/effects";
 import uuidv4 from "uuid/v4";
 import PropTypes from "prop-types";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
 import TimePicker from "components/TimePicker";
 import DayPicker from "containers/DayPicker";
-import { createSchedule } from "actions/schedules";
-import { createResource } from "actions/resources";
-import { createRule } from "actions/rules";
-import { createRoom } from "actions/rooms";
-import { createSensor } from "actions/sensors";
-import { createScene, modifyScene } from "actions/scenes";
-import {
-  wakeSensor,
-  sleepSensor,
-  timerSensor,
-  otherSensor,
-  sensorObject,
-  groupObject,
-  sceneObject,
-  resourceObject,
-  ruleObject,
-  roomObject,
-  createLightstates
-} from "constants/routines";
+import { createRoutine } from "actions/routines";
+import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade, adjustment } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
-import { absolute, recur, randomize } from "utils/date";
-import { selectifyScenes } from "utils/scenes";
 import "./style.css";
 import moment from "moment";
 
@@ -118,22 +99,8 @@ class RoutineDetails extends Component {
     });
   }
 
-  async handleSubmit(e) {
-    const {
-      type,
-      createSchedule,
-      createRule,
-      createResource,
-      createSensor,
-      createScene,
-      createdSensor,
-      createdScene,
-      createdSchedule,
-      createdRule,
-      createdRoom,
-      createRoom,
-      modifyScene
-    } = this.props;
+  handleSubmit(e) {
+    const { type, roomList, createRoutine } = this.props;
     const {
       name,
       days,
@@ -144,109 +111,22 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect
     } = this.state;
-    const { roomList } = this.props;
-    let obj = {};
-    let resource = resourceObject(name, type);
-    let shortId = shortid
-      .characters(
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-      )
-      .substr(0, 16);
-    let lights = [];
-    if (routineLights.length < 1) {
-      Object.keys(roomList).forEach(roomKey => {
-        if (Object.keys(rooms).includes(roomKey)) {
-          lights = lights.concat(roomList[roomKey].lights);
-        }
-      });
-    } else {
-      lights = routineLights;
-    }
-    obj.status = "disabled";
-    obj.recycle = true;
-    obj.autodelete = false;
-    if (
-      // recurring time
-      Object.keys(days).some(function(day) {
-        return days[day];
-      })
-    ) {
-      obj.localtime = recur(absolute(time, null, true), days);
-    } else {
-      // absolute time
-      obj.localtime = absolute(time, null, true);
-    }
-    if (type === "wake") {
-      createSensor(wakeSensor);
-      await new Promise(resolve => {
-        if (createdSensor) resolve();
-      });
-      resource.links.push("/sensors/" + createdSensor);
-      obj.description = shortId + "_start wake up";
-      obj.name = name;
-      obj.command = sensorObject(createdSensor);
-      createSchedule(obj);
-      resource.links.push("/schedules/" + createdSchedule);
-      obj.description = shortId + "_trigger end scene";
-      obj.name = shortId;
-      if (rooms.length > 0) {
-        rooms.forEach(room => {
-          resource.links.push("/groups/" + room);
-        });
-      } else resource.links.push("/groups/" + 0);
-      createScene(sceneObject(false, type, lights));
-      modifyScene(
-        createdScene,
-        createLightstates(lights, fadeSelect, type, false)
-      );
-      resource.links.push("/scenes/" + createdScene);
-      obj.command = groupObject(createdScene);
-      createSchedule(obj);
-      createScene(sceneObject(true, type, lights));
-      modifyScene(
-        createdScene,
-        createLightstates(lights, fadeSelect, type, true)
-      );
-      resource.links.push("/scenes/" + createdScene);
-      createRule(
-        ruleObject(
-          name,
-          createdSensor,
-          createdScene,
-          rooms,
-          createdSchedule,
-          true,
-          timeOff,
-          type
-        )
-      );
-      resource.links.push("/schedules/" + createdSchedule);
-      resource.links.push("/rules/" + createdRule);
-      if (timeOff) {
-        createRoom(roomObject(lights));
-        createRule(
-          ruleObject(
-            name,
-            createdSensor,
-            createdScene,
-            createdRoom,
-            createdSchedule,
-            false,
-            timeOff,
-            type
-          )
-        );
-        resource.links.push("/rules/" + createdRule);
-        resource.links.push("/groups/" + createdRoom);
-      }
-      createResource(resource);
-    } else if (type === "sleep") {
-    } else if (type === "routines") {
-      // clone scenes in roomScenes and pass
-      // 1 scene for each group, group 0 for home
-      // turn rooms off at @ rules routine end
-    } else if (type === "timers") {
-    }
+    let props = {
+      type,
+      roomList,
+      createRoutine
+    };
+    let state = {
+      name,
+      days,
+      rooms,
+      home,
+      time,
+      timeOff,
+      routineLights,
+      fadeSelect
+    };
+    createRoutine({ props, state });
   }
 
   handleCheck(roomKey) {
@@ -567,13 +447,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createSchedule: bindActionCreators(createSchedule.request, dispatch),
-  createResource: bindActionCreators(createResource.request, dispatch),
-  createRule: bindActionCreators(createRule.request, dispatch),
-  createSensor: bindActionCreators(createSensor.request, dispatch),
-  createScene: bindActionCreators(createScene.request, dispatch),
-  createRoom: bindActionCreators(createRoom.request, dispatch),
-  modifyScene: bindActionCreators(modifyScene.request, dispatch)
+  createRoutine: bindActionCreators(createRoutine.request, dispatch)
 });
 
 export default connect(

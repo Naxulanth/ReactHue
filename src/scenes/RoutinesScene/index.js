@@ -13,7 +13,13 @@ import { getLights } from "actions/lights";
 import "./style.css";
 
 class RoutinesScene extends Component {
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      test: false
+    };
+  }
+  async componentDidMount() {
     const {
       getSchedules,
       getResources,
@@ -21,8 +27,10 @@ class RoutinesScene extends Component {
       getSensors,
       getRooms,
       getLights,
-      getScenes
+      getScenes,
+      schedules
     } = this.props;
+    let that = this;
     getSchedules();
     getResources();
     getRules();
@@ -58,7 +66,9 @@ class RoutinesScene extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  schedules: state.schedules.list
+});
 
 const mapDispatchToProps = dispatch => ({
   getSchedules: bindActionCreators(getSchedules.request, dispatch),

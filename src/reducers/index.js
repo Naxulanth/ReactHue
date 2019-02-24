@@ -7,6 +7,7 @@ import schedules from "./schedules";
 import resources from "./resources";
 import rules from "./rules";
 import sensors from "./sensors";
+import routines from "./routines";
 
 const reducers = {
   lights,
@@ -15,7 +16,8 @@ const reducers = {
   schedules,
   resources,
   rules,
-  sensors
+  sensors,
+  routines
 };
 
 export default combineReducers(reducers);

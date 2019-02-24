@@ -1,5 +1,5 @@
 import shortid from "shortid";
-import { SENSORS, GROUPS } from "constants/endpoints";
+import { SENSORS_RAW, GROUPS_RAW } from "constants/endpoints";
 import { user } from "constants/localStorage";
 import { absolute } from "utils/date";
 
@@ -93,7 +93,7 @@ export const otherSensor = {
 
 export function sensorObject(createdSensor) {
   return {
-    address: SENSORS + "/" + createdSensor + "/state",
+    address: SENSORS_RAW + "/" + createdSensor + "/state",
     body: {
       flag: true
     },
@@ -103,7 +103,7 @@ export function sensorObject(createdSensor) {
 
 export function groupObject(scene) {
   return {
-    address: GROUPS + "/0/action",
+    address: GROUPS_RAW + "/0/action",
     body: {
       scene: scene
     },
