@@ -270,7 +270,7 @@ class RoutineDetails extends Component {
   handleScene(e, roomKey) {
     const { roomScenes } = this.state;
     const { scenes } = this.props;
-    let tempScenes = Object.assign({}, roomScenes);
+    let tempScenes = roomScenes;
     tempScenes[roomKey] = e;
     this.setState({
       roomScenes: tempScenes
