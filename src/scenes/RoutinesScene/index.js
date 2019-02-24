@@ -8,6 +8,7 @@ import { getResources } from "actions/resources";
 import { getRules } from "actions/rules";
 import { getSensors } from "actions/sensors";
 import { getRooms } from "actions/rooms";
+import { getScenes } from "actions/scenes";
 import { getLights } from "actions/lights";
 import "./style.css";
 
@@ -19,7 +20,8 @@ class RoutinesScene extends Component {
       getRules,
       getSensors,
       getRooms,
-      getLights
+      getLights,
+      getScenes
     } = this.props;
     getSchedules();
     getResources();
@@ -27,6 +29,7 @@ class RoutinesScene extends Component {
     getSensors();
     getRooms();
     getLights();
+    getScenes();
   }
 
   render() {
@@ -63,7 +66,8 @@ const mapDispatchToProps = dispatch => ({
   getRules: bindActionCreators(getRules.request, dispatch),
   getSensors: bindActionCreators(getSensors.request, dispatch),
   getRooms: bindActionCreators(getRooms.request, dispatch),
-  getLights: bindActionCreators(getLights.request, dispatch)
+  getLights: bindActionCreators(getLights.request, dispatch),
+  getScenes: bindActionCreators(getScenes.request, dispatch)
 });
 
 export default connect(

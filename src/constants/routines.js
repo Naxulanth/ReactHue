@@ -130,7 +130,7 @@ export function sceneObject(init, type, lights, group) {
     owner: localStorage.getItem(user),
     recycle: true,
     locked: true,
-    appdata: {},
+    appdata: {},  
     picture: "",
     lastupdated: new Date(),
     version: 2

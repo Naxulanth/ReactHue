@@ -13,7 +13,7 @@ import { createSchedule } from "actions/schedules";
 import { createResource } from "actions/resources";
 import { createRule } from "actions/rules";
 import { createSensor } from "actions/sensors";
-import { createScene, modifyScene } from "actions/scenes";
+import { createScene, modifyScene, getScenes } from "actions/scenes";
 import {
   wakeSensor,
   sleepSensor,
@@ -31,6 +31,7 @@ import Select from "react-select";
 import { wakeFade, sleepFade, otherFade, adjustment } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
 import { absolute, recur, randomize } from "utils/date";
+import { selectifyScenes } from "utils/scenes";
 import "./style.css";
 import moment from "moment";
 
@@ -48,7 +49,9 @@ class RoutineDetails extends Component {
       home: false,
       timeOff: null,
       routineLights: [],
-      adjustmentSelect: ""
+      adjustmentSelect: "",
+      roomScenes: {},
+      sceneSelectors: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -59,12 +62,27 @@ class RoutineDetails extends Component {
     this.handleOffTime = this.handleOffTime.bind(this);
     this.handleLightCheck = this.handleLightCheck.bind(this);
     this.handleAdjustment = this.handleAdjustment.bind(this);
+    this.sceneSelect = this.sceneSelect.bind(this);
+    this.getRoomScenes = this.getRoomScenes.bind(this);
+    this.handleScene = this.handleScene.bind(this);
   }
 
   componentDidMount() {
     if (this.props.scheduleId) {
       // edit mode
       this.setState({});
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { rooms, roomScenes } = this.state;
+    const { scenes } = this.props;
+    if (
+      scenes &&
+      rooms.length > 0 &&
+      (prevState.rooms !== rooms || prevState.roomScenes !== roomScenes)
+    ) {
+      this.sceneSelect();
     }
   }
 
@@ -206,15 +224,15 @@ class RoutineDetails extends Component {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
       // random times in /schedule, needs date calculating. turn rooms off at @ rules routine end
-    }
-    else if (type === "timers") {
-
+    } else if (type === "timers") {
     }
   }
 
   handleCheck(roomKey) {
-    const { rooms, home } = this.state;
-    let tempRooms = rooms;
+    const { rooms, home, roomScenes } = this.state;
+    const { type } = this.props;
+    let tempRooms = rooms.slice();
+    let tempScenes = roomScenes;
     if (!roomKey) {
       this.setState({
         home: !home,
@@ -224,15 +242,17 @@ class RoutineDetails extends Component {
       let keyIndex = tempRooms.indexOf(roomKey);
       if (keyIndex > -1) {
         tempRooms.splice(keyIndex, 1);
+        delete tempScenes[roomKey];
       } else tempRooms.push(roomKey);
       this.setState({
         rooms: tempRooms,
-        home: false
+        home: false,
+        roomScenes: tempScenes
       });
     }
   }
 
-  handleLightCheck(lightKey) {
+  handleLightCheck(e, lightKey) {
     const { routineLights } = this.state;
     let tempLights = routineLights;
     let keyIndex = tempLights.indexOf(lightKey);
@@ -248,6 +268,57 @@ class RoutineDetails extends Component {
     this.setState({ days });
   }
 
+  handleScene(e, roomKey) {
+    const { roomScenes } = this.state;
+    const { scenes } = this.props;
+    let tempScenes = Object.assign({}, roomScenes);
+    tempScenes[roomKey] = e;
+    this.setState({
+      roomScenes: tempScenes
+    });
+  }
+
+  sceneSelect() {
+    const { roomList, scenes } = this.props;
+    const { roomScenes, rooms } = this.state;
+    let sceneSelects = {};
+    rooms.forEach(roomKey => {
+      let room = roomList[roomKey];
+      let options = this.getRoomScenes(room);
+      sceneSelects[roomKey] = (
+        <Select
+          placeholder={room.name + " scene"}
+          value={roomScenes[roomKey]}
+          onChange={e => {
+            this.handleScene(e, roomKey);
+          }}
+          styles={selectStyle}
+          options={options}
+        />
+      );
+    });
+    sceneSelects[0] = (
+      <Select
+        placeholder={"Home scene"}
+        value={roomScenes[0]}
+        onChange={e => {
+          this.handleScene(e, 0);
+        }}
+        styles={selectStyle}
+        options={this.getRoomScenes(false)}
+      />
+    );
+    this.setState({
+      sceneSelectors: sceneSelects
+    });
+  }
+
+  getRoomScenes(room) {
+    const { scenes } = this.props;
+    let roomScenes = [];
+    return selectifyScenes(scenes, room);
+  }
+
   render() {
     const {
       handleSubmit,
@@ -258,7 +329,8 @@ class RoutineDetails extends Component {
       handleOffTime,
       handleTime,
       handleLightCheck,
-      handleAdjustment
+      handleAdjustment,
+      sceneSelect
     } = this;
     const {
       name,
@@ -269,7 +341,9 @@ class RoutineDetails extends Component {
       time,
       timeOff,
       routineLights,
-      adjustmentSelect
+      adjustmentSelect,
+      sceneSelectors,
+      roomScenes
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
     const adjustmentField = (
@@ -430,10 +504,30 @@ class RoutineDetails extends Component {
           </Col>
         </Row>
         {type === "wake" ? wakeOnly : null}
+        {type === "routines"
+          ? rooms.map(roomKey => {
+              return (
+                <Row key={uuidv4()} className="vertical-center">
+                  <Col lg="3" />
+                  <Col lg="6">{sceneSelectors[roomKey]}</Col>
+                  <Col lg="3" />
+                </Row>
+              );
+            })
+          : null}
+        {type === "routines" && rooms.length === 0 && home ? (
+          <Row className="vertical-center">
+            <Col lg="3" />
+            <Col lg="6">{sceneSelectors[0]}</Col>
+            <Col lg="3" />
+          </Row>
+        ) : null}
         <Row className="vertical-center center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col lg="6" sm="6" md="6" xl="6">
-            <Button onClick={handleSubmit}> {edit ? "Submit" : "Create"} </Button>
+            <Button onClick={handleSubmit}>
+              {edit ? "Submit" : "Create"}{" "}
+            </Button>
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>
@@ -447,7 +541,8 @@ const mapStateToProps = state => ({
   lightList: state.lights.list,
   createdSensor: state.sensors.createdSensor,
   createdScene: state.scenes.createdScene,
-  createdSchedule: state.schedules.createdSchedule
+  createdSchedule: state.schedules.createdSchedule,
+  scenes: state.scenes.list
 });
 
 const mapDispatchToProps = dispatch => ({

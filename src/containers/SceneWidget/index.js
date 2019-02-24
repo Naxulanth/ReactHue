@@ -16,6 +16,7 @@ import Button from "components/Button";
 import Select from "components/SceneSelect";
 import TextInput from "components/TextInput";
 import { sceneSelectStyle } from "constants/selectStyle";
+import { selectifyScenes } from "utils/scenes";
 
 import "./style.css";
 
@@ -62,29 +63,12 @@ class SceneWidget extends Component {
 
   getRoomScenes() {
     const { scenes, room, roomId } = this.props;
-    let roomScenes = [];
-    Object.keys(scenes).forEach(scene => {
-      if (
-        JSON.stringify(scenes[scene].lights.sort()) ===
-        JSON.stringify(room[roomId].lights.sort())
-      ) {
-        roomScenes.push({ [scene]: scenes[scene] });
-      }
-    });
-    let selectors = [];
-    roomScenes.forEach(scene => {
-      let sceneValue = Object.values(scene)[0];
-      let selector = {
-        value: sceneValue,
-        label: sceneValue.name,
-        key: Object.keys(scene)[0]
-      };
-      selectors.push(selector);
-    });
+    let selectors = selectifyScenes(scenes, room, roomId);
     this.setState({
       roomScenes: selectors
     });
   }
+
   handleChange(selectedOption) {
     const { getScene } = this.props;
     getScene(selectedOption.key);
@@ -175,7 +159,7 @@ class SceneWidget extends Component {
       </Button>
     ) : null;
     const modifyText = selectedOption ? (
-      <TextInput
+      <TextInput className="push"
         placeholder={"Edit scene name..."}
         value={modifyName}
         onChange={this.handleModifyText}
