@@ -12,6 +12,7 @@ import DayPicker from "containers/DayPicker";
 import { createSchedule } from "actions/schedules";
 import { createResource } from "actions/resources";
 import { createRule } from "actions/rules";
+import { createRoom } from "actions/rooms";
 import { createSensor } from "actions/sensors";
 import { createScene, modifyScene, getScenes } from "actions/scenes";
 import {
@@ -24,6 +25,7 @@ import {
   sceneObject,
   resourceObject,
   ruleObject,
+  roomObject,
   createLightstates
 } from "constants/routines";
 import Checkbox from "components/Checkbox";
@@ -217,6 +219,23 @@ class RoutineDetails extends Component {
       );
       resource.links.push("/schedules/" + createdSchedule);
       resource.links.push("/rules/" + createdRule);
+      if (timeOff) {
+        createRoom(roomObject(lights));
+        createRule(
+          ruleObject(
+            name,
+            createdSensor,
+            createdScene,
+            createdRoom,
+            createdSchedule,
+            false,
+            timeOff,
+            type
+          )
+        );
+        resource.links.push("/rules/" + createdRule);
+        resource.links.push("/groups/" + createdRoom);
+      }
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
@@ -490,7 +509,7 @@ class RoutineDetails extends Component {
         </Row>
         {type === "routines" ? (
           <Row className="vertical-center last center">
-            <Col lg="3" sm="3" md="3" xl="3"/>
+            <Col lg="3" sm="3" md="3" xl="3" />
             <Col lg="3" sm="3" md="3" xl="3">
               Turn room(s) off
             </Col>
@@ -504,7 +523,7 @@ class RoutineDetails extends Component {
                 onChange={handleOffTime}
               />
             </Col>
-            <Col lg="3" sm="3" md="3" xl="3"/>
+            <Col lg="3" sm="3" md="3" xl="3" />
           </Row>
         ) : null}
         {type === "wake" ? wakeOnly : null}
@@ -546,7 +565,8 @@ const mapStateToProps = state => ({
   createdSensor: state.sensors.createdSensor,
   createdScene: state.scenes.createdScene,
   createdSchedule: state.schedules.createdSchedule,
-  scenes: state.scenes.list
+  scenes: state.scenes.list,
+  createdRoom: state.rooms.createdRoom
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -554,7 +574,8 @@ const mapDispatchToProps = dispatch => ({
   createResource: bindActionCreators(createResource.request, dispatch),
   createRule: bindActionCreators(createRule.request, dispatch),
   createSensor: bindActionCreators(createSensor.request, dispatch),
-  createScene: bindActionCreators(createScene.request, dispatch)
+  createScene: bindActionCreators(createScene.request, dispatch),
+  createRoom: bindActionCreators(createRoom.request, dispatch)
 });
 
 export default connect(

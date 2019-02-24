@@ -1,4 +1,9 @@
-import { ROOMS_GET, ROOMS_PUT, ROOMS_PUT_ATTR } from "../constants/actionTypes";
+import {
+  ROOMS_GET,
+  ROOMS_PUT,
+  ROOMS_PUT_ATTR,
+  ROOMS_CREATE
+} from "../constants/actionTypes";
 
 const rooms = (state = [], action) => {
   switch (action.type) {
@@ -22,6 +27,15 @@ const rooms = (state = [], action) => {
     case ROOMS_PUT_ATTR.SUCCESS:
       return state;
     case ROOMS_PUT_ATTR.FAILURE:
+      return state;
+    case ROOMS_CREATE.REQUEST:
+      return state;
+    case ROOMS_CREATE.SUCCESS:
+      return {
+        ...state,
+        createdSchedule: action.response.data[0].success.id
+      };
+    case ROOMS_CREATE.FAILURE:
       return state;
     default:
       return state;

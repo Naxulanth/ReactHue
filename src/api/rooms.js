@@ -23,3 +23,11 @@ export function modifyRoomAttr(id, body) {
     data: JSON.stringify(body)
   });
 }
+
+export function createRoom(body) {
+  return axios.request({
+    method: "post",
+    url: GROUPS + "/",
+    data: JSON.stringify(body)
+  });
+}

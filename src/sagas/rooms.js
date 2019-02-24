@@ -1,5 +1,10 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { ROOMS_GET, ROOMS_PUT, ROOMS_PUT_ATTR } from "../constants/actionTypes";
+import {
+  ROOMS_GET,
+  ROOMS_PUT,
+  ROOMS_PUT_ATTR,
+  ROOMS_CREATE
+} from "../constants/actionTypes";
 
 import * as actions from "../actions/rooms";
 import * as api from "../api/rooms";
@@ -45,4 +50,18 @@ export function* modifyRoomAttr({ id, body }) {
 
 export function* watchModifyRoomAttr() {
   yield takeLatest(ROOMS_PUT_ATTR.REQUEST, modifyRoomAttr);
+}
+
+export function* createRoom({ body }) {
+  try {
+    const response = yield call(api.createRoom, body);
+    yield put(actions.createRoom.success(response));
+    yield call(renew);
+  } catch (e) {
+    yield put(actions.createRoom.failure(e));
+  }
+}
+
+export function* watchcreateRoom() {
+  yield takeLatest(ROOMS_CREATE.REQUEST, createRoom);
 }

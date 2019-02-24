@@ -130,7 +130,7 @@ export function sceneObject(init, type, lights, group) {
     owner: localStorage.getItem(user),
     recycle: true,
     locked: true,
-    appdata: {},  
+    appdata: {},
     picture: "",
     lastupdated: new Date(),
     version: 2
@@ -171,86 +171,64 @@ export function ruleObject(
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"
   };
-let actionSensor = {
-  address: "/sensors/" + createdSensor + "/state",
-  method: "PUT",
-  body: {
-    flag: false
-  }
-};
-let ddx = {
-  address: "/sensors/" + createdSensor + "/state/flag",
-  operator: "ddx",
-  value: endTime // fix this date format
-};
-let wakeSchedule = {
-  address: "/schedules/" + createdSchedule,
-  method: "PUT",
-  body: {
-    status: "enabled"
-  }
-};
-function addScenes(obj, groups) {
-  if (groups.length < 1) {
-    obj.actions.push({
-      address: "/groups/0/action",
-      method: "PUT",
-      body: {
-        scene: "gbUmfVHl0wFHIsi"
+  let actionSensor = {
+    address: "/sensors/" + createdSensor + "/state",
+    method: "PUT",
+    body: {
+      flag: false
+    }
+  };
+  let ddx = {
+    address: "/sensors/" + createdSensor + "/state/flag",
+    operator: "ddx",
+    value: endTime // fix this date format (PT time difference)
+  };
+  let wakeSchedule = {
+    address: "/schedules/" + createdSchedule,
+    method: "PUT",
+    body: {
+      status: "enabled"
+    }
+  };
+  let obj = {
+    name: name + " rule",
+    owner: localStorage.getItem(user),
+    created: absolute(new Date()),
+    lasttriggered: "none",
+    timestriggered: 0,
+    status: "enabled",
+    recycle: true,
+    conditions: [
+      {
+        address: "/sensors/" + createdSensor + "/state/flag",
+        operator: "eq",
+        value: "true"
       }
-    });
-  } else
-    groups.forEach(group => {
-      let scene = {
-        address: "/groups/" + group + "/action",
+    ],
+    actions: [
+      {
+        address: "/sensors" + createdSensor + "state",
         method: "PUT",
         body: {
-          scene: createdScene
+          flag: false
         }
-      };
-      obj.actions.push(scene);
-    });
-}
-let obj = {
-  name: name + " rule",
-  owner: localStorage.getItem(user),
-  created: absolute(new Date()),
-  lasttriggered: "none",
-  timestriggered: 0,
-  status: "enabled",
-  recycle: true,
-  conditions: [
-    {
-      address: "/sensors/" + createdSensor + "/state/flag",
-      operator: "eq",
-      value: "true"
-    }
-  ],
-  actions: [
-    {
-      address: "/sensors" + createdSensor + "state",
-      method: "PUT",
-      body: {
-        flag: false
       }
-    }
-  ]
-};
-if (type === "wake") {
-  obj.actions.push(wakeSchedule);
-}
-if (init && (type === "timers" || type === "routines")) {
-  obj.conditions.push(dx);
-}
-if (!init) {
-  obj.conditions.push(ddx);
-  if (!init || (type !== "sleep" && type !== "routines")) {
+    ]
+  };
+  if (type === "wake" && !init) {
+    obj.actions.push(wakeSchedule);
+  }
+  if (init && (type === "timers" || type === "routines")) {
+    obj.conditions.push(dx);
+  }
+  if (!init) {
+    obj.conditions.push(ddx);
+  }
+  if (!timeOff && (!init || (type !== "sleep" && type !== "routines"))) {
     obj.actions.push(actionSensor);
   }
-  addScenes(obj, groups);
-  // timeoff needs fixing.
+  if (!(!init && type === "wake")) addScenes(obj, groups);
   return obj;
-}
 }
 
 export function createLightstates(lights, fade, type, init) {
@@ -291,4 +269,51 @@ export function createLightstates(lights, fade, type, init) {
     result[light] = obj;
   });
   return result;
+}
+
+function addScenes(obj, groups) {
+  if (groups.length < 1) {
+    obj.actions.push({
+      address: "/groups/0/action",
+      method: "PUT",
+      body: {
+        scene: "gbUmfVHl0wFHIsi"
+      }
+    });
+  } else
+    groups.forEach(group => {
+      let scene = {
+        address: "/groups/" + group + "/action",
+        method: "PUT",
+        body: {
+          scene: createdScene
+        }
+      };
+      obj.actions.push(scene);
+    });
+}
+
+export function roomObject(lights) {
+  let obj = {
+    name: "Group for wakeup",
+    lights: lights,
+    sensors: [],
+    type: "LightGroup",
+    state: {
+      all_on: false,
+      any_on: false
+    },
+    recycle: true,
+    action: {
+      on: false,
+      bri: 254,
+      hue: 8418,
+      sat: 140,
+      effect: "none",
+      xy: [0.4573, 0.41],
+      ct: 366,
+      alert: "none",
+      colormode: "ct"
+    }
+  };
 }

@@ -5,7 +5,12 @@ import {
   watchModifyLight,
   watchModifyLightAttr
 } from "./lights";
-import { watchGetRooms, watchModifyRoom, watchModifyRoomAttr } from "./rooms";
+import {
+  watchGetRooms,
+  watchModifyRoom,
+  watchModifyRoomAttr,
+  watchCreateRoom
+} from "./rooms";
 import {
   watchGetScene,
   watchGetScenes,
@@ -46,4 +51,5 @@ export default function* root() {
   yield fork(watchGetResources);
   yield fork(watchGetRules);
   yield fork(watchGetSensors);
+  yield fork(watchCreateRoom);
 }
