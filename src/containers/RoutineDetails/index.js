@@ -30,7 +30,7 @@ class RoutineDetails extends Component {
       days: {},
       rooms: [],
       fadeSelect: "",
-      time: null,
+      time: "",
       home: false,
       timeOff: null,
       routineLights: [],
@@ -130,6 +130,24 @@ class RoutineDetails extends Component {
     };
     if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
+    if (validator.isEmpty(time)) {
+      toast.error("Please fill out the time field", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
+    if (!home && rooms.length < 1) {
+      toast.error("Please select room(s)", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
+    if (validator.isEmpty(fadeSelect)) {
+      toast.error("Please choose fade amount", {
         position: toast.POSITION.TOP_RIGHT
       });
       return;
