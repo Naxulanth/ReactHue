@@ -223,6 +223,7 @@ class RoutineDetails extends Component {
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // 1 scene for each group, group 0 for home
+      // clone scenes in roomScenes and pass
       // random times in /schedule, needs date calculating. turn rooms off at @ rules routine end
     } else if (type === "timers") {
     }
