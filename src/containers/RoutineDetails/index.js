@@ -504,7 +504,7 @@ class RoutineDetails extends Component {
           </Col>
         </Row>
         {type === "wake" ? wakeOnly : null}
-        {type === "routines"
+        {type === "routines" || type === "timers"
           ? rooms.map(roomKey => {
               return (
                 <Row key={uuidv4()} className="vertical-center">
@@ -515,7 +515,7 @@ class RoutineDetails extends Component {
               );
             })
           : null}
-        {type === "routines" && rooms.length === 0 && home ? (
+        { (type === "routines" || type === "timers") && rooms.length === 0 && home ? (
           <Row className="vertical-center">
             <Col lg="3" />
             <Col lg="6">{sceneSelectors[0]}</Col>
