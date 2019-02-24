@@ -155,6 +155,8 @@ export function resourceObject(name, type) {
   resource.recycle = false;
   resource.links = [];
   resource.classid = classid;
+  
+  return resource;
 }
 
 export function ruleObject(

@@ -8,6 +8,8 @@ export function absolute(localtime, time, raw) {
     } else {
       localtime = new Date(unrecur(unrandomize(localtime)) + "Z");
     }
+  } else {
+    localtime = new Date(localtime);
   }
   localtime.setDate(today.getDate());
   localtime.setMonth(today.getMonth());

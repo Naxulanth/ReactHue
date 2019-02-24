@@ -166,7 +166,6 @@ class RoutineDetails extends Component {
     obj.recycle = "true";
     obj.autodelete = "false";
     obj.created = absolute(new Date(), null, true);
-    createResource(name, type);
     if (
       // recurring time
       Object.keys(days).some(function(day) {
@@ -238,6 +237,7 @@ class RoutineDetails extends Component {
         resource.links.push("/rules/" + createdRule);
         resource.links.push("/groups/" + createdRoom);
       }
+      createResource(resource);
     } else if (type === "sleep") {
     } else if (type === "routines") {
       // clone scenes in roomScenes and pass
