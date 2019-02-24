@@ -2,7 +2,6 @@ import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { call, put, takeLatest } from "redux-saga/effects";
 import uuidv4 from "uuid/v4";
 import PropTypes from "prop-types";
 import Button from "components/Button";
@@ -12,10 +11,12 @@ import DayPicker from "containers/DayPicker";
 import { createRoutine } from "actions/routines";
 import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
+import { toast } from "react-toastify";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade, adjustment } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
 import "./style.css";
+import 'react-toastify/dist/ReactToastify.css';
 import moment from "moment";
 
 moment().format();
@@ -126,6 +127,12 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect
     };
+    if (name.length === 0) {
+      toast.error("Please fill out the name field", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
     createRoutine({ props, state });
   }
 

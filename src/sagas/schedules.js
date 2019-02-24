@@ -5,7 +5,6 @@ import {
   SCHEDULE_DELETE,
   SCHEDULE_GET,
   SCHEDULE_PUT,
-  ROUTINE_CREATE
 } from "../constants/actionTypes";
 
 import * as actions from "../actions/schedules";
