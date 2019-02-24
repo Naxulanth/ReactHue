@@ -254,7 +254,7 @@ class RoutineDetails extends Component {
     const { routineLights } = this.state;
     let tempLights = routineLights;
     let keyIndex = tempLights.indexOf(lightKey);
-    console.log(lightKey)
+    console.log(lightKey);
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);
     } else tempLights.push(lightKey);
@@ -354,21 +354,6 @@ class RoutineDetails extends Component {
           styles={selectStyle}
           options={adjustment}
         />
-        <Row className="vertical-center">
-          <Col lg="5" sm="5" md="5" xl="5">
-            Turn light(s) off
-          </Col>
-          <Col lg="7" sm="7" md="7" xl="7">
-            <TimePicker
-              placeholder={"Pick time"}
-              showSecond={false}
-              use12Hours
-              allowEmpty={true}
-              value={timeOff}
-              onChange={handleOffTime}
-            />
-          </Col>
-        </Row>
       </Fragment>
     );
     const wakeOnly = (
@@ -380,11 +365,12 @@ class RoutineDetails extends Component {
                   const room = roomList[roomKey];
                   return room.lights.map(lightKey => {
                     const light = lightList[lightKey];
+
                     return (
                       <Checkbox
                         key={uuidv4()}
                         name={light.name}
-                        onChange={(e) => {
+                        onChange={e => {
                           handleLightCheck(e, lightKey);
                         }}
                         checked={routineLights.includes(lightKey)}
@@ -502,6 +488,25 @@ class RoutineDetails extends Component {
               : null}
           </Col>
         </Row>
+        {type === "routines" ? (
+          <Row className="vertical-center last center">
+            <Col lg="3" sm="3" md="3" xl="3"/>
+            <Col lg="3" sm="3" md="3" xl="3">
+              Turn room(s) off
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3">
+              <TimePicker
+                placeholder={"Pick time"}
+                showSecond={false}
+                use12Hours
+                allowEmpty={true}
+                value={timeOff}
+                onChange={handleOffTime}
+              />
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3"/>
+          </Row>
+        ) : null}
         {type === "wake" ? wakeOnly : null}
         {type === "routines" || type === "timers"
           ? rooms.map(roomKey => {
@@ -514,7 +519,9 @@ class RoutineDetails extends Component {
               );
             })
           : null}
-        { (type === "routines" || type === "timers") && rooms.length === 0 && home ? (
+        {(type === "routines" || type === "timers") &&
+        rooms.length === 0 &&
+        home ? (
           <Row className="vertical-center">
             <Col lg="3" />
             <Col lg="6">{sceneSelectors[0]}</Col>
@@ -524,9 +531,7 @@ class RoutineDetails extends Component {
         <Row className="vertical-center center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col lg="6" sm="6" md="6" xl="6">
-            <Button onClick={handleSubmit}>
-              {edit ? "Submit" : "Create"}{" "}
-            </Button>
+            <Button onClick={handleSubmit}>{edit ? "Submit" : "Create"}</Button>
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>
