@@ -162,8 +162,6 @@ class RoutineDetails extends Component {
     obj.recycle = "true";
     obj.autodelete = "false";
     obj.created = absolute(new Date());
-    if (timeOff) obj.timeOff = timeOff;
-    // fade time into lightstates scene edit
     if (
       // recurring time
       Object.keys(days).some(function(day) {
@@ -204,8 +202,7 @@ class RoutineDetails extends Component {
         createLightstates(lights, fadeSelect, type, true)
       );
       resource.links.push("/scenes/" + createdScene);
-      // fix scene lightstates depending on fade etc...
-      // ifTimeoff exists, create new group, and remove a parameter from rules
+      // if Timeoff exists, create new group, and remove a parameter from rules
       createRule(
         ruleObject(
           name,
@@ -257,6 +254,7 @@ class RoutineDetails extends Component {
     const { routineLights } = this.state;
     let tempLights = routineLights;
     let keyIndex = tempLights.indexOf(lightKey);
+    console.log(lightKey)
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);
     } else tempLights.push(lightKey);
@@ -386,8 +384,8 @@ class RoutineDetails extends Component {
                       <Checkbox
                         key={uuidv4()}
                         name={light.name}
-                        onChange={() => {
-                          handleLightCheck(lightKey);
+                        onChange={(e) => {
+                          handleLightCheck(e, lightKey);
                         }}
                         checked={routineLights.includes(lightKey)}
                       >
