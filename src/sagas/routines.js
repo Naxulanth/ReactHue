@@ -40,11 +40,10 @@ export function* createRoutine({ body }) {
     let props = body.props;
     let obj = {};
     let resource = resourceObject(state.name, props.type);
-    let shortId = shortid
-      .characters(
-        "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-      )
-      .substr(0, 16);
+    shortid.characters(
+      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
+    );
+    let shortId = shortid.generate()
     let lights = [];
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
