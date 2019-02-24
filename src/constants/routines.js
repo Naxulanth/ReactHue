@@ -127,13 +127,8 @@ export function sceneObject(init, type, lights, group) {
     name: name,
     type: sceneType,
     lights: lights,
-    owner: localStorage.getItem(user),
     recycle: true,
-    locked: true,
-    appdata: {},
     picture: "",
-    lastupdated: new Date(),
-    version: 2
   };
   if (sceneType === "GroupScene") {
     obj["group"] = group;
@@ -301,22 +296,7 @@ export function roomObject(lights) {
     lights: lights,
     sensors: [],
     type: "LightGroup",
-    state: {
-      all_on: false,
-      any_on: false
-    },
     recycle: true,
-    action: {
-      on: false,
-      bri: 254,
-      hue: 8418,
-      sat: 140,
-      effect: "none",
-      xy: [0.4573, 0.41],
-      ct: 366,
-      alert: "none",
-      colormode: "ct"
-    }
   };
   return obj;
 }

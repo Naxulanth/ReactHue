@@ -118,7 +118,7 @@ class RoutineDetails extends Component {
     });
   }
 
-  handleSubmit(e) {
+  async handleSubmit(e) {
     const {
       type,
       createSchedule,
@@ -131,7 +131,8 @@ class RoutineDetails extends Component {
       createdSchedule,
       createdRule,
       createdRoom,
-      createRoom
+      createRoom,
+      modifyScene
     } = this.props;
     const {
       name,
@@ -141,8 +142,7 @@ class RoutineDetails extends Component {
       time,
       timeOff,
       routineLights,
-      fadeSelect,
-      groups
+      fadeSelect
     } = this.state;
     const { roomList } = this.props;
     let obj = {};
@@ -163,9 +163,8 @@ class RoutineDetails extends Component {
       lights = routineLights;
     }
     obj.status = "disabled";
-    obj.recycle = "true";
-    obj.autodelete = "false";
-    obj.created = absolute(new Date(), null, true);
+    obj.recycle = true;
+    obj.autodelete = false;
     if (
       // recurring time
       Object.keys(days).some(function(day) {
@@ -179,6 +178,9 @@ class RoutineDetails extends Component {
     }
     if (type === "wake") {
       createSensor(wakeSensor);
+      await new Promise(resolve => {
+        if (createdSensor) resolve();
+      });
       resource.links.push("/sensors/" + createdSensor);
       obj.description = shortId + "_start wake up";
       obj.name = name;
@@ -211,7 +213,7 @@ class RoutineDetails extends Component {
           name,
           createdSensor,
           createdScene,
-          groups,
+          rooms,
           createdSchedule,
           true,
           timeOff,
@@ -274,7 +276,6 @@ class RoutineDetails extends Component {
     const { routineLights } = this.state;
     let tempLights = routineLights;
     let keyIndex = tempLights.indexOf(lightKey);
-    console.log(lightKey);
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);
     } else tempLights.push(lightKey);
@@ -359,7 +360,6 @@ class RoutineDetails extends Component {
       adjustmentSelect,
       sceneSelectors
     } = this.state;
-    console.log(new Date(time));
     const { type, roomList, lightList, edit } = this.props;
     const adjustmentField = (
       <Fragment>
@@ -572,7 +572,8 @@ const mapDispatchToProps = dispatch => ({
   createRule: bindActionCreators(createRule.request, dispatch),
   createSensor: bindActionCreators(createSensor.request, dispatch),
   createScene: bindActionCreators(createScene.request, dispatch),
-  createRoom: bindActionCreators(createRoom.request, dispatch)
+  createRoom: bindActionCreators(createRoom.request, dispatch),
+  modifyScene: bindActionCreators(modifyScene.request, dispatch)
 });
 
 export default connect(
