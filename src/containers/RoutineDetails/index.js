@@ -12,11 +12,12 @@ import { createRoutine } from "actions/routines";
 import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
 import { toast } from "react-toastify";
+import validator from "validator";
 import Select from "react-select";
 import { wakeFade, sleepFade, otherFade, adjustment } from "constants/fade";
 import { selectStyle } from "constants/selectStyle";
 import "./style.css";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 
 moment().format();
@@ -127,7 +128,7 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect
     };
-    if (name.length === 0) {
+    if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
         position: toast.POSITION.TOP_RIGHT
       });
