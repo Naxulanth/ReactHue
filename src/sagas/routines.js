@@ -50,11 +50,11 @@ export function* createRoutine({ body }) {
     let lights = [];
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
-        console.log(roomKey)
+        console.log(roomKey);
         if (state.rooms.includes(roomKey)) {
-          console.log('test')
+          console.log("test");
           lights = lights.concat(props.roomList[roomKey].lights);
-          console.log(lights)
+          console.log(lights);
         }
       });
     } else {
@@ -113,6 +113,12 @@ export function* createRoutine({ body }) {
         );
         yield put(scenesActions.modifySceneLights.success(modifyFirstScene));
       }
+      const secondScheduleData = yield call(
+        schedulesApi.createSchedule,
+        secondSchedule
+      );
+      yield put(schedulesActions.createSchedule.success(secondScheduleData));
+      const secondScheduleId = secondScheduleData.data[0].success.id;
     }
   } catch (e) {}
 }

@@ -1,30 +1,3 @@
-// first scene
-const firstScene = yield call(
-  scenesApi.createScene,
-  sceneObject(false, props.type, lights)
-);
-yield put(scenesActions.createScene.success(firstScene));
-const firstSceneId = firstScene.data[0].success.id;
-// second schedule
-const secondSchedule = Object.assign({}, firstSchedule);
-secondSchedule.description = shortId + "_trigger end scene";
-secondSchedule.name = shortId;
-secondSchedule.command = groupObject(firstSceneId);
-for (let light of lights) {
-  const modifyFirstScene = yield call(
-    scenesApi.modifySceneLights,
-    firstSceneId,
-    light,
-    createLightstates(state.fadeSelect.value, props.type, false)
-  );
-  yield put(scenesActions.modifySceneLights.success(modifyFirstScene));
-}
-const secondScheduleData = yield call(
-  schedulesApi.createSchedule,
-  secondSchedule
-);
-yield put(schedulesActions.createSchedule.success(secondScheduleData));
-const secondScheduleId = secondScheduleData.data[0].success.id;
 // second scene
 const secondScene = yield call(
   scenesApi.createScene,
