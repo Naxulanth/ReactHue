@@ -39,6 +39,9 @@ export function* watchDeleteSchedule() {
 
 export function* createSchedule({ body }) {
   try {
+    if (true) {
+    } else {
+    }
     const response = yield call(api.createSchedule, body);
     yield put(actions.createSchedule.success(response));
   } catch (e) {
@@ -90,8 +93,7 @@ export function* getSchedules() {
         response.data[schedule].description.toLowerCase().includes("routine")
       ) {
         routines[schedule] = response.data[schedule];
-      }
-      else if (
+      } else if (
         response.data[schedule].description.toLowerCase().includes("end scene")
       ) {
         endScenes[schedule] = response.data[schedule];
@@ -101,7 +103,7 @@ export function* getSchedules() {
     yield (schedules["routines"] = routines);
     yield (schedules["wake"] = wake);
     yield (schedules["sleep"] = sleep);
-    yield (schedules["endScenes"] = endScenes)
+    yield (schedules["endScenes"] = endScenes);
     yield put(actions.getSchedules.success(schedules));
   } catch (e) {
     yield put(actions.getSchedules.failure(e));

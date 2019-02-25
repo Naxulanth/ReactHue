@@ -47,25 +47,25 @@ export const sleepSensor = {
 };
 
 export const wakeSensor = {
-  "state": {
-    "flag": false,
-    "lastupdated": "none"
+  state: {
+    flag: false,
+    lastupdated: "none"
   },
-  "config": {
-    "on": true,
-    "reachable": true
+  config: {
+    on: true,
+    reachable: true
   },
-  "name": "Sensor for wakeup",
-  "type": "CLIPGenericFlag",
-  "modelid": "WAKEUP",
-  "manufacturername": "Philips",
-  "swversion": "A_1810251352",
-  "uniqueid": shortid
+  name: "Sensor for wakeup",
+  type: "CLIPGenericFlag",
+  modelid: "WAKEUP",
+  manufacturername: "Philips",
+  swversion: "A_1810251352",
+  uniqueid: shortid
     .characters(
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
     )
     .substr(0, 16),
-  "recycle": true
+  recycle: true
 };
 
 export const otherSensor = {
@@ -163,7 +163,7 @@ export function ruleObject(
   type
 ) {
   let fixedName = "";
-  if (type === "wake") fixedName = name + "_Start"
+  if (type === "wake") fixedName = name + "_Start";
   let dx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"
@@ -198,8 +198,7 @@ export function ruleObject(
         value: "true"
       }
     ],
-    actions: [
-    ]
+    actions: []
   };
   if (type === "wake" && init) {
     obj.actions.push(wakeSchedule);
@@ -214,7 +213,7 @@ export function ruleObject(
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
-  console.log(obj)
+  console.log(obj);
   return obj;
 }
 
@@ -222,7 +221,7 @@ export function createLightstates(fade, type, init) {
   let obj = {};
   let wakeEnd = {
     on: true,
-    bri: 254, 
+    bri: 254,
     ct: 447,
     transitiontime: (parseInt(fade) - 1) * 60
   };
@@ -255,7 +254,15 @@ export function createLightstates(fade, type, init) {
 }
 
 function addScenes(obj, groups, createdScene) {
-  if (groups.length < 1) {
+  if (typeof groups === "string" || typeof groups === "number") {
+    obj.actions.push({
+      address: "/groups/" + groups + "/action",
+      method: "PUT",
+      body: {
+        scene: createdScene
+      }
+    });
+  } else if (groups.length < 1) {
     obj.actions.push({
       address: "/groups/0/action",
       method: "PUT",

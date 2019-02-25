@@ -130,6 +130,7 @@ export function* createRoutine({ body }) {
         );
         yield put(scenesActions.modifySceneLights.success(modifystartScene));
       }
+      // main rule
       const rule = yield call(
         rulesApi.createRule,
         ruleObject(
@@ -145,9 +146,6 @@ export function* createRoutine({ body }) {
       );
       yield put(rulesActions.createRule.success(rule));
       const ruleId = rule.data[0].success.id;
-
-      // main rule
-
       // timeoff rule & group - needs checking
       let timeoffRuleId = null;
       let roomId = null;
@@ -176,7 +174,7 @@ export function* createRoutine({ body }) {
       resource.links.push("/sensors/" + sensorId);
       resource.links.push("/schedules/" + startScheduleId);
       resource.links.push("/schedules/" + endScheduleId);
-      resource.links.push("/rules/" + ruleId);
+      resource.links.push("/rules/" + ruleId);  
       resource.links.push("/scenes/" + endSceneId);
       resource.links.push("/scenes/" + startSceneId);
       if (state.timeOff) {
