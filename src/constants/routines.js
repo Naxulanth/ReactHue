@@ -47,25 +47,25 @@ export const sleepSensor = {
 };
 
 export const wakeSensor = {
-  state: {
-    flag: false,
-    lastupdated: "none"
+  "state": {
+    "flag": false,
+    "lastupdated": "none"
   },
-  config: {
-    on: true,
-    reachable: true
+  "config": {
+    "on": true,
+    "reachable": true
   },
-  name: "Sensor for wakeup",
-  type: "CLIPGenericFlag",
-  modelid: "WAKEUP",
-  manufacturername: "Philips",
-  swversion: "A_1810251352",
-  uniqueid: shortid
+  "name": "Sensor for wakeup",
+  "type": "CLIPGenericFlag",
+  "modelid": "WAKEUP",
+  "manufacturername": "Philips",
+  "swversion": "A_1810251352",
+  "uniqueid": shortid
     .characters(
       "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
     )
     .substr(0, 16),
-  recycle: true
+  "recycle": true
 };
 
 export const otherSensor = {
@@ -114,10 +114,10 @@ export function sceneObject(init, type, lights, group) {
   let name = "";
   let sceneType = "";
   if (type === "wake") {
-    name = "Wake Up " + init ? "init" : "end";
+    name = "Wake Up " + (init ? "init" : "end");
     sceneType = "LightScene";
   } else if (type === "sleep") {
-    name = "Go to sleep " + init ? "start" : "end";
+    name = "Go to sleep " + (init ? "start" : "end");
     sceneType = "LightScene";
   } else if (type === "routines") {
   } else if (type === "timers") {
@@ -198,7 +198,7 @@ export function ruleObject(
     ],
     actions: [
       {
-        address: "/sensors" + createdSensor + "state",
+        address: "/sensors/" + createdSensor + "/state",
         method: "PUT",
         body: {
           flag: false
@@ -222,15 +222,13 @@ export function ruleObject(
   return obj;
 }
 
-export function createLightstates(lights, fade, type, init) {
-  let result = {};
-  result["lightstates"] = {};
+export function createLightstates(fade, type, init) {
   let obj = {};
   let wakeEnd = {
     on: true,
-    bri: 254,
+    bri: 254, 
     ct: 447,
-    transitiontime: parseInt(fade) - 1 * 60
+    transitiontime: (parseInt(fade) - 1) * 60
   };
   let wakeInit = {
     on: true,
@@ -246,7 +244,7 @@ export function createLightstates(lights, fade, type, init) {
     on: false,
     bri: 1,
     ct: 447,
-    transitiontime: parseInt(fade) - 1 * 60
+    transitiontime: (parseInt(fade) - 1) * 60
   };
   if (type === "wake") {
     if (init) obj = wakeInit;
@@ -257,10 +255,7 @@ export function createLightstates(lights, fade, type, init) {
   } else if (type === "routines") {
   } else if (type === "timers") {
   }
-  lights.forEach(light => {
-    result["lightstates"][light] = obj;
-  });
-  return result;
+  return obj;
 }
 
 function addScenes(obj, groups, createdScene) {

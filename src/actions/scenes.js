@@ -39,7 +39,7 @@ export const modifySceneLights = {
   success: response => action(SCENE_LIGHTS_PUT.SUCCESS, { response }),
   failure: error => action(SCENE_LIGHTS_PUT.FAILURE, { error })
 };
-
+  
 export const deleteScene = {
   request: id => action(SCENE_DELETE.REQUEST, { id }),
   success: response => action(SCENE_DELETE.SUCCESS, { response }),
