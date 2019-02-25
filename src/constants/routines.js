@@ -2,6 +2,12 @@ import shortid from "shortid";
 import { SENSORS_RAW, GROUPS_RAW } from "constants/endpoints";
 import { absolute } from "utils/date";
 
+shortid
+  .characters(
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
+  )
+  .substr(0, 16);
+
 export const timerSensor = {
   state: {
     flag: false,
@@ -16,11 +22,7 @@ export const timerSensor = {
   modelid: "PHA_TIMER",
   manufacturername: "Philips",
   swversion: "1.0",
-  uniqueid: shortid
-    .characters(
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-    )
-    .substr(0, 16),
+  uniqueid: shortid.generate(),
   recycle: true
 };
 
@@ -38,11 +40,7 @@ export const sleepSensor = {
   modelid: "PHA_CTRL_START",
   manufacturername: "Philips",
   swversion: "1.1",
-  uniqueid: shortid
-    .characters(
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-    )
-    .substr(0, 16),
+  uniqueid: shortid.generate(),
   recycle: true
 };
 
@@ -60,11 +58,7 @@ export const wakeSensor = {
   modelid: "WAKEUP",
   manufacturername: "Philips",
   swversion: "A_1810251352",
-  uniqueid: shortid
-    .characters(
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-    )
-    .substr(0, 16),
+  uniqueid: shortid.generate(),
   recycle: true
 };
 
@@ -82,11 +76,7 @@ export const otherSensor = {
   modelid: "PHA_CTRL_START",
   manufacturername: "Philips",
   swversion: "1.0",
-  uniqueid: shortid
-    .characters(
-      "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-    )
-    .substr(0, 16),
+  uniqueid: shortid.generate(),
   recycle: true
 };
 
