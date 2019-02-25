@@ -1,19 +1,4 @@
-// second scene
-const secondScene = yield call(
-  scenesApi.createScene,
-  sceneObject(true, props.type, lights, false)
-);
-yield put(scenesActions.createScene.success(secondScene));
-const secondSceneId = secondScene.data[0].success.id;
-for (let light of lights) {
-  const modifySecondScene = yield call(
-    scenesApi.modifySceneLights,
-    secondSceneId,
-    light,
-    createLightstates(state.fadeSelect.value, props.type, true)
-  );
-  yield put(scenesActions.modifySceneLights.success(modifySecondScene));
-}
+
 // main rule
 const rule = yield call(
   rulesApi.createRule,

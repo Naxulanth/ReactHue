@@ -94,11 +94,6 @@ export function* createRoutine({ body }) {
       );
       yield put(scenesActions.createScene.success(firstScene));
       const firstSceneId = firstScene.data[0].success.id;
-      // second schedule
-      const secondSchedule = Object.assign({}, firstSchedule);
-      secondSchedule.description = shortId + "_trigger end scene";
-      secondSchedule.name = shortId;
-      secondSchedule.command = groupObject(firstSceneId);
       for (let light of lights) {
         const modifyFirstScene = yield call(
           scenesApi.modifySceneLights,
@@ -108,12 +103,33 @@ export function* createRoutine({ body }) {
         );
         yield put(scenesActions.modifySceneLights.success(modifyFirstScene));
       }
+      // second schedule
+      const secondSchedule = Object.assign({}, firstSchedule);
+      secondSchedule.description = shortId + "_trigger end scene";
+      secondSchedule.name = shortId;
+      secondSchedule.command = groupObject(firstSceneId);
       const secondScheduleData = yield call(
         schedulesApi.createSchedule,
         secondSchedule
       );
       yield put(schedulesActions.createSchedule.success(secondScheduleData));
       const secondScheduleId = secondScheduleData.data[0].success.id;
+      // second scene
+      const secondScene = yield call(
+        scenesApi.createScene,
+        sceneObject(true, props.type, lights, true)
+      );
+      yield put(scenesActions.createScene.success(secondScene));
+      const secondSceneId = secondScene.data[0].success.id;
+      for (let light of lights) {
+        const modifySecondScene = yield call(
+          scenesApi.modifySceneLights,
+          secondSceneId,
+          light,
+          createLightstates(state.fadeSelect.value, props.type, true)
+        );
+        yield put(scenesActions.modifySceneLights.success(modifySecondScene));
+      }
     }
   } catch (e) {}
 }
