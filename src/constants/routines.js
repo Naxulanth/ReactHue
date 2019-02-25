@@ -162,6 +162,8 @@ export function ruleObject(
   timeOff,
   type
 ) {
+  let fixedName = "";
+  if (type === "wake") fixedName = name + "_Start"
   let dx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"
@@ -186,7 +188,7 @@ export function ruleObject(
     }
   };
   let obj = {
-    name: name + " rule",
+    name: fixedName
     status: "enabled",
     recycle: true,
     conditions: [
@@ -206,7 +208,7 @@ export function ruleObject(
       }
     ]
   };
-  if (type === "wake" && !init) {
+  if (type === "wake" && init) {
     obj.actions.push(wakeSchedule);
   }
   if (init && (type === "timers" || type === "routines")) {

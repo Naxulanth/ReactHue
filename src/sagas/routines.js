@@ -43,10 +43,10 @@ export function* createRoutine({ body }) {
   try {
     let state = body.state;
     let props = body.props;
-    let firstSchedule = {};
+    let startSchedule = {};
     let shortId = shortid.generate();
-    firstSchedule.status = "disabled";
-    firstSchedule.recycle = true;
+    startSchedule.status = "disabled";
+    startSchedule.recycle = true;
     let lights = [];
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
@@ -64,13 +64,13 @@ export function* createRoutine({ body }) {
         return state.days[day];
       })
     ) {
-      firstSchedule.localtime = recur(
+      startSchedule.localtime = recur(
         absolute(state.time, null, true),
         state.days
       );
     } else {
       // absolute time
-      firstSchedule.localtime = absolute(state.time, null, true);
+      startSchedule.localtime = absolute(state.time, null, true);
     }
     if (props.type === "wake") {
       // sensor
@@ -78,57 +78,57 @@ export function* createRoutine({ body }) {
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
       // first schedule
-      firstSchedule.description = shortId + "_start wake up";
-      firstSchedule.name = state.name;
-      firstSchedule.command = sensorObject(sensorId);
-      const firstScheduleData = yield call(
+      startSchedule.description = shortId + "_start wake up";
+      startSchedule.name = state.name;
+      startSchedule.command = sensorObject(sensorId);
+      const startScheduleData = yield call(
         schedulesApi.createSchedule,
-        firstSchedule
+        startSchedule
       );
-      yield put(schedulesActions.createSchedule.success(firstScheduleData));
-      const firstScheduleId = firstScheduleData.data[0].success.id;
+      yield put(schedulesActions.createSchedule.success(startScheduleData));
+      const startScheduleId = startScheduleData.data[0].success.id;
       // first scene
-      const firstScene = yield call(
+      const endScene = yield call(
         scenesApi.createScene,
         sceneObject(false, props.type, lights, false)
       );
-      yield put(scenesActions.createScene.success(firstScene));
-      const firstSceneId = firstScene.data[0].success.id;
+      yield put(scenesActions.createScene.success(endScene));
+      const endSceneId = endScene.data[0].success.id;
       for (let light of lights) {
-        const modifyFirstScene = yield call(
+        const modifyendScene = yield call(
           scenesApi.modifySceneLights,
-          firstSceneId,
+          endSceneId,
           light,
           createLightstates(state.fadeSelect.value, props.type, false)
         );
-        yield put(scenesActions.modifySceneLights.success(modifyFirstScene));
+        yield put(scenesActions.modifySceneLights.success(modifyendScene));
       }
       // second schedule
-      const secondSchedule = Object.assign({}, firstSchedule);
-      secondSchedule.description = shortId + "_trigger end scene";
-      secondSchedule.name = shortId;
-      secondSchedule.command = groupObject(firstSceneId);
-      const secondScheduleData = yield call(
+      const endSchedule = Object.assign({}, startSchedule);
+      endSchedule.description = shortId + "_trigger end scene";
+      endSchedule.name = shortId;
+      endSchedule.command = groupObject(endSceneId);
+      const endScheduleData = yield call(
         schedulesApi.createSchedule,
-        secondSchedule
+        endSchedule
       );
-      yield put(schedulesActions.createSchedule.success(secondScheduleData));
-      const secondScheduleId = secondScheduleData.data[0].success.id;
+      yield put(schedulesActions.createSchedule.success(endScheduleData));
+      const endScheduleId = endScheduleData.data[0].success.id;
       // second scene
-      const secondScene = yield call(
+      const startScene = yield call(
         scenesApi.createScene,
         sceneObject(true, props.type, lights, true)
       );
-      yield put(scenesActions.createScene.success(secondScene));
-      const secondSceneId = secondScene.data[0].success.id;
+      yield put(scenesActions.createScene.success(startScene));
+      const startSceneId = startScene.data[0].success.id;
       for (let light of lights) {
-        const modifySecondScene = yield call(
+        const modifystartScene = yield call(
           scenesApi.modifySceneLights,
-          secondSceneId,
+          startSceneId,
           light,
           createLightstates(state.fadeSelect.value, props.type, true)
         );
-        yield put(scenesActions.modifySceneLights.success(modifySecondScene));
+        yield put(scenesActions.modifySceneLights.success(modifystartScene));
       }
     }
   } catch (e) {}

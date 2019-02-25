@@ -3,11 +3,11 @@
 const rule = yield call(
   rulesApi.createRule,
   ruleObject(
-    state.name,
+    shortId,
     sensorId,
-    secondSceneId,
+    startSceneId,
     state.rooms,
-    secondScheduleId,
+    endScheduleId,
     true,
     state.timeOff,
     props.type
@@ -27,9 +27,9 @@ if (state.timeOff) {
     ruleObject(
       state.name,
       sensorId,
-      secondSceneId,
+      startSceneId,
       roomId,
-      secondScheduleId,
+      endScheduleId,
       false,
       state.timeOff,
       props.type
@@ -41,11 +41,11 @@ if (state.timeOff) {
 // resources
 let resource = resourceObject(state.name, props.type);
 resource.links.push("/sensors/" + sensorId);
-resource.links.push("/schedules/" + firstScheduleId);
-resource.links.push("/schedules/" + secondScheduleId);
+resource.links.push("/schedules/" + startScheduleId);
+resource.links.push("/schedules/" + endScheduleId);
 resource.links.push("/rules/" + ruleId);
-resource.links.push("/scenes/" + firstSceneId);
-resource.links.push("/scenes/" + secondSceneId);
+resource.links.push("/scenes/" + endSceneId);
+resource.links.push("/scenes/" + startSceneId);
 if (state.timeOff) {
   resource.links.push("/rules/" + timeoffRuleId);
   resource.links.push("/groups/" + roomId);
