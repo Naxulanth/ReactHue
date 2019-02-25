@@ -51,7 +51,6 @@ export function* createRoutine({ body }) {
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
         if (state.rooms.includes(roomKey)) {
-          console.log("test");
           lights = lights.concat(props.roomList[roomKey].lights);
         }
       });
@@ -108,6 +107,7 @@ export function* createRoutine({ body }) {
       endSchedule.description = shortId + "_trigger end scene";
       endSchedule.name = shortId;
       endSchedule.command = groupObject(endSceneId);
+      endSchedule.localtime = "PT00:01:00";
       const endScheduleData = yield call(
         schedulesApi.createSchedule,
         endSchedule
@@ -174,7 +174,7 @@ export function* createRoutine({ body }) {
       resource.links.push("/sensors/" + sensorId);
       resource.links.push("/schedules/" + startScheduleId);
       resource.links.push("/schedules/" + endScheduleId);
-      resource.links.push("/rules/" + ruleId);  
+      resource.links.push("/rules/" + ruleId);
       resource.links.push("/scenes/" + endSceneId);
       resource.links.push("/scenes/" + startSceneId);
       if (state.timeOff) {
@@ -191,6 +191,8 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
       yield put(actions.createRoutine.success());
+      const refreshSchedules = yield call(schedulesApi.getSchedules);
+      yield put(schedulesActions.getSchedules.success(refreshSchedules));
     }
   } catch (e) {}
 }

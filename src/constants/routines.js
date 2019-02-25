@@ -213,7 +213,6 @@ export function ruleObject(
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
-  console.log(obj);
   return obj;
 }
 
@@ -223,7 +222,7 @@ export function createLightstates(fade, type, init) {
     on: true,
     bri: 254,
     ct: 447,
-    transitiontime: (parseInt(fade) - 1) * 60
+    transitiontime: (parseInt(fade) - 1) * 600
   };
   let wakeInit = {
     on: true,
@@ -239,7 +238,7 @@ export function createLightstates(fade, type, init) {
     on: false,
     bri: 1,
     ct: 447,
-    transitiontime: (parseInt(fade) - 1) * 60
+    transitiontime: (parseInt(fade) - 1) * 600
   };
   if (type === "wake") {
     if (init) obj = wakeInit;

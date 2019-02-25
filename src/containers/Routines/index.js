@@ -1,13 +1,16 @@
 import React, { Component } from "react";
 import RoutineTitle from "components/RoutineTitle";
+import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import Button from "components/Button";
+import { getSchedules } from "actions/schedules";
 import Routine from "containers/Routine";
 import RoutineDetails from "containers/RoutineDetails";
 import Animate from "components/Animate";
 import uuidv4 from "uuid/v4";
 import "./style.css";
+import { get } from "http";
 
 class Routines extends Component {
   constructor(props) {
@@ -27,10 +30,17 @@ class Routines extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { schedules, type } = this.props;
-    const { routines } = this.state;
-    if (schedules && routines.length === 0) {
+  componentDidUpdate(prevProps) {
+    const { schedules, type, loading, getSchedules } = this.props;
+    const { routines, creator } = this.state;
+    if (prevProps.loading === true && loading === false) {
+      getSchedules();
+    }
+    if (
+      (schedules && routines.length === 0) ||
+      (JSON.stringify(schedules) !== JSON.stringify(prevProps.schedules) &&
+        creator)
+    ) {
       this.mapRoutines(type);
     }
   }
@@ -42,7 +52,7 @@ class Routines extends Component {
       let r = keys.map(routine => {
         return <Routine key={uuidv4()} type={type} id={routine} />;
       });
-      this.setState({ routines: r });
+      this.setState({ routines: r, creator: false });
     }
   }
 
@@ -90,10 +100,13 @@ class Routines extends Component {
 }
 
 const mapStateToProps = state => ({
-  schedules: state.schedules.list
+  schedules: state.schedules.list,
+  loading: state.routines.loading
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  getSchedules: bindActionCreators(getSchedules.request, dispatch)
+});
 
 export default connect(
   mapStateToProps,

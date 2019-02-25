@@ -469,7 +469,7 @@ const mapStateToProps = state => ({
   createdScene: state.scenes.createdScene,
   createdSchedule: state.schedules.createdSchedule,
   scenes: state.scenes.list,
-  createdRoom: state.rooms.createdRoom
+  createdRoom: state.rooms.createdRoom,
 });
 
 const mapDispatchToProps = dispatch => ({
