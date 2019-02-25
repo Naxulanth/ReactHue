@@ -199,13 +199,6 @@ export function ruleObject(
       }
     ],
     actions: [
-      {
-        address: "/sensors/" + createdSensor + "/state",
-        method: "PUT",
-        body: {
-          flag: false
-        }
-      }
     ]
   };
   if (type === "wake" && init) {
@@ -221,6 +214,7 @@ export function ruleObject(
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
+  console.log(obj)
   return obj;
 }
 

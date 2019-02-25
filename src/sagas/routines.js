@@ -130,6 +130,69 @@ export function* createRoutine({ body }) {
         );
         yield put(scenesActions.modifySceneLights.success(modifystartScene));
       }
+      const rule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          shortId,
+          sensorId,
+          startSceneId,
+          state.rooms,
+          endScheduleId,
+          true,
+          state.timeOff,
+          props.type
+        )
+      );
+      yield put(rulesActions.createRule.success(rule));
+      const ruleId = rule.data[0].success.id;
+
+      // main rule
+
+      // timeoff rule & group - needs checking
+      let timeoffRuleId = null;
+      let roomId = null;
+      if (state.timeOff) {
+        const room = yield call(roomsApi.createRoom, roomObject(lights));
+        roomId = room.data[0].success.id;
+        yield put(roomsActions.createRoom.success(room));
+        const timeoffRule = yield call(
+          rulesApi.createRule,
+          ruleObject(
+            state.name,
+            sensorId,
+            startSceneId,
+            roomId,
+            endScheduleId,
+            false,
+            state.timeOff,
+            props.type
+          )
+        );
+        yield put(rulesActions.createRule.success(rule));
+        timeoffRuleId = timeoffRule.data[0].success.id;
+      }
+      // resources - needs checking
+      let resource = resourceObject(state.name, props.type);
+      resource.links.push("/sensors/" + sensorId);
+      resource.links.push("/schedules/" + startScheduleId);
+      resource.links.push("/schedules/" + endScheduleId);
+      resource.links.push("/rules/" + ruleId);
+      resource.links.push("/scenes/" + endSceneId);
+      resource.links.push("/scenes/" + startSceneId);
+      if (state.timeOff) {
+        resource.links.push("/rules/" + timeoffRuleId);
+        resource.links.push("/groups/" + roomId);
+      }
+      if (state.rooms.length > 0) {
+        state.rooms.forEach(room => {
+          resource.links.push("/groups/" + room);
+        });
+      } else {
+        resource.links.push("/groups/" + 0);
+      }
+      const resourceData = yield call(resourcesApi.createResource, resource);
+      yield put(resourcesActions.createResource.success(resourceData));
+      yield put(actions.createRoutine.success());
     }
   } catch (e) {}
 }
