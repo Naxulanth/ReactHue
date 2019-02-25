@@ -82,7 +82,7 @@ class Routine extends Component {
           </Row>
           <Row>
             <Col sm="12" md="12" lg="12" xl="12">
-              {details ? <RoutineDetails edit /> : null}
+              {details ? <RoutineDetails type={type} edit /> : null}
             </Col>
           </Row>
         </div>
