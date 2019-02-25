@@ -14,7 +14,15 @@ import { renew } from "./shared";
 export function* getRooms() {
   try {
     const response = yield call(api.getRooms);
-    yield put(actions.getRooms.success(response));
+    let roomList = {};
+    let routineGroups = {};
+    Object.keys(response.data).forEach(roomKey => {
+      if (!response.data[roomKey].name.includes("Group for wakeup")) {
+        roomList[roomKey] = response.data[roomKey];
+      } else routineGroups[roomKey] = response.data[roomKey];
+    });
+    let result = { roomList, routineGroups };
+    yield put(actions.getRooms.success(result));
   } catch (e) {
     yield put(actions.getRooms.failure(e));
   }
