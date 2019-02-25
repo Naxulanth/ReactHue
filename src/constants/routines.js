@@ -188,7 +188,7 @@ export function ruleObject(
     }
   };
   let obj = {
-    name: fixedName
+    name: fixedName,
     status: "enabled",
     recycle: true,
     conditions: [

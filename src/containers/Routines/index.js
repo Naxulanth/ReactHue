@@ -69,8 +69,7 @@ class Routines extends Component {
             <Row className="vertical-center push-bottom">
               <Col sm="8" md="8" lg="8" xl="8">
                 <RoutineTitle>
-                  {" "}
-                  {type.charAt(0).toUpperCase() + type.slice(1)}{" "}
+                  {type.charAt(0).toUpperCase() + type.slice(1)}
                 </RoutineTitle>
               </Col>
               <Col className="align-right" sm="4" md="4" lg="4" xl="4">

@@ -4,7 +4,7 @@ import {
   SCHEDULE_CREATE,
   SCHEDULE_DELETE,
   SCHEDULE_GET,
-  SCHEDULE_PUT,
+  SCHEDULE_PUT
 } from "../constants/actionTypes";
 
 import * as actions from "../actions/schedules";
@@ -70,15 +70,11 @@ export function* getSchedules() {
     let wake = {};
     let sleep = {};
     let schedules = {};
+    let endScenes = {};
     const response = yield call(api.getSchedules);
     const keys = Object.keys(response.data);
     yield keys.forEach(schedule => {
-      if (
-        response.data[schedule].description
-          .toLowerCase()
-          .toLowerCase()
-          .includes("timer")
-      ) {
+      if (response.data[schedule].description.toLowerCase().includes("timer")) {
         timers[schedule] = response.data[schedule];
       } else if (
         response.data[schedule].description.toLowerCase().includes("wake up")
@@ -95,11 +91,17 @@ export function* getSchedules() {
       ) {
         routines[schedule] = response.data[schedule];
       }
+      else if (
+        response.data[schedule].description.toLowerCase().includes("end scene")
+      ) {
+        endScenes[schedule] = response.data[schedule];
+      }
     });
     yield (schedules["timers"] = timers);
     yield (schedules["routines"] = routines);
     yield (schedules["wake"] = wake);
     yield (schedules["sleep"] = sleep);
+    yield (schedules["endScenes"] = endScenes)
     yield put(actions.getSchedules.success(schedules));
   } catch (e) {
     yield put(actions.getSchedules.failure(e));

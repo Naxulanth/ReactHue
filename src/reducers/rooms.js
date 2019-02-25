@@ -11,14 +11,17 @@ const rooms = (state = [], action) => {
       return state;
     case ROOMS_GET.SUCCESS:
       let roomList = {};
+      let routineGroups = {};
       Object.keys(action.response.data).forEach(roomKey => {
         if (!action.response.data[roomKey].name.includes("Group for wakeup")) {
           roomList[roomKey] = action.response.data[roomKey];
         }
+        else routineGroups[roomKey] = action.response.data[roomKey];
       });
       return {
         ...state,
-        list: roomList
+        list: roomList,
+        routines: routineGroups
       };
     case ROOMS_GET.FAILURE:
       return state;
