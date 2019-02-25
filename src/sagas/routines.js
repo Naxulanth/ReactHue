@@ -50,17 +50,14 @@ export function* createRoutine({ body }) {
     let lights = [];
     if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
-        console.log(roomKey);
         if (state.rooms.includes(roomKey)) {
           console.log("test");
           lights = lights.concat(props.roomList[roomKey].lights);
-          console.log(lights);
         }
       });
     } else {
       lights = state.routineLights;
     }
-    console.log(lights);
     if (
       // recurring time
       Object.keys(state.days).some(function(day) {
@@ -75,7 +72,6 @@ export function* createRoutine({ body }) {
       // absolute time
       firstSchedule.localtime = absolute(state.time, null, true);
     }
-    console.log(firstSchedule);
     if (props.type === "wake") {
       // sensor
       const sensor = yield call(sensorsApi.createSensor, wakeSensor);
@@ -85,7 +81,6 @@ export function* createRoutine({ body }) {
       firstSchedule.description = shortId + "_start wake up";
       firstSchedule.name = state.name;
       firstSchedule.command = sensorObject(sensorId);
-      console.log(firstSchedule);
       const firstScheduleData = yield call(
         schedulesApi.createSchedule,
         firstSchedule

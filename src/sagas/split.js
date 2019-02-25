@@ -1,7 +1,7 @@
 // second scene
 const secondScene = yield call(
   scenesApi.createScene,
-  sceneObject(true, props.type, lights)
+  sceneObject(true, props.type, lights, false)
 );
 yield put(scenesActions.createScene.success(secondScene));
 const secondSceneId = secondScene.data[0].success.id;
