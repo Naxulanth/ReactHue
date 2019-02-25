@@ -25,20 +25,20 @@ export function absolute(localtime, time, raw) {
 export function recur(time, days) {
   let acc = 0;
   let dayValues = {
-    sunday: 1,
-    saturday: 2,
-    friday: 4,
-    thursday: 8,
-    wednesday: 16,
-    tuesday: 32,
-    monday: 64
+    sun: 1,
+    sat: 2,
+    fri: 4,
+    thu: 8,
+    wed: 16,
+    tue: 32,
+    mon: 64
   };
   Object.keys(days).forEach(day => {
     if (days[day]) acc += dayValues[day];
   });
-  acc = ("000" + acc).slice(-4);
+  acc = ("000" + acc).slice(-3);
   let prefix = "W" + acc + "/";
-  return prefix + time;
+  return prefix + "T" + time.split("T")[1];
 }
 export function randomize(time, interval) {
   if (interval == 60) return time + "A01:00:00";

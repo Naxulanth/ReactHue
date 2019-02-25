@@ -33,7 +33,7 @@ export const SENSOR_PUT = createRequestTypes("SENSOR_PUT");
 export const SENSOR_DELETE = createRequestTypes("SENSOR_DELETE");
 
 export const RULES_GET = createRequestTypes("RULES_GET");
-export const RULE_CREATE = createRequestTypes("RULE_GET");
+export const RULE_CREATE = createRequestTypes("RULE_CREATE");
 export const RULE_PUT = createRequestTypes("RULE_PUT");
 export const RULE_DELETE = createRequestTypes("RULE_DELETE");
 

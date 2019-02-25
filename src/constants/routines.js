@@ -1,6 +1,5 @@
 import shortid from "shortid";
 import { SENSORS_RAW, GROUPS_RAW } from "constants/endpoints";
-import { user } from "constants/localStorage";
 import { absolute } from "utils/date";
 
 export const timerSensor = {
@@ -128,7 +127,7 @@ export function sceneObject(init, type, lights, group) {
     type: sceneType,
     lights: lights,
     recycle: true,
-    picture: "",
+    picture: ""
   };
   if (sceneType === "GroupScene") {
     obj["group"] = group;
@@ -146,11 +145,10 @@ export function resourceObject(name, type) {
   let resource = {};
   resource.name = name;
   resource.description = name + " behavior";
-  resource.owner = localStorage.getItem(user);
   resource.recycle = false;
   resource.links = [];
   resource.classid = classid;
-  
+
   return resource;
 }
 
@@ -189,10 +187,6 @@ export function ruleObject(
   };
   let obj = {
     name: name + " rule",
-    owner: localStorage.getItem(user),
-    created: absolute(new Date(), null, true),
-    lasttriggered: "none",
-    timestriggered: 0,
     status: "enabled",
     recycle: true,
     conditions: [
@@ -230,6 +224,7 @@ export function ruleObject(
 
 export function createLightstates(lights, fade, type, init) {
   let result = {};
+  result["lightstates"] = {};
   let obj = {};
   let wakeEnd = {
     on: true,
@@ -263,7 +258,7 @@ export function createLightstates(lights, fade, type, init) {
   } else if (type === "timers") {
   }
   lights.forEach(light => {
-    result[light] = obj;
+    result["lightstates"][light] = obj;
   });
   return result;
 }
@@ -296,7 +291,7 @@ export function roomObject(lights) {
     lights: lights,
     sensors: [],
     type: "LightGroup",
-    recycle: true,
+    recycle: true
   };
   return obj;
 }
