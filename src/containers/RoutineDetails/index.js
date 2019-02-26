@@ -20,7 +20,6 @@ import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 
-
 moment().format();
 
 class RoutineDetails extends Component {
@@ -55,7 +54,6 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-
     if (this.props.scheduleId) {
       // edit mode
       this.setState({});
