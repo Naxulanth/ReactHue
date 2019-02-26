@@ -9,11 +9,15 @@ import {
 const schedules = (state = [], action) => {
   switch (action.type) {
     case SCHEDULES_GET.REQUEST:
-      return state;
+      return {
+        ...state,
+        loading: true
+      };
     case SCHEDULES_GET.SUCCESS:
       return {
         ...state,
-        list: action.response
+        list: action.response,
+        loading: false,
       };
     case SCHEDULES_GET.FAILURE:
       return state;

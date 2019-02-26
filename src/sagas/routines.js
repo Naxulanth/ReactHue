@@ -140,7 +140,7 @@ export function* createRoutine({ body }) {
           state.rooms,
           endScheduleId,
           true,
-          state.timeOff,
+          state.formattedTimeOff,
           props.type
         )
       );
@@ -149,7 +149,7 @@ export function* createRoutine({ body }) {
       // timeoff rule & group - needs checking
       let timeoffRuleId = null;
       let roomId = null;
-      if (state.timeOff) {
+      if (state.formattedTimeOff) {
         const room = yield call(roomsApi.createRoom, roomObject(lights));
         roomId = room.data[0].success.id;
         yield put(roomsActions.createRoom.success(room));
@@ -162,14 +162,14 @@ export function* createRoutine({ body }) {
             roomId,
             endScheduleId,
             false,
-            state.timeOff,
+            state.formattedTimeOff,
             props.type
           )
         );
-        yield put(rulesActions.createRule.success(rule));
         timeoffRuleId = timeoffRule.data[0].success.id;
+        yield put(rulesActions.createRule.success(rule));
       }
-      // resources - needs checking
+      // resources
       let resource = resourceObject(state.name, props.type);
       resource.links.push("/sensors/" + sensorId);
       resource.links.push("/schedules/" + startScheduleId);
@@ -177,7 +177,7 @@ export function* createRoutine({ body }) {
       resource.links.push("/rules/" + ruleId);
       resource.links.push("/scenes/" + endSceneId);
       resource.links.push("/scenes/" + startSceneId);
-      if (state.timeOff) {
+      if (state.formattedTimeOff) {
         resource.links.push("/rules/" + timeoffRuleId);
         resource.links.push("/groups/" + roomId);
       }
@@ -191,8 +191,7 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
       yield put(actions.createRoutine.success());
-      const refreshSchedules = yield call(schedulesApi.getSchedules);
-      yield put(schedulesActions.getSchedules.success(refreshSchedules));
+      yield put(schedulesActions.getSchedules.request());
     }
   } catch (e) {}
 }

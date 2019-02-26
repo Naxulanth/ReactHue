@@ -28,9 +28,7 @@ class RoutinesScene extends Component {
       getRooms,
       getLights,
       getScenes,
-      schedules
     } = this.props;
-    let that = this;
     getSchedules();
     getResources();
     getRules();

@@ -1,6 +1,5 @@
 import shortid from "shortid";
 import { SENSORS_RAW, GROUPS_RAW } from "constants/endpoints";
-import { absolute } from "utils/date";
 
 shortid
   .characters(
@@ -165,6 +164,14 @@ export function ruleObject(
       flag: false
     }
   };
+  let actionTimeOff = {
+    address: "/groups/" + groups + "/action",
+    method: "PUT",
+    body: {
+      on: false
+    }
+  };
+
   let ddx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "ddx",
@@ -190,6 +197,9 @@ export function ruleObject(
     ],
     actions: []
   };
+  if (timeOff) {
+    obj.actions.push(actionTimeOff);
+  }
   if (type === "wake" && init) {
     obj.actions.push(wakeSchedule);
   }
@@ -199,7 +209,7 @@ export function ruleObject(
   if (!init) {
     obj.conditions.push(ddx);
   }
-  if (!timeOff && (!init || (type !== "sleep" && type !== "routines"))) {
+  if (!init || (type !== "sleep" && type !== "routines")) {
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);

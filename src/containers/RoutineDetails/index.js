@@ -50,6 +50,7 @@ class RoutineDetails extends Component {
     this.sceneSelect = this.sceneSelect.bind(this);
     this.getRoomScenes = this.getRoomScenes.bind(this);
     this.handleScene = this.handleScene.bind(this);
+    this.formatTimeOff = this.formatTimeOff.bind(this);
   }
 
   componentDidMount() {
@@ -89,6 +90,24 @@ class RoutineDetails extends Component {
     });
   }
 
+  formatTimeOff(time, timeOff) {
+    const { fadeSelect } = this.state;
+    let start = new Date(time);
+    let end = new Date(timeOff);
+    if (fadeSelect)
+      end.setMinutes(end.getMinutes() + parseInt(fadeSelect.value));
+    var res = Math.abs(end - start) / 1000;
+    let hours = Math.floor(res / 3600) % 24;
+    let minutes = Math.floor(res / 60) % 60;
+    if (start > end) {
+      hours = 24 - hours;
+    }
+    hours = ("00" + hours).slice(-2);
+    minutes = ("00" + minutes).slice(-2);
+    let formatted = "PT" + hours + ":" + minutes + ":00";
+    return formatted;
+  }
+
   handleFade(e) {
     this.setState({
       fadeSelect: e
@@ -102,6 +121,7 @@ class RoutineDetails extends Component {
   }
 
   handleSubmit(e) {
+    let formattedTimeOff = null;
     const { type, roomList, createRoutine } = this.props;
     const {
       name,
@@ -113,6 +133,7 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect
     } = this.state;
+    if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
       type,
       roomList,
@@ -124,7 +145,7 @@ class RoutineDetails extends Component {
       rooms,
       home,
       time,
-      timeOff,
+      formattedTimeOff,
       routineLights,
       fadeSelect
     };
@@ -469,7 +490,7 @@ const mapStateToProps = state => ({
   createdScene: state.scenes.createdScene,
   createdSchedule: state.schedules.createdSchedule,
   scenes: state.scenes.list,
-  createdRoom: state.rooms.createdRoom,
+  createdRoom: state.rooms.createdRoom
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -10,7 +10,6 @@ import RoutineDetails from "containers/RoutineDetails";
 import Animate from "components/Animate";
 import uuidv4 from "uuid/v4";
 import "./style.css";
-import { get } from "http";
 
 class Routines extends Component {
   constructor(props) {
@@ -31,15 +30,13 @@ class Routines extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { schedules, type, loading, getSchedules } = this.props;
-    const { routines, creator } = this.state;
-    if (prevProps.loading === true && loading === false) {
-      getSchedules();
-    }
+    const { schedules, type } = this.props;
+    const { routines } = this.state;
     if (
-      (schedules && routines.length === 0) ||
-      (JSON.stringify(schedules) !== JSON.stringify(prevProps.schedules) &&
-        creator)
+      schedules &&
+      (routines.length === 0 ||
+        Object.keys(schedules[type]).length !==
+          Object.keys(prevProps.schedules[type]).length)
     ) {
       this.mapRoutines(type);
     }
@@ -69,7 +66,7 @@ class Routines extends Component {
     const { handleCreator } = this;
     const details = (
       <Animate pose={creator ? "visible" : "hidden"}>
-        <RoutineDetails type={type} />
+        <RoutineDetails key={uuidv4()} type={type} />
       </Animate>
     );
     if (schedules && schedules[type]) {
@@ -101,7 +98,8 @@ class Routines extends Component {
 
 const mapStateToProps = state => ({
   schedules: state.schedules.list,
-  loading: state.routines.loading
+  loading: state.routines.loading,
+  schedulesLoading: state.schedules.loading
 });
 
 const mapDispatchToProps = dispatch => ({

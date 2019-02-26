@@ -14,7 +14,7 @@ export function* setSchedule({ id, body }) {
   try {
     const response = yield call(api.setSchedule, id, body);
     yield put(actions.setSchedule.success(response));
-    yield call(getSchedules);
+    yield put(actions.getSchedules.request())
   } catch (e) {
     yield put(actions.setSchedule.failure(e));
   }

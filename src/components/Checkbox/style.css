@@ -3,6 +3,7 @@
     margin-left: 10px;
     margin-right: 10px;
     text-align: center;
+    min-width: 80px;
 }
 
 /* Hide the browser's default checkbox */
