@@ -23,3 +23,10 @@ export function modifySensor(id, body) {
     data: JSON.stringify(body)
   });
 }
+
+export function deleteSensor(id) {
+  return axios.request({
+    method: "delete",
+    url: SENSORS + "/" + id
+  });
+}

@@ -23,3 +23,10 @@ export function modifyResource(id, body) {
     data: JSON.stringify(body)
   });
 }
+
+export function deleteResource(id) {
+  return axios.request({
+    method: "delete",
+    url: RESOURCES + "/" + id,
+  });
+}

@@ -23,3 +23,10 @@ export function modifyRule(id, body) {
     data: JSON.stringify(body)
   });
 }
+
+export function deleteRule(id) {
+  return axios.request({
+    method: "delete",
+    url: RULES + "/" + id
+  });
+}

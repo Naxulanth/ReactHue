@@ -20,6 +20,7 @@ import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
 
+
 moment().format();
 
 class RoutineDetails extends Component {
@@ -54,6 +55,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
+
     if (this.props.scheduleId) {
       // edit mode
       this.setState({});
@@ -490,7 +492,8 @@ const mapStateToProps = state => ({
   createdScene: state.scenes.createdScene,
   createdSchedule: state.schedules.createdSchedule,
   scenes: state.scenes.list,
-  createdRoom: state.rooms.createdRoom
+  createdRoom: state.rooms.createdRoom,
+  resources: state.resources.list
 });
 
 const mapDispatchToProps = dispatch => ({
