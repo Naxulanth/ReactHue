@@ -192,6 +192,53 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
       yield put(actions.createRoutine.success());
       yield put(schedulesActions.getSchedules.request());
+    } else if (props.type === "sleep") {
+      // sensor
+      const sensor = yield call(sensorsApi.createSensor, sleepSensor);
+      yield put(sensorsActions.createSensor.success(sensor));
+      const sensorId = sensor.data[0].success.id;
+      // first schedule
+      startSchedule.description = "Trigger go to sleep start";
+      startSchedule.name = "Go to sleep start";
+      startSchedule.command = sensorObject(sensorId);
+      const startScheduleData = yield call(
+        schedulesApi.createSchedule,
+        startSchedule
+      );
+      yield put(schedulesActions.createSchedule.success(startScheduleData));
+      const startScheduleId = startScheduleData.data[0].success.id;
+      // first scene
+      const endScene = yield call(
+        scenesApi.createScene,
+        sceneObject(false, props.type, lights, false)
+      );
+      yield put(scenesActions.createScene.success(endScene));
+      const endSceneId = endScene.data[0].success.id;
+      for (let light of lights) {
+        const modifystartScene = yield call(
+          scenesApi.modifySceneLights,
+          startSceneId,
+          light,
+          createLightstates(state.fadeSelect.value, props.type, true)
+        );
+        yield put(scenesActions.modifySceneLights.success(modifystartScene));
+      }
+      const startScene = yield call(
+        scenesApi.createScene,
+        sceneObject(true, props.type, lights, true)
+      );
+      yield put(scenesActions.createScene.success(startScene));
+      const startSceneId = startScene.data[0].success.id;
+      for (let light of lights) {
+        const modifystartScene = yield call(
+          scenesApi.modifySceneLights,
+          startSceneId,
+          light,
+          createLightstates(state.fadeSelect.value, props.type, true)
+        );
+        yield put(scenesActions.modifySceneLights.success(modifystartScene));
+      }
+      // rule
     }
   } catch (e) {}
 }
