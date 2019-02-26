@@ -239,6 +239,22 @@ export function* createRoutine({ body }) {
         yield put(scenesActions.modifySceneLights.success(modifystartScene));
       }
       // rule
+      const startRule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          "Go to sleep start",
+          sensorId,
+          startSceneId,
+          0,
+          null,
+          true,
+          null,
+          props.type
+        )
+      );
+      yield put(rulesActions.createRule.success(startRule));
+      const startRuleId = rule.data[0].success.id;
+      // end rule
     }
   } catch (e) {}
 }
