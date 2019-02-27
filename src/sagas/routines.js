@@ -286,6 +286,25 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "routines") {
+      const sensor = yield call(sensorsApi.createSensor, wakeSensor);
+      yield put(sensorsActions.createSensor.success(sensor));
+      const sensorId = sensor.data[0].success.id;
+      // first schedule
+      startSchedule.description = "MyRoutine";
+      startSchedule.name = state.name;
+      startSchedule.command = sensorObject(sensorId);
+      if (state.adjustmentSelect) {
+        startSchedule.localtime = randomize(startSchedule.localtime, state.adjustmentSelect.value)
+      }
+      const startScheduleData = yield call(
+        schedulesApi.createSchedule,
+        startSchedule
+      );
+      yield put(schedulesActions.createSchedule.success(startScheduleData));
+      const startScheduleId = startScheduleData.data[0].success.id;
+      // 1 scene for each room -> this is going to be copied from the roomScenes
+      // 2 rules
+      // resources
     } else if (props.type === "timers") {
     }
     yield put(actions.createRoutine.success());

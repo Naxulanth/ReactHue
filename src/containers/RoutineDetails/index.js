@@ -34,7 +34,7 @@ class RoutineDetails extends Component {
       home: false,
       timeOff: null,
       routineLights: [],
-      adjustmentSelect: "",
+      adjustmentSelect: null,
       roomScenes: {},
       sceneSelectors: []
     };
