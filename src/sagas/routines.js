@@ -192,6 +192,7 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
       yield put(actions.createRoutine.success());
       yield put(schedulesActions.getSchedules.request());
+      // sleep
     } else if (props.type === "sleep") {
       // sensor
       const sensor = yield call(sensorsApi.createSensor, sleepSensor);
@@ -253,7 +254,7 @@ export function* createRoutine({ body }) {
         )
       );
       yield put(rulesActions.createRule.success(startRule));
-      const startRuleId = rule.data[0].success.id;
+      const startRuleId = startRule.data[0].success.id;
       // end rule
     }
   } catch (e) {}

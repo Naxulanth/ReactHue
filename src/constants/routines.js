@@ -171,7 +171,6 @@ export function ruleObject(
       on: false
     }
   };
-
   let ddx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "ddx",
