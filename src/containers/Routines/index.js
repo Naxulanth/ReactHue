@@ -4,7 +4,6 @@ import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import Button from "components/Button";
-import { getSchedules } from "actions/schedules";
 import Routine from "containers/Routine";
 import RoutineDetails from "containers/RoutineDetails";
 import Animate from "components/Animate";
@@ -99,11 +98,9 @@ class Routines extends Component {
 const mapStateToProps = state => ({
   schedules: state.schedules.list,
   loading: state.routines.loading,
-  schedulesLoading: state.schedules.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  getSchedules: bindActionCreators(getSchedules.request, dispatch)
 });
 
 export default connect(

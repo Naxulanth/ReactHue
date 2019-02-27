@@ -190,8 +190,6 @@ export function* createRoutine({ body }) {
       }
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
-      yield put(actions.createRoutine.success());
-      yield put(schedulesActions.getSchedules.request());
       // sleep
     } else if (props.type === "sleep") {
       // sensor
@@ -256,6 +254,41 @@ export function* createRoutine({ body }) {
       yield put(rulesActions.createRule.success(startRule));
       const startRuleId = startRule.data[0].success.id;
       // end rule
+      const endRule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          "Go to sleep fade",
+          sensorId,
+          endSceneId,
+          0,
+          null,
+          false,
+          "PT:00:01:00",
+          props.type
+        )
+      );
+      yield put(rulesActions.createRule.success(endRule));
+      const endRuleId = endRule.data[0].success.id;
+      let resource = resourceObject(state.name, props.type);
+      resource.links.push("/sensors/" + sensorId);
+      resource.links.push("/schedules/" + startScheduleId);
+      resource.links.push("/rules/" + startRuleId);
+      resource.links.push("/rules/" + endRuleId);
+      resource.links.push("/scenes/" + endSceneId);
+      resource.links.push("/scenes/" + startSceneId);
+      if (state.rooms.length > 0) {
+        state.rooms.forEach(room => {
+          resource.links.push("/groups/" + room);
+        });
+      } else {
+        resource.links.push("/groups/" + 0);
+      }
+      const resourceData = yield call(resourcesApi.createResource, resource);
+      yield put(resourcesActions.createResource.success(resourceData));
+    } else if (props.type === "routines") {
+    } else if (props.type === "timers") {
     }
+    yield put(actions.createRoutine.success());
+    yield put(schedulesActions.getSchedules.request());
   } catch (e) {}
 }
