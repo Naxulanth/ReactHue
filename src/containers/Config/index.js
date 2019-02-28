@@ -16,13 +16,16 @@ class Config extends Component {
       username: "",
       text: "",
       redirect: false,
-      bridges: []
+      bridges: [],
+      generator: "generate token",
+      generatorConfirm: false
     };
     this.handleIPInput = this.handleIPInput.bind(this);
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.getBridges = this.getBridges.bind(this);
     this.handleClick = this.handleClick.bind(this);
+    this.handleToken = this.handleToken.bind(this);
   }
 
   componentDidMount() {
@@ -58,6 +61,38 @@ class Config extends Component {
     this.setState({
       ip: e.target.textContent
     });
+  }
+
+  handleToken() {
+    const { generatorConfirm, ip } = this.state;
+    if (!generatorConfirm) {
+      this.setState({
+        generator:
+          "Press the link button on your Hue bridge, then click this link",
+        generatorConfirm: true
+      });
+    } else {
+      this.setState({
+        generator: "Connecting..."
+      })
+      axios.post("http://" + ip + "/api", { devicetype: "hue_console" }).then(res => {
+        if (res.data[0].error) {
+          this.setState({
+            generator: res.data[0].error.description + ", click this link again to try again"
+          })
+        }
+        else if (res.data[0].success) {
+          this.setState({
+            username: res.data[0].success.username,
+            generator: "Success"
+          })
+        }
+      }).catch(e => {
+        this.setState({
+          generator: "Bridge not found, make sure to enter the correct Bridge IP"
+        })
+      });
+    }
   }
 
   handleSubmit() {
@@ -101,12 +136,13 @@ class Config extends Component {
   }
 
   render() {
-    const { ip, username, text, redirect, bridges } = this.state;
+    const { ip, username, text, redirect, bridges, generator } = this.state;
     const {
       handleIPInput,
       handleUsernameInput,
       handleSubmit,
-      handleClick
+      handleClick,
+      handleToken
     } = this;
     if (redirect) return (window.location.href = "/");
     return (
@@ -119,7 +155,9 @@ class Config extends Component {
                 return (
                   <Row>
                     <Col>
-                      <span className="pointer" onClick={handleClick}>{bridge}</span>
+                      <span className="pointer" onClick={handleClick}>
+                        {bridge}
+                      </span>
                     </Col>
                   </Row>
                 );
@@ -157,7 +195,7 @@ class Config extends Component {
             </div>
           </Col>
         </Row>
-        <Row>
+        <Row className="margin-10">
           <Col lg="12" sm="12" md="12" xl="12">
             Bridge IP
           </Col>
@@ -167,14 +205,21 @@ class Config extends Component {
             <TextInput value={ip} onChange={handleIPInput} />
           </Col>
         </Row>
-        <Row>
+        <Row className="margin-10">
           <Col lg="12" sm="12" md="12" xl="12">
-            Username
+            <span>Token</span>
           </Col>
         </Row>
         <Row>
           <Col lg="12" sm="12" md="12" xl="12">
             <TextInput value={username} onChange={handleUsernameInput} />
+          </Col>
+        </Row>
+        <Row className="align-right">
+          <Col lg="12" sm="12" md="12" xl="12">
+            <span className="smaller pointer" onClick={handleToken}>
+              {generator}
+            </span>
           </Col>
         </Row>
         <Row>

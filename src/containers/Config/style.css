@@ -23,3 +23,7 @@
 .pointer {
     cursor: pointer;
 }
+
+.smaller {
+    font-size: 12px;
+}
