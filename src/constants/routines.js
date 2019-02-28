@@ -108,8 +108,6 @@ export function sceneObject(init, type, lights, group) {
   } else if (type === "sleep") {
     name = "Go to sleep " + (init ? "start" : "end");
     sceneType = "LightScene";
-  } else if (type === "routines") {
-  } else if (type === "timers") {
   }
   let obj = {
     name: name,
@@ -121,7 +119,6 @@ export function sceneObject(init, type, lights, group) {
   if (sceneType === "GroupScene") {
     obj["group"] = group;
   }
-
   return obj;
 }
 
@@ -217,6 +214,12 @@ export function ruleObject(
 
 export function createLightstates(fade, type, init) {
   let obj = {};
+  let dimmed = {
+    on: true,
+    bri: 254,
+    ct: 367,
+    transitiontime: (parseInt(fade) - 1) * 600
+  };
   let wakeEnd = {
     on: true,
     bri: 254,
@@ -245,8 +248,7 @@ export function createLightstates(fade, type, init) {
   } else if (type === "sleep") {
     if (init) obj = sleepInit;
     else obj = sleepEnd;
-  } else if (type === "routines") {
-  } else if (type === "timers") {
+  } else if (type === "dimmed") {
   }
   return obj;
 }

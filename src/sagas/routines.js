@@ -19,6 +19,8 @@ import { absolute, recur, randomize } from "utils/date";
 
 import * as roomsActions from "../actions/rooms";
 import * as roomsApi from "../api/rooms";
+import * as lightsActions from "../actions/lights";
+import * as lightsApi from "../api/lights";
 import * as sensorsActions from "../actions/sensors";
 import * as sensorsApi from "../api/sensors";
 import * as scenesActions from "../actions/scenes";
@@ -48,7 +50,10 @@ export function* createRoutine({ body }) {
     startSchedule.status = "disabled";
     startSchedule.recycle = true;
     let lights = [];
-    if (state.routineLights.length < 1) {
+    if (state.home) {
+      const allLights = yield call(lightsApi.getLights);
+      lights = Object.keys(allLights);
+    } else if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
         if (state.rooms.includes(roomKey)) {
           lights = lights.concat(props.roomList[roomKey].lights);
@@ -306,12 +311,28 @@ export function* createRoutine({ body }) {
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
       if (state.home) {
-        if (state.roomScenes[0].value = "Dimmed") {
-
+        let scene = null;
+        let sceneId = null;
+        if ((state.roomScenes[0].key = "Dimmed")) {
+          scene = yield call(scenesApi.createScene, {
+            name: "Dimmed",
+            group: "0",
+            type: "GroupScene",
+            recycle: true
+          });
+          yield put(scenesActions.createScene.success(scene));
+          sceneId = scene.data[0].success.id;
         }
-      }
-      else {
-
+        for (let light of lights) {
+          const modifyScene = yield call(
+            scenesApi.modifySceneLights,
+            sceneId,
+            light,
+            createLightstates(state.fadeSelect.value, "dimmed")
+          );
+          yield put(scenesActions.modifySceneLights.success(modifyScene));
+        }
+      } else {
       }
       // 1 scene for each room -> this is going to be copied from the roomScenes
       // 2 rules

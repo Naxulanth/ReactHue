@@ -27,5 +27,6 @@ export function selectifyScenes(scenes, room, roomId) {
     };
     selectors.push(selector);
   });
+  console.log(selectors)
   return selectors;
 }

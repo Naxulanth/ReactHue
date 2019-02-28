@@ -61,13 +61,13 @@ class RoutineDetails extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { rooms, roomScenes } = this.state;
+    const { rooms, roomScenes, home } = this.state;
     const { scenes } = this.props;
     console.log(roomScenes);
     console.log(prevState.roomScenes);
     if (
       scenes &&
-      rooms.length > 0 &&
+      (rooms.length > 0 || home) &&
       (prevState.rooms !== rooms ||
         JSON.stringify(prevState.roomScenes) !== JSON.stringify(roomScenes))
     ) {
