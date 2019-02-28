@@ -333,8 +333,9 @@ export function* createRoutine({ body }) {
           yield put(scenesActions.modifySceneLights.success(modifyScene));
         }
       } else {
+        // 1 scene for each room -> this is going to be copied from the roomScenes
+        
       }
-      // 1 scene for each room -> this is going to be copied from the roomScenes
       // 2 rules
       // resources
     } else if (props.type === "timers") {
