@@ -7,77 +7,85 @@ shortid
   )
   .substr(0, 16);
 
-export const timerSensor = {
-  state: {
-    flag: false,
-    lastupdated: "none"
-  },
-  config: {
-    on: true,
-    reachable: true
-  },
-  name: "Timer.companion",
-  type: "CLIPGenericFlag",
-  modelid: "PHA_TIMER",
-  manufacturername: "Philips",
-  swversion: "1.0",
-  uniqueid: shortid.generate(),
-  recycle: true
-};
+export function timerSensor(shortid) {
+  return {
+    state: {
+      flag: false,
+      lastupdated: "none"
+    },
+    config: {
+      on: true,
+      reachable: true
+    },
+    name: "Timer.companion",
+    type: "CLIPGenericFlag",
+    modelid: "PHA_TIMER",
+    manufacturername: "Philips",
+    swversion: "1.0",
+    uniqueid: shortid,
+    recycle: true
+  };
+}
 
-export const sleepSensor = {
-  state: {
-    flag: false,
-    lastupdated: "none"
-  },
-  config: {
-    on: true,
-    reachable: true
-  },
-  name: "Go to sleep",
-  type: "CLIPGenericFlag",
-  modelid: "PHA_CTRL_START",
-  manufacturername: "Philips",
-  swversion: "1.1",
-  uniqueid: shortid.generate(),
-  recycle: true
-};
+export function sleepSensor(shortid) {
+  return {
+    state: {
+      flag: false,
+      lastupdated: "none"
+    },
+    config: {
+      on: true,
+      reachable: true
+    },
+    name: "Go to sleep",
+    type: "CLIPGenericFlag",
+    modelid: "PHA_CTRL_START",
+    manufacturername: "Philips",
+    swversion: "1.1",
+    uniqueid: shortid,
+    recycle: true
+  };
+}
 
-export const wakeSensor = {
-  state: {
-    flag: false,
-    lastupdated: "none"
-  },
-  config: {
-    on: true,
-    reachable: true
-  },
-  name: "Sensor for wakeup",
-  type: "CLIPGenericFlag",
-  modelid: "WAKEUP",
-  manufacturername: "Philips",
-  swversion: "A_1810251352",
-  uniqueid: shortid.generate(),
-  recycle: true
-};
+export function wakeSensor(shortid) {
+  return {
+    state: {
+      flag: false,
+      lastupdated: "none"
+    },
+    config: {
+      on: true,
+      reachable: true
+    },
+    name: "Sensor for wakeup",
+    type: "CLIPGenericFlag",
+    modelid: "WAKEUP",
+    manufacturername: "Philips",
+    swversion: "A_1810251352",
+    uniqueid: shortid,
+    recycle: true
+  };
+}
 
-export const otherSensor = {
-  state: {
-    flag: false,
-    lastupdated: "none"
-  },
-  config: {
-    on: true,
-    reachable: true
-  },
-  name: "Routine.companion",
-  type: "CLIPGenericFlag",
-  modelid: "PHA_CTRL_START",
-  manufacturername: "Philips",
-  swversion: "1.0",
-  uniqueid: shortid.generate(),
-  recycle: true
-};
+export function otherSensor(shortid) {
+  return {
+    state: {
+      flag: false,
+      lastupdated: "none"
+    },
+    config: {
+      on: true,
+      reachable: true
+    },
+    name: "Routine.companion",
+    type: "CLIPGenericFlag",
+    modelid: "PHA_CTRL_START",
+    manufacturername: "Philips",
+    swversion: "1.0",
+    uniqueid: shortid,
+    recycle: true
+  };
+}
 
 export function sensorObject(createdSensor) {
   return {
@@ -149,7 +157,8 @@ export function ruleObject(
   type
 ) {
   let fixedName = "";
-  if (type === "wake") fixedName = name + "_Start";
+  if (type === "wake" && init) fixedName = name + "_Start";
+  else if (type === "wake" && !init) fixedName = name + ".end"
   let dx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"
@@ -193,7 +202,7 @@ export function ruleObject(
     ],
     actions: []
   };
-  if (timeOff) {
+  if (!init && timeOff) {
     obj.actions.push(actionTimeOff);
   }
   if (type === "wake" && init) {
@@ -205,7 +214,7 @@ export function ruleObject(
   if (!init) {
     obj.conditions.push(ddx);
   }
-  if (!init || (type !== "sleep" && type !== "routines")) {
+  if (!init || (init && !timeOff)) {
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);

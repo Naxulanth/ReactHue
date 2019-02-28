@@ -78,7 +78,7 @@ export function* createRoutine({ body }) {
     }
     if (props.type === "wake") {
       // sensor
-      const sensor = yield call(sensorsApi.createSensor, wakeSensor);
+      const sensor = yield call(sensorsApi.createSensor, wakeSensor(shortId));
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
       // first schedule
@@ -198,7 +198,7 @@ export function* createRoutine({ body }) {
       // sleep
     } else if (props.type === "sleep") {
       // sensor
-      const sensor = yield call(sensorsApi.createSensor, sleepSensor);
+      const sensor = yield call(sensorsApi.createSensor, sleepSensor(shortId));
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
       // first schedule
@@ -291,7 +291,7 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "routines") {
-      const sensor = yield call(sensorsApi.createSensor, wakeSensor);
+      const sensor = yield call(sensorsApi.createSensor, otherSensor(shortId));
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
       // first schedule

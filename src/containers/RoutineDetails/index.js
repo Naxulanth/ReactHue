@@ -63,15 +63,12 @@ class RoutineDetails extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { rooms, roomScenes, home } = this.state;
     const { scenes } = this.props;
-    console.log(roomScenes);
-    console.log(prevState.roomScenes);
     if (
       scenes &&
       (rooms.length > 0 || home) &&
       (prevState.rooms !== rooms ||
         JSON.stringify(prevState.roomScenes) !== JSON.stringify(roomScenes))
     ) {
-      console.log("y");
       this.sceneSelect();
     }
   }
@@ -220,12 +217,9 @@ class RoutineDetails extends Component {
   }
 
   handleScene(e, roomKey) {
-    console.log(e);
     const { roomScenes } = this.state;
     let tempScenes = Object.assign({}, roomScenes);
     tempScenes[roomKey] = e;
-    console.log(tempScenes);
-    console.log(roomScenes);
     this.setState({
       roomScenes: tempScenes
     });

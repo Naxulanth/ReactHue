@@ -18,7 +18,6 @@ export function selectifyScenes(scenes, room, roomId) {
   }
   let selectors = [];
   roomScenes.forEach(scene => {
-    console.log(scene)
     let sceneValue = Object.values(scene)[0];
     let selector = {
       value: sceneValue,
@@ -27,6 +26,5 @@ export function selectifyScenes(scenes, room, roomId) {
     };
     selectors.push(selector);
   });
-  console.log(selectors)
   return selectors;
 }

@@ -5,7 +5,6 @@ import { deleteSchedule } from "api/schedules";
 
 if (this.props.resources) {
     Object.keys(this.props.resources).forEach(key => {
-      console.log(key)
       deleteResource(key)
     })
   }
