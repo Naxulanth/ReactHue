@@ -8,7 +8,6 @@ import "./style.css";
 import queryString from "query-string";
 import { user, bridge } from "constants/localStorage";
 
-
 class Config extends Component {
   constructor(props) {
     super(props);
@@ -16,19 +15,34 @@ class Config extends Component {
       ip: "",
       username: "",
       text: "",
-      redirect: false
+      redirect: false,
+      bridges: []
     };
     this.handleIPInput = this.handleIPInput.bind(this);
     this.handleUsernameInput = this.handleUsernameInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.getBridges = this.getBridges.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let localUser = localStorage.getItem(user);
     let localBridge = localStorage.getItem(bridge);
+    this.getBridges();
     this.setState({
       username: localUser ? localUser : "",
       ip: localBridge ? localBridge : ""
+    });
+  }
+
+  getBridges() {
+    let bridges = [];
+    axios.get("https://discovery.meethue.com/").then(res => {
+      res.data.forEach(bridge => {
+        bridges.push(bridge.internalipaddress);
+        console.log(bridges);
+        this.setState({ bridges });
+      });
     });
   }
 
@@ -38,6 +52,12 @@ class Config extends Component {
 
   handleUsernameInput(e) {
     this.setState({ username: e.target.value });
+  }
+
+  handleClick(e) {
+    this.setState({
+      ip: e.target.textContent
+    });
   }
 
   handleSubmit() {
@@ -81,12 +101,33 @@ class Config extends Component {
   }
 
   render() {
-    const { ip, username, text, redirect } = this.state;
-    const { handleIPInput, handleUsernameInput, handleSubmit } = this;
+    const { ip, username, text, redirect, bridges } = this.state;
+    const {
+      handleIPInput,
+      handleUsernameInput,
+      handleSubmit,
+      handleClick
+    } = this;
     if (redirect) return (window.location.href = "/");
     return (
       <div className="config">
-        <Row>
+        {bridges.length > 0 ? (
+          <Row>
+            <Col lg="12" sm="12" md="12" xl="12">
+              Bridges discovered in the network:
+              {bridges.map(bridge => {
+                return (
+                  <Row>
+                    <Col>
+                      <span className="pointer" onClick={handleClick}>{bridge}</span>
+                    </Col>
+                  </Row>
+                );
+              })}
+            </Col>
+          </Row>
+        ) : null}
+        <Row className="margin-10">
           <Col lg="12" sm="12" md="12" xl="12">
             Active Bridge:{" "}
             {queryString.parse(window.location.search)["bridge"]
