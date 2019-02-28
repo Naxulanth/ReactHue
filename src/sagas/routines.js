@@ -294,7 +294,10 @@ export function* createRoutine({ body }) {
       startSchedule.name = state.name;
       startSchedule.command = sensorObject(sensorId);
       if (state.adjustmentSelect) {
-        startSchedule.localtime = randomize(startSchedule.localtime, state.adjustmentSelect.value)
+        startSchedule.localtime = randomize(
+          startSchedule.localtime,
+          state.adjustmentSelect.value
+        );
       }
       const startScheduleData = yield call(
         schedulesApi.createSchedule,

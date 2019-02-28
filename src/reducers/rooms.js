@@ -13,7 +13,7 @@ const rooms = (state = [], action) => {
       return {
         ...state,
         list: action.response.roomList,
-        routines: action.response.routineGrups
+        routines: action.response.routineGroups
       };
     case ROOMS_GET.FAILURE:
       return state;
