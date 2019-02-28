@@ -138,7 +138,7 @@ export function resourceObject(name, type) {
   else classid = 4;
   let resource = {};
   resource.name = name;
-  resource.description = name + " behavior";
+  resource.description = name + " behaviour";
   resource.recycle = false;
   resource.links = [];
   resource.classid = classid;
@@ -158,7 +158,8 @@ export function ruleObject(
 ) {
   let fixedName = "";
   if (type === "wake" && init) fixedName = name + "_Start";
-  else if (type === "wake" && !init) fixedName = name + ".end"
+  else if (type === "wake" && !init) fixedName = name + ".end";
+  else fixedName = name;
   let dx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "dx"

@@ -268,7 +268,7 @@ export function* createRoutine({ body }) {
           0,
           null,
           false,
-          "PT:00:01:00",
+          "PT00:01:00",
           props.type
         )
       );
@@ -342,5 +342,6 @@ export function* createRoutine({ body }) {
     }
     yield put(actions.createRoutine.success());
     yield put(schedulesActions.getSchedules.request());
+    yield put(resourcesActions.getResources.request());
   } catch (e) {}
 }
