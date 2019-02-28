@@ -63,11 +63,15 @@ class RoutineDetails extends Component {
   componentDidUpdate(prevProps, prevState) {
     const { rooms, roomScenes } = this.state;
     const { scenes } = this.props;
+    console.log(roomScenes);
+    console.log(prevState.roomScenes);
     if (
       scenes &&
       rooms.length > 0 &&
-      (prevState.rooms !== rooms || prevState.roomScenes !== roomScenes)
+      (prevState.rooms !== rooms ||
+        JSON.stringify(prevState.roomScenes) !== JSON.stringify(roomScenes))
     ) {
+      console.log("y");
       this.sceneSelect();
     }
   }
@@ -179,7 +183,7 @@ class RoutineDetails extends Component {
   handleCheck(roomKey) {
     const { rooms, home, roomScenes } = this.state;
     let tempRooms = rooms.slice();
-    let tempScenes = roomScenes;
+    let tempScenes = Object.assign({}, roomScenes);
     if (!roomKey) {
       this.setState({
         home: !home,
@@ -201,7 +205,7 @@ class RoutineDetails extends Component {
 
   handleLightCheck(e, lightKey) {
     const { routineLights } = this.state;
-    let tempLights = routineLights;
+    let tempLights = Object.assign({}, routineLights);
     let keyIndex = tempLights.indexOf(lightKey);
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);
@@ -216,9 +220,12 @@ class RoutineDetails extends Component {
   }
 
   handleScene(e, roomKey) {
+    console.log(e);
     const { roomScenes } = this.state;
-    let tempScenes = roomScenes;
+    let tempScenes = Object.assign({}, roomScenes);
     tempScenes[roomKey] = e;
+    console.log(tempScenes);
+    console.log(roomScenes);
     this.setState({
       roomScenes: tempScenes
     });

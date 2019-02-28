@@ -1,12 +1,11 @@
+import { homeScenes } from "constants/homeScenes";
+
 export function selectifyScenes(scenes, room, roomId) {
   let roomScenes = [];
   if (!room) {
-    // need to find out home scenes
-    Object.keys(scenes).forEach(scene => {
-      if (scenes[scene].type === "GroupScene") {
-        roomScenes.push({ [scene]: scenes[scene] });
-      }
-    });
+    Object.keys(homeScenes).forEach(scene => {
+      roomScenes.push({[scene]: homeScenes[scene]})
+    })
   } else {
     Object.keys(scenes).forEach(scene => {
       if (
@@ -19,6 +18,7 @@ export function selectifyScenes(scenes, room, roomId) {
   }
   let selectors = [];
   roomScenes.forEach(scene => {
+    console.log(scene)
     let sceneValue = Object.values(scene)[0];
     let selector = {
       value: sceneValue,

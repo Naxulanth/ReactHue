@@ -15,7 +15,7 @@ class DayPicker extends Component {
   handleSelect(e) {
     const { selected } = this.state;
     const { days } = this.props;
-    let tempSelected = selected;
+    let tempSelected = Object.assign({}, selected);
     tempSelected[e.target.getAttribute("value")] = !selected[
       e.target.getAttribute("value")
     ];

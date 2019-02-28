@@ -305,6 +305,14 @@ export function* createRoutine({ body }) {
       );
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
+      if (state.home) {
+        if (state.roomScenes[0].value = "Dimmed") {
+
+        }
+      }
+      else {
+
+      }
       // 1 scene for each room -> this is going to be copied from the roomScenes
       // 2 rules
       // resources
