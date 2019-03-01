@@ -1,11 +1,4 @@
-import shortid from "shortid";
 import { SENSORS_RAW, GROUPS_RAW } from "constants/endpoints";
-
-shortid
-  .characters(
-    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
-  )
-  .substr(0, 16);
 
 export function timerSensor(shortid) {
   return {
@@ -224,11 +217,13 @@ export function ruleObject(
 
 export function createLightstates(fade, type, init) {
   let obj = {};
-  let dimmed = {
-    on: true,
-    bri: 254,
-    ct: 367,
-    transitiontime: (parseInt(fade) - 1) * 600
+  let homeScenes = {
+    dimmed: {
+      on: true,
+      bri: 254,
+      ct: 367,
+      transitiontime: (parseInt(fade) - 1) * 600
+    }
   };
   let wakeEnd = {
     on: true,
@@ -258,7 +253,8 @@ export function createLightstates(fade, type, init) {
   } else if (type === "sleep") {
     if (init) obj = sleepInit;
     else obj = sleepEnd;
-  } else if (type === "dimmed") {
+  } else if (Object.keys(homeScenes).includes(type)) {
+    return homeScenes[type];
   }
   return obj;
 }

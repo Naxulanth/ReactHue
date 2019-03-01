@@ -313,28 +313,26 @@ export function* createRoutine({ body }) {
       if (state.home) {
         let scene = null;
         let sceneId = null;
-        if ((state.roomScenes[0].key = "Dimmed")) {
+        let sceneKey = state.roomScenes[0].key;
           scene = yield call(scenesApi.createScene, {
-            name: "Dimmed",
+            name: sceneKey,
             group: "0",
             type: "GroupScene",
             recycle: true
           });
           yield put(scenesActions.createScene.success(scene));
           sceneId = scene.data[0].success.id;
-        }
         for (let light of lights) {
           const modifyScene = yield call(
             scenesApi.modifySceneLights,
             sceneId,
             light,
-            createLightstates(state.fadeSelect.value, "dimmed")
+            createLightstates(state.fadeSelect.value, sceneKey)
           );
           yield put(scenesActions.modifySceneLights.success(modifyScene));
         }
       } else {
         // 1 scene for each room -> this is going to be copied from the roomScenes
-        
       }
       // 2 rules
       // resources

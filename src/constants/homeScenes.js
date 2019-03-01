@@ -1,3 +1,3 @@
 export const homeScenes = {
-  Dimmed: { name: "Dimmed" }
+  dimmed: { name: "Dimmed" }
 };
