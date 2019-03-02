@@ -223,6 +223,7 @@ class RoutineDetails extends Component {
     this.setState({
       roomScenes: tempScenes
     });
+    console.log(roomScenes)
   }
 
   sceneSelect() {

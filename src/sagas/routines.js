@@ -336,20 +336,22 @@ export function* createRoutine({ body }) {
       } else {
         for (let room of state.rooms) {
           let sceneObj = state.roomScenes[room];
+          const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
+          const lightStates = detailedScene.lightstates;
           const createdScene = yield call(scenesApi.createScene, {
             name: sceneObj.value.name,
             type: "GroupScene",
             group: room,
             recycle: true
           });
-          yield put(scenesActions.createScene.success(scene));
-          const sceneId = scene.data[0].success.id;
-          for (let light of lights) { // need to get room lights 
+          yield put(scenesActions.createScene.success(createdScene));
+          const sceneId = createdScene.data[0].success.id;
+          for (let light of sceneObj.value.lights) {
             const modifyScene = yield call(
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(state.fadeSelect.value, sceneObj.key) // need to send lightstates object instead of key
+              createLightstates(state.fadeSelect.value, lightStates[room]) // need to send lightstates object instead of key
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
