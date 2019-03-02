@@ -221,9 +221,9 @@ export function* createRoutine({ body }) {
       for (let light of lights) {
         const modifystartScene = yield call(
           scenesApi.modifySceneLights,
-          startSceneId,
+          endSceneId,
           light,
-          createLightstates(state.fadeSelect.value, props.type, true)
+          createLightstates(state.fadeSelect.value, props.type, false)
         );
         yield put(scenesActions.modifySceneLights.success(modifystartScene));
       }
@@ -351,7 +351,7 @@ export function* createRoutine({ body }) {
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(state.fadeSelect.value, lightStates[room]) // need to send lightstates object instead of key
+              createLightstates(state.fadeSelect.value, lightStates[room])
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
