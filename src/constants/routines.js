@@ -196,7 +196,7 @@ export function ruleObject(
     ],
     actions: []
   };
-  if (!init && timeOff) {
+  if (!init && timeOff && type === "wake") {
     obj.actions.push(actionTimeOff);
   }
   if (type === "wake" && init) {
@@ -208,7 +208,7 @@ export function ruleObject(
   if (!init) {
     obj.conditions.push(ddx);
   }
-  if (!init || (init && !timeOff)) {
+  if (!init || (init && !timeOff && type === "wake")) {
     obj.actions.push(actionSensor);
   }
   if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
@@ -255,8 +255,7 @@ export function createLightstates(fade, type, init) {
     else obj = sleepEnd;
   } else if (Object.keys(homeScenes).includes(type)) {
     return homeScenes[type];
-  }
-  else {
+  } else {
     obj = type;
   }
   return obj;

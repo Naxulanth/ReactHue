@@ -219,28 +219,28 @@ export function* createRoutine({ body }) {
       yield put(scenesActions.createScene.success(endScene));
       const endSceneId = endScene.data[0].success.id;
       for (let light of lights) {
-        const modifystartScene = yield call(
+        const modifyEndScene = yield call(
           scenesApi.modifySceneLights,
           endSceneId,
           light,
           createLightstates(state.fadeSelect.value, props.type, false)
         );
-        yield put(scenesActions.modifySceneLights.success(modifystartScene));
+        yield put(scenesActions.modifySceneLights.success(modifyEndScene));
       }
       const startScene = yield call(
         scenesApi.createScene,
-        sceneObject(true, props.type, lights, true)
+        sceneObject(true, props.type, lights, false)
       );
       yield put(scenesActions.createScene.success(startScene));
       const startSceneId = startScene.data[0].success.id;
       for (let light of lights) {
-        const modifystartScene = yield call(
+        const modifyStartScene = yield call(
           scenesApi.modifySceneLights,
           startSceneId,
           light,
           createLightstates(state.fadeSelect.value, props.type, true)
         );
-        yield put(scenesActions.modifySceneLights.success(modifystartScene));
+        yield put(scenesActions.modifySceneLights.success(modifyStartScene));
       }
       // rule
       const startRule = yield call(
