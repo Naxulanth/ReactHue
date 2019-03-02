@@ -256,6 +256,9 @@ export function createLightstates(fade, type, init) {
   } else if (Object.keys(homeScenes).includes(type)) {
     return homeScenes[type];
   }
+  else {
+    obj = type;
+  }
   return obj;
 }
 

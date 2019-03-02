@@ -310,18 +310,19 @@ export function* createRoutine({ body }) {
       );
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
+      let resource = resourceObject(state.name, props.type);
       if (state.home) {
         let scene = null;
         let sceneId = null;
         let sceneKey = state.roomScenes[0].key;
-          scene = yield call(scenesApi.createScene, {
-            name: sceneKey,
-            group: "0",
-            type: "GroupScene",
-            recycle: true
-          });
-          yield put(scenesActions.createScene.success(scene));
-          sceneId = scene.data[0].success.id;
+        scene = yield call(scenesApi.createScene, {
+          name: sceneKey,
+          group: "0",
+          type: "GroupScene",
+          recycle: true
+        });
+        yield put(scenesActions.createScene.success(scene));
+        sceneId = scene.data[0].success.id;
         for (let light of lights) {
           const modifyScene = yield call(
             scenesApi.modifySceneLights,
@@ -330,9 +331,30 @@ export function* createRoutine({ body }) {
             createLightstates(state.fadeSelect.value, sceneKey)
           );
           yield put(scenesActions.modifySceneLights.success(modifyScene));
+          resource.links.push("/scenes/" + sceneId);
         }
       } else {
-        // 1 scene for each room -> this is going to be copied from the roomScenes
+        for (let room of state.rooms) {
+          let sceneObj = state.roomScenes[room];
+          const createdScene = yield call(scenesApi.createScene, {
+            name: sceneObj.value.name,
+            type: "GroupScene",
+            group: room,
+            recycle: true
+          });
+          yield put(scenesActions.createScene.success(scene));
+          const sceneId = scene.data[0].success.id;
+          for (let light of lights) { // need to get room lights 
+            const modifyScene = yield call(
+              scenesApi.modifySceneLights,
+              sceneId,
+              light,
+              createLightstates(state.fadeSelect.value, sceneObj.key) // need to send lightstates object instead of key
+            );
+            yield put(scenesActions.modifySceneLights.success(modifyScene));
+          }
+          resource.links.push("/scenes/" + sceneId);
+        }
       }
       // 2 rules
       // resources
