@@ -220,8 +220,20 @@ export function createLightstates(fade, type, init) {
   let homeScenes = {
     dimmed: {
       on: true,
+      bri: 77,
+      ct: 367,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    bright: {
+      on: true,
       bri: 254,
       ct: 367,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    nightlight: {
+      on: true,
+      bri: 1,
+      xy: [0.561, 0.4042],
       transitiontime: (parseInt(fade) - 1) * 600
     }
   };
