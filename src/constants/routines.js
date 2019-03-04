@@ -235,7 +235,32 @@ export function createLightstates(fade, type, init) {
       bri: 1,
       xy: [0.561, 0.4042],
       transitiontime: (parseInt(fade) - 1) * 600
-    }
+    },
+    relax: {
+      on: true,
+      bri: 144,
+      ct: 447,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    read: {
+      on: true,
+      bri: 254,
+      ct: 346,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    concentrate: {
+      on: true,
+      bri: 254,
+      ct: 233,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    energize: {
+      on: true,
+      bri: 254,
+      ct: 156,
+      transitiontime: (parseInt(fade) - 1) * 600
+    },
+    off: { on: false, transitiontime: (parseInt(fade) - 1) * 600 }
   };
   let wakeEnd = {
     on: true,
