@@ -371,8 +371,34 @@ export function* createRoutine({ body }) {
           props.type
         )
       );
-      // end rule
-      // resources
+      yield put(rulesActions.createRule.success(startRule));
+      const startRuleId = startRule.data[0].success.id;
+      const endRule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          "Routine 2.end",
+          sensorId,
+          startSceneId,
+          state.rooms,
+          null,
+          false,
+          null,
+          props.type
+        )
+      );
+      yield put(rulesActions.createRule.success(endRule));
+      const endRuleId = startRule.data[0].success.id;
+      resource.links.push("/sensors/" + sensorId);
+      resource.links.push("/schedules/" + startScheduleId);
+      resource.links.push("/rules/" + startRuleId);
+      resource.links.push("/rules/" + endRuleId);
+      if (state.rooms.length > 0) {
+        state.rooms.forEach(room => {
+          resource.links.push("/groups/" + room);
+        });
+      } else {
+        resource.links.push("/groups/" + 0);
+      }
     } else if (props.type === "timers") {
     }
     yield put(actions.createRoutine.success());
