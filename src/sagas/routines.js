@@ -358,7 +358,20 @@ export function* createRoutine({ body }) {
           resource.links.push("/scenes/" + sceneId);
         }
       }
-      // 2 rules
+      const startRule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          "Routine 2.start",
+          sensorId,
+          startSceneId,
+          state.rooms,
+          null,
+          true,
+          null,
+          props.type
+        )
+      );
+      // end rule
       // resources
     } else if (props.type === "timers") {
     }
