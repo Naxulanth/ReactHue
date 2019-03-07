@@ -291,6 +291,7 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "routines") {
+      let createdScenes = [];
       const sensor = yield call(sensorsApi.createSensor, otherSensor(shortId));
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
@@ -346,6 +347,7 @@ export function* createRoutine({ body }) {
           });
           yield put(scenesActions.createScene.success(createdScene));
           const sceneId = createdScene.data[0].success.id;
+          createdScenes.push(sceneId);
           for (let light of sceneObj.value.lights) {
             const modifyScene = yield call(
               scenesApi.modifySceneLights,
@@ -358,12 +360,13 @@ export function* createRoutine({ body }) {
           resource.links.push("/scenes/" + sceneId);
         }
       }
+      // created scene ids need to be array?
       const startRule = yield call(
         rulesApi.createRule,
         ruleObject(
           "Routine 2.start",
           sensorId,
-          startSceneId,
+          createdScenes,
           state.rooms,
           null,
           true,
@@ -378,7 +381,7 @@ export function* createRoutine({ body }) {
         ruleObject(
           "Routine 2.end",
           sensorId,
-          startSceneId,
+          createdScenes,
           state.rooms,
           null,
           false,

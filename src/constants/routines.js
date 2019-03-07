@@ -199,6 +199,18 @@ export function ruleObject(
   if (!init && timeOff && type === "wake") {
     obj.actions.push(actionTimeOff);
   }
+  if (!init && type === "routines") {
+    groups.forEach(group => {
+      let groupObject = {
+        address: "/groups/" + group + "/action",
+        method: "PUT",
+        body: {
+          on: false
+        }
+      };
+      obj.actions.push(groupObject)
+    });
+  }
   if (type === "wake" && init) {
     obj.actions.push(wakeSchedule);
   }
@@ -316,12 +328,13 @@ function addScenes(obj, groups, createdScene) {
       }
     });
   } else
-    groups.forEach(group => {
+    groups.forEach((group, i) => {
       let scene = {
         address: "/groups/" + group + "/action",
         method: "PUT",
         body: {
-          scene: createdScene
+          scene:
+            typeof createdScene === "object" ? createdScene[i] : createdScene
         }
       };
       obj.actions.push(scene);
