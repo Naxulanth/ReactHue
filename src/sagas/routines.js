@@ -338,7 +338,7 @@ export function* createRoutine({ body }) {
         for (let room of state.rooms) {
           let sceneObj = state.roomScenes[room];
           const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
-          const lightStates = detailedScene.lightstates;
+          const lightStates = detailedScene.data.lightstates
           const createdScene = yield call(scenesApi.createScene, {
             name: sceneObj.value.name,
             type: "GroupScene",
@@ -348,6 +348,7 @@ export function* createRoutine({ body }) {
           yield put(scenesActions.createScene.success(createdScene));
           const sceneId = createdScene.data[0].success.id;
           createdScenes.push(sceneId);
+          console.log(sceneObj.value.lights)
           for (let light of sceneObj.value.lights) {
             const modifyScene = yield call(
               scenesApi.modifySceneLights,
@@ -355,6 +356,7 @@ export function* createRoutine({ body }) {
               light,
               createLightstates(state.fadeSelect.value, lightStates[room])
             );
+            console.log('f')
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
           resource.links.push("/scenes/" + sceneId);
@@ -385,7 +387,7 @@ export function* createRoutine({ body }) {
           state.rooms,
           null,
           false,
-          null,
+          // this should be end time - start time in PT format,
           props.type
         )
       );

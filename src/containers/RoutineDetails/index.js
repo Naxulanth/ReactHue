@@ -132,7 +132,8 @@ class RoutineDetails extends Component {
       time,
       timeOff,
       routineLights,
-      fadeSelect
+      fadeSelect,
+      roomScenes
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
@@ -148,7 +149,8 @@ class RoutineDetails extends Component {
       time,
       formattedTimeOff,
       routineLights,
-      fadeSelect
+      fadeSelect,
+      roomScenes
     };
     if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
