@@ -363,29 +363,33 @@ class RoutineDetails extends Component {
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="center" lg="3" sm="3" md="3" xl="3">
-            <Select
-              placeholder={"Fade"}
-              value={fadeSelect}
-              onChange={handleFade}
-              styles={selectStyle}
-              options={
-                type === "wake"
-                  ? wakeFade
-                  : type === "sleep"
-                  ? sleepFade
-                  : otherFade
-              }
-            />
+            {type === "timers" ? null : (
+              <Select
+                placeholder={"Fade"}
+                value={fadeSelect}
+                onChange={handleFade}
+                styles={selectStyle}
+                options={
+                  type === "wake"
+                    ? wakeFade
+                    : type === "sleep"
+                    ? sleepFade
+                    : otherFade
+                }
+              />
+            )}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3">
-            <TimePicker
-              placeholder={"Pick time"}
-              showSecond={false}
-              use12Hours
-              allowEmpty={false}
-              value={time}
-              onChange={handleTime}
-            />
+            {type === "timers" ? null : (
+              <TimePicker
+                placeholder={"Pick time"}
+                showSecond={false}
+                use12Hours
+                allowEmpty={false}
+                value={time}
+                onChange={handleTime}
+              />
+            )}
           </Col>
           <Col lg="6" sm="6" md="6" xl="6" />
         </Row>
@@ -399,7 +403,7 @@ class RoutineDetails extends Component {
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
-            <DayPicker days={getDays} />
+            {type === "timers" ? null : <DayPicker days={getDays} />}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>
