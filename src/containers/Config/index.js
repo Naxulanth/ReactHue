@@ -43,7 +43,6 @@ class Config extends Component {
     axios.get("https://discovery.meethue.com/").then(res => {
       res.data.forEach(bridge => {
         bridges.push(bridge.internalipaddress);
-        console.log(bridges);
         this.setState({ bridges });
       });
     });

@@ -225,7 +225,6 @@ class RoutineDetails extends Component {
     this.setState({
       roomScenes: tempScenes
     });
-    console.log(roomScenes)
   }
 
   sceneSelect() {
@@ -312,7 +311,6 @@ class RoutineDetails extends Component {
                   const room = roomList[roomKey];
                   return room.lights.map(lightKey => {
                     const light = lightList[lightKey];
-
                     return (
                       <Checkbox
                         key={uuidv4()}

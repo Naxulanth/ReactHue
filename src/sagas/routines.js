@@ -348,7 +348,6 @@ export function* createRoutine({ body }) {
           yield put(scenesActions.createScene.success(createdScene));
           const sceneId = createdScene.data[0].success.id;
           createdScenes.push(sceneId);
-          console.log(sceneObj.value.lights)
           for (let light of sceneObj.value.lights) {
             const modifyScene = yield call(
               scenesApi.modifySceneLights,
@@ -356,13 +355,11 @@ export function* createRoutine({ body }) {
               light,
               createLightstates(state.fadeSelect.value, lightStates[room])
             );
-            console.log('f')
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
           resource.links.push("/scenes/" + sceneId);
         }
       }
-      // created scene ids need to be array?
       const startRule = yield call(
         rulesApi.createRule,
         ruleObject(
@@ -387,7 +384,7 @@ export function* createRoutine({ body }) {
           state.rooms,
           null,
           false,
-          // this should be end time - start time in PT format,
+          state.formattedTimeOff,
           props.type
         )
       );
