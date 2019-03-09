@@ -380,7 +380,7 @@ class RoutineDetails extends Component {
             )}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3">
-            {type === "timers" ? null : (
+            {type === "timers" ? "timer component here." : (
               <TimePicker
                 placeholder={"Pick time"}
                 showSecond={false}
