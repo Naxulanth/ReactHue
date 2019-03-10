@@ -362,6 +362,26 @@ class RoutineDetails extends Component {
         </Row>
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
+          <Col lg="3" sm="3" md="3" xl="3">
+            {type === "timers" ? (
+              <TimePicker
+                placeholder={"Pick time"}
+                showSecond={false}
+                allowEmpty={false}
+                value={time}
+                onChange={handleTime}
+              />
+            ) : (
+              <TimePicker
+                placeholder={"Pick time"}
+                showSecond={false}
+                use12Hours
+                allowEmpty={false}
+                value={time}
+                onChange={handleTime}
+              />
+            )}
+          </Col>
           <Col className="center" lg="3" sm="3" md="3" xl="3">
             {type === "timers" ? null : (
               <Select
@@ -376,18 +396,6 @@ class RoutineDetails extends Component {
                     ? sleepFade
                     : otherFade
                 }
-              />
-            )}
-          </Col>
-          <Col lg="3" sm="3" md="3" xl="3">
-            {type === "timers" ? "timer component here." : (
-              <TimePicker
-                placeholder={"Pick time"}
-                showSecond={false}
-                use12Hours
-                allowEmpty={false}
-                value={time}
-                onChange={handleTime}
               />
             )}
           </Col>
