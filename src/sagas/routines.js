@@ -363,7 +363,7 @@ export function* createRoutine({ body }) {
       const startRule = yield call(
         rulesApi.createRule,
         ruleObject(
-          "Routine 2.start",
+          state.name + '.start',
           sensorId,
           createdScenes,
           state.rooms,
@@ -378,7 +378,7 @@ export function* createRoutine({ body }) {
       const endRule = yield call(
         rulesApi.createRule,
         ruleObject(
-          "Routine 2.end",
+          state.name + '.end',
           sensorId,
           createdScenes,
           state.rooms,

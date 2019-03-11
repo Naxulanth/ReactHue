@@ -208,7 +208,7 @@ export function ruleObject(
           on: false
         }
       };
-      obj.actions.push(groupObject)
+      obj.actions.push(groupObject);
     });
   }
   if (type === "wake" && init) {
@@ -306,6 +306,7 @@ export function createLightstates(fade, type, init) {
     return homeScenes[type];
   } else {
     obj = type;
+    obj.transitiontime = (parseInt(fade) - 1) * 600;
   }
   return obj;
 }
