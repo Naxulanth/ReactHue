@@ -338,7 +338,7 @@ export function* createRoutine({ body }) {
         for (let room of state.rooms) {
           let sceneObj = state.roomScenes[room];
           const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
-          const lightStates = detailedScene.data.lightstates
+          const lightStates = detailedScene.data.lightstates;
           const createdScene = yield call(scenesApi.createScene, {
             name: sceneObj.value.name,
             type: "GroupScene",
@@ -384,12 +384,12 @@ export function* createRoutine({ body }) {
           state.rooms,
           null,
           false,
-          state.formattedTimeOff,
+          state.formattedTimeOff, 
           props.type
         )
       );
       yield put(rulesActions.createRule.success(endRule));
-      const endRuleId = startRule.data[0].success.id;
+      const endRuleId = endRule.data[0].success.id;
       resource.links.push("/sensors/" + sensorId);
       resource.links.push("/schedules/" + startScheduleId);
       resource.links.push("/rules/" + startRuleId);
@@ -401,8 +401,12 @@ export function* createRoutine({ body }) {
       } else {
         resource.links.push("/groups/" + 0);
       }
+      console.log(resource)
+      const resourceData = yield call(resourcesApi.createResource, resource);
+      yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "timers") {
     }
+
     yield put(actions.createRoutine.success());
     yield put(schedulesActions.getSchedules.request());
     yield put(resourcesActions.getResources.request());
