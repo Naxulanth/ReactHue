@@ -401,7 +401,6 @@ export function* createRoutine({ body }) {
       } else {
         resource.links.push("/groups/" + 0);
       }
-      console.log(resource);
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "timers") {

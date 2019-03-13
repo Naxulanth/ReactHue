@@ -91,7 +91,6 @@ class RoutineDetails extends Component {
   }
 
   formatTimeOff(time, timeOff) {
-    const { fadeSelect } = this.state;
     let start = new Date(time);
     let end = new Date(timeOff);
     var res = Math.abs(end - start) / 1000;
