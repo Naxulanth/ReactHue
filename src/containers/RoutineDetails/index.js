@@ -98,8 +98,11 @@ class RoutineDetails extends Component {
     let hours = Math.floor(res / 3600) % 24;
     let minutes = Math.floor(res / 60) % 60;
     if (start > end) {
-      hours = 24 - hours - 1;
+      hours = 24 - hours;
+    }
+    if (start.getMinutes() > end.getMinutes()) {
       minutes = 60 - minutes;
+      hours -= 1;
     }
     hours = ("00" + hours).slice(-2);
     minutes = ("00" + minutes).slice(-2);
