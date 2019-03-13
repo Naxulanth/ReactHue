@@ -94,13 +94,12 @@ class RoutineDetails extends Component {
     const { fadeSelect } = this.state;
     let start = new Date(time);
     let end = new Date(timeOff);
-    if (fadeSelect)
-      end.setMinutes(end.getMinutes() + parseInt(fadeSelect.value));
     var res = Math.abs(end - start) / 1000;
     let hours = Math.floor(res / 3600) % 24;
     let minutes = Math.floor(res / 60) % 60;
     if (start > end) {
-      hours = 24 - hours;
+      hours = 24 - hours - 1;
+      minutes = 60 - minutes;
     }
     hours = ("00" + hours).slice(-2);
     minutes = ("00" + minutes).slice(-2);
