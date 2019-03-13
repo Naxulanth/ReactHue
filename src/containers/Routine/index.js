@@ -23,6 +23,7 @@ class Routine extends Component {
   handleToggle() {
     const { setSchedule, id, schedules, type } = this.props;
     let { localtime, time } = schedules[type][id];
+    // need to fix time depending on what it is (absolute/rand/recurring)
     let localTime = absolute(localtime, time);
     setSchedule(id, {
       status: schedules[type][id].status === "enabled" ? "disabled" : "enabled",

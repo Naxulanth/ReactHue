@@ -19,7 +19,6 @@ import { selectStyle } from "constants/selectStyle";
 import "./style.css";
 import "react-toastify/dist/ReactToastify.css";
 import moment from "moment";
-
 moment().format();
 
 class RoutineDetails extends Component {

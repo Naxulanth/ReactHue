@@ -306,7 +306,7 @@ export function createLightstates(fade, type, init) {
     return homeScenes[type];
   } else {
     obj = type;
-    obj.transitiontime = (parseInt(fade) - 1) * 600;
+    if (type === "routines") obj.transitiontime = (parseInt(fade) - 1) * 600;
   }
   return obj;
 }

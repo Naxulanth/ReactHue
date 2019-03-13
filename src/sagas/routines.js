@@ -363,7 +363,7 @@ export function* createRoutine({ body }) {
       const startRule = yield call(
         rulesApi.createRule,
         ruleObject(
-          state.name + '.start',
+          state.name + ".start",
           sensorId,
           createdScenes,
           state.rooms,
@@ -378,13 +378,13 @@ export function* createRoutine({ body }) {
       const endRule = yield call(
         rulesApi.createRule,
         ruleObject(
-          state.name + '.end',
+          state.name + ".end",
           sensorId,
           createdScenes,
           state.rooms,
           null,
           false,
-          state.formattedTimeOff, 
+          state.formattedTimeOff,
           props.type
         )
       );
@@ -401,10 +401,77 @@ export function* createRoutine({ body }) {
       } else {
         resource.links.push("/groups/" + 0);
       }
-      console.log(resource)
+      console.log(resource);
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "timers") {
+      let createdScenes = [];
+      const sensor = yield call(sensorsApi.createSensor, otherSensor(shortId));
+      yield put(sensorsActions.createSensor.success(sensor));
+      const sensorId = sensor.data[0].success.id;
+      startSchedule.description = "Timer";
+      startSchedule.name = state.name;
+      startSchedule.command = sensorObject(sensorId);
+      let hours = state.localtime.getHours();
+      hours = ("00" + hours).slice(-2);
+      let minutes = state.localtime.getMinutes();
+      minutes = ("00" + hours).slice(-2);
+      startSchedule.localtime = "PT" + hours + ":" + minutes + ":00";
+      const startScheduleData = yield call(
+        schedulesApi.createSchedule,
+        startSchedule
+      );
+      yield put(schedulesActions.createSchedule.success(startScheduleData));
+      const startScheduleId = startScheduleData.data[0].success.id;
+      let resource = resourceObject(state.name, props.type);
+      if (state.home) {
+        let scene = null;
+        let sceneId = null;
+        let sceneKey = state.roomScenes[0].key;
+        scene = yield call(scenesApi.createScene, {
+          name: sceneKey,
+          group: "0",
+          type: "GroupScene",
+          recycle: true
+        });
+        yield put(scenesActions.createScene.success(scene));
+        sceneId = scene.data[0].success.id;
+        for (let light of lights) {
+          const modifyScene = yield call(
+            scenesApi.modifySceneLights,
+            sceneId,
+            light,
+            createLightstates(state.fadeSelect.value, sceneKey)
+          );
+          yield put(scenesActions.modifySceneLights.success(modifyScene));
+          resource.links.push("/scenes/" + sceneId);
+        }
+      } else {
+        for (let room of state.rooms) {
+          let sceneObj = state.roomScenes[room];
+          const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
+          const lightStates = detailedScene.data.lightstates;
+          const createdScene = yield call(scenesApi.createScene, {
+            name: sceneObj.value.name,
+            type: "GroupScene",
+            group: room,
+            recycle: true
+          });
+          yield put(scenesActions.createScene.success(createdScene));
+          const sceneId = createdScene.data[0].success.id;
+          createdScenes.push(sceneId);
+          for (let light of sceneObj.value.lights) {
+            const modifyScene = yield call(
+              scenesApi.modifySceneLights,
+              sceneId,
+              light,
+              createLightstates(state.fadeSelect.value, lightStates[room])
+            );
+            yield put(scenesActions.modifySceneLights.success(modifyScene));
+          }
+          resource.links.push("/scenes/" + sceneId);
+        }
+      }
     }
 
     yield put(actions.createRoutine.success());
