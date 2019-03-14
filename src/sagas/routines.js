@@ -407,15 +407,16 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
     } else if (props.type === "timers") {
       let createdScenes = [];
-      const sensor = yield call(sensorsApi.createSensor, otherSensor(shortId));
+      const sensor = yield call(sensorsApi.createSensor, timerSensor(shortId));
       yield put(sensorsActions.createSensor.success(sensor));
       const sensorId = sensor.data[0].success.id;
       startSchedule.description = "Timer";
       startSchedule.name = state.name;
       startSchedule.command = sensorObject(sensorId);
-      let hours = state.localtime.getHours();
+      let time = new Date(state.time)
+      let hours = time.getHours();
       hours = ("00" + hours).slice(-2);
-      let minutes = state.localtime.getMinutes();
+      let minutes = time.getMinutes();
       minutes = ("00" + hours).slice(-2);
       startSchedule.localtime = "PT" + hours + ":" + minutes + ":00";
       const startScheduleData = yield call(
@@ -451,6 +452,7 @@ export function* createRoutine({ body }) {
         for (let room of state.rooms) {
           let sceneObj = state.roomScenes[room];
           const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
+          yield put(scenesActions.getScene.success(detailedScene));
           const lightStates = detailedScene.data.lightstates;
           const createdScene = yield call(scenesApi.createScene, {
             name: sceneObj.value.name,
@@ -466,7 +468,7 @@ export function* createRoutine({ body }) {
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(state.fadeSelect.value, lightStates[room])
+              createLightstates(1, lightStates[room])
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }

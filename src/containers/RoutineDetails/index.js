@@ -170,7 +170,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (!fadeSelect) {
+    if (!fadeSelect && type !== "timers") {
       toast.error("Please choose fade amount", {
         position: toast.POSITION.TOP_RIGHT
       });
