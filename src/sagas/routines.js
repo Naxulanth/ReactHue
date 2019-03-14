@@ -375,25 +375,27 @@ export function* createRoutine({ body }) {
       );
       yield put(rulesActions.createRule.success(startRule));
       const startRuleId = startRule.data[0].success.id;
-      const endRule = yield call(
-        rulesApi.createRule,
-        ruleObject(
-          state.name + ".end",
-          sensorId,
-          createdScenes,
-          state.rooms,
-          null,
-          false,
-          state.formattedTimeOff,
-          props.type
-        )
-      );
-      yield put(rulesActions.createRule.success(endRule));
-      const endRuleId = endRule.data[0].success.id;
+      if (state.timeOff) {
+        const endRule = yield call(
+          rulesApi.createRule,
+          ruleObject(
+            state.name + ".end",
+            sensorId,
+            createdScenes,
+            state.rooms,
+            null,
+            false,
+            state.formattedTimeOff,
+            props.type
+          )
+        );
+        yield put(rulesActions.createRule.success(endRule));
+        const endRuleId = endRule.data[0].success.id;
+        resource.links.push("/rules/" + endRuleId);
+      }
       resource.links.push("/sensors/" + sensorId);
       resource.links.push("/schedules/" + startScheduleId);
       resource.links.push("/rules/" + startRuleId);
-      resource.links.push("/rules/" + endRuleId);
       if (state.rooms.length > 0) {
         state.rooms.forEach(room => {
           resource.links.push("/groups/" + room);
@@ -471,6 +473,33 @@ export function* createRoutine({ body }) {
           resource.links.push("/scenes/" + sceneId);
         }
       }
+      const startRule = yield call(
+        rulesApi.createRule,
+        ruleObject(
+          state.name + ".action",
+          sensorId,
+          createdScenes,
+          state.rooms,
+          null,
+          true,
+          null,
+          props.type
+        )
+      );
+      yield put(rulesActions.createRule.success(startRule));
+      const startRuleId = startRule.data[0].success.id;
+      resource.links.push("/sensors/" + sensorId);
+      resource.links.push("/schedules/" + startScheduleId);
+      resource.links.push("/rules/" + startRuleId);
+      if (state.rooms.length > 0) {
+        state.rooms.forEach(room => {
+          resource.links.push("/groups/" + room);
+        });
+      } else {
+        resource.links.push("/groups/" + 0);
+      }
+      const resourceData = yield call(resourcesApi.createResource, resource);
+      yield put(resourcesActions.createResource.success(resourceData));
     }
 
     yield put(actions.createRoutine.success());

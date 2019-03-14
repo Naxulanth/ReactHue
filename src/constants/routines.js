@@ -223,7 +223,8 @@ export function ruleObject(
   if (!init || (init && !timeOff && type === "wake")) {
     obj.actions.push(actionSensor);
   }
-  if (!(!init && type === "wake")) addScenes(obj, groups, createdScene);
+  if (!(!init && (type === "wake" || type === "routines")))
+    addScenes(obj, groups, createdScene);
   return obj;
 }
 
