@@ -483,7 +483,7 @@ export function* createRoutine({ body }) {
           createdScenes,
           state.rooms,
           null,
-          true,
+          false,
           null,
           props.type
         )
