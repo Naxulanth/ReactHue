@@ -170,8 +170,20 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (!fadeSelect && type !== "timers") {
+    if (!fadeSelect) {
       toast.error("Please choose fade amount", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
+    if ((type === "routines" || type === "timers") && Object.keys(roomScenes).length < 1) {
+      toast.error("Please choose scenes", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
+    if (type === "routines") {
+      toast.error("Please choose random times", {
         position: toast.POSITION.TOP_RIGHT
       });
       return;
