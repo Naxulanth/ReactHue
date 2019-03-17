@@ -53,7 +53,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    if (this.props.scheduleId) {
+    if (this.props.edit) {
       // edit mode
       this.setState({});
     }

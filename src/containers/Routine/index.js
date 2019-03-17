@@ -91,7 +91,9 @@ class Routine extends Component {
           </Row>
           <Row>
             <Col sm="12" md="12" lg="12" xl="12">
-              {details ? <RoutineDetails type={type} edit /> : null}
+              {details ? (
+                <RoutineDetails type={type} edit={schedules[type][id]} />
+              ) : null}
             </Col>
           </Row>
         </div>
