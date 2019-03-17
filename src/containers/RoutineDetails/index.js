@@ -53,9 +53,17 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    if (this.props.edit) {
-      // edit mode
-      this.setState({});
+    const { resources, edit } = this.props;
+    let resourceKey = "";
+    if (edit) {
+      resourceKey = Object.keys(resources).find(key => {
+        let resource = resources[key];
+        console.log(edit);
+        console.log(resource);
+        return resource["links"].includes("/schedules/" + edit);
+      });
+      let resource = resources[resourceKey]
+      
     }
   }
 
@@ -176,7 +184,10 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if ((type === "routines" || type === "timers") && Object.keys(roomScenes).length < 1) {
+    if (
+      (type === "routines" || type === "timers") &&
+      Object.keys(roomScenes).length < 1
+    ) {
       toast.error("Please choose scenes", {
         position: toast.POSITION.TOP_RIGHT
       });
