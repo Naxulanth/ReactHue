@@ -53,7 +53,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    const { resources, edit } = this.props;
+    const { resources, edit, schedules, type } = this.props;
     let resourceKey = "";
     if (edit) {
       resourceKey = Object.keys(resources).find(key => {
@@ -62,8 +62,10 @@ class RoutineDetails extends Component {
         console.log(resource);
         return resource["links"].includes("/schedules/" + edit);
       });
-      let resource = resources[resourceKey]
-      
+      let resourceLinks = resources[resourceKey]["links"];
+      this.setState({
+        name: schedules[type][edit].name
+      });
     }
   }
 
@@ -528,7 +530,8 @@ const mapStateToProps = state => ({
   createdSchedule: state.schedules.createdSchedule,
   scenes: state.scenes.list,
   createdRoom: state.rooms.createdRoom,
-  resources: state.resources.list
+  resources: state.resources.list,
+  schedules: state.schedules.list
 });
 
 const mapDispatchToProps = dispatch => ({
