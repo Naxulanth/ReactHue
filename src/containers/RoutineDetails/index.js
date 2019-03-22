@@ -55,16 +55,25 @@ class RoutineDetails extends Component {
   componentDidMount() {
     const { resources, edit, schedules, type } = this.props;
     let resourceKey = "";
+    let schedule = "";
     if (edit) {
       resourceKey = Object.keys(resources).find(key => {
         let resource = resources[key];
-        console.log(edit);
-        console.log(resource);
         return resource["links"].includes("/schedules/" + edit);
       });
       let resourceLinks = resources[resourceKey]["links"];
+      schedule = schedules[type][edit];
+      let localTime = schedule.localtime;
+      let time = moment();
+      if (localTime.includes("PT")) {
+        let split = localTime.split("PT")[1].split(":");
+        console.log(split)
+        time.hours(split[0]);
+        time.minutes(split[1]);
+      }
       this.setState({
-        name: schedules[type][edit].name
+        name: schedules[type][edit].name,
+        time: time
       });
     }
   }
