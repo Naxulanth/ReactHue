@@ -67,9 +67,28 @@ class RoutineDetails extends Component {
       let time = moment();
       if (localTime.includes("PT")) {
         let split = localTime.split("PT")[1].split(":");
-        console.log(split)
         time.hours(split[0]);
         time.minutes(split[1]);
+      } else {
+        if (localTime.includes("W")) {
+          let split = localTime.split("/T")[0].substr(1);
+          let days = parseInt(split);
+          let dayCounter = 64;
+          let i = 0;
+          let dayValues = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+          let dayState = {};
+          while (days > 0) {
+            if (days - dayCounter >= 0) {
+              days -= dayCounter;
+              dayState[dayValues[i]] = true;
+            }
+            dayCounter /= 2;
+            i++;
+          }
+          this.setState({
+            days: dayState
+          });
+        }
       }
       this.setState({
         name: schedules[type][edit].name,
@@ -152,7 +171,8 @@ class RoutineDetails extends Component {
       timeOff,
       routineLights,
       fadeSelect,
-      roomScenes
+      roomScenes,
+      adjustmentSelect
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
@@ -204,7 +224,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (type === "routines") {
+    if (type === "routines" && !adjustmentSelect) {
       toast.error("Please choose random times", {
         position: toast.POSITION.TOP_RIGHT
       });
@@ -445,7 +465,7 @@ class RoutineDetails extends Component {
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
-            {type === "timers" ? null : <DayPicker days={getDays} />}
+            {type === "timers" ? null : <DayPicker initial={this.state.days} days={getDays} />}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>

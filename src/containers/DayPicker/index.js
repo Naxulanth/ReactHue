@@ -7,9 +7,19 @@ class DayPicker extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: {}
+      selected: {},
+      loaded: false
     };
     this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  componentDidUpdate(prevState, prevProps) {
+    if (this.props.initial !== this.state.selected && !this.state.loaded) {
+      this.setState({
+        selected: this.props.initial,
+        loaded: true
+      });
+    }
   }
 
   handleSelect(e) {
