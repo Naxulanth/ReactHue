@@ -69,7 +69,7 @@ class RoutineDetails extends Component {
         let split = localTime.split("PT")[1].split(":");
         time.hours(split[0]);
         time.minutes(split[1]);
-      } else {
+      } else if (localTime.includes("W") || localTime.includes("A")) {
         if (localTime.includes("W")) {
           let split = localTime.split("/T")[0].substr(1);
           let days = parseInt(split);
@@ -89,6 +89,11 @@ class RoutineDetails extends Component {
             days: dayState
           });
         }
+        if (localTime.includes("A")) {
+        }
+      }
+      else {
+        
       }
       this.setState({
         name: schedules[type][edit].name,
@@ -465,7 +470,9 @@ class RoutineDetails extends Component {
         <Row className="vertical-center">
           <Col lg="3" sm="3" md="3" xl="3" />
           <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
-            {type === "timers" ? null : <DayPicker initial={this.state.days} days={getDays} />}
+            {type === "timers" ? null : (
+              <DayPicker initial={this.state.days} days={getDays} />
+            )}
           </Col>
           <Col lg="3" sm="3" md="3" xl="3" />
         </Row>
