@@ -98,6 +98,9 @@ class RoutineDetails extends Component {
         }
       } else {
       }
+      // fade
+      // lights & rooms
+      // scenes
       this.setState({
         name: schedules[type][edit].name,
         time: time,
