@@ -65,6 +65,7 @@ class RoutineDetails extends Component {
       schedule = schedules[type][edit];
       let localTime = schedule.localtime;
       let time = moment();
+      let offTime = null;
       if (localTime.includes("PT")) {
         let split = localTime.split("PT")[1].split(":");
         time.hours(split[0]);
@@ -90,14 +91,17 @@ class RoutineDetails extends Component {
           });
         }
         if (localTime.includes("A")) {
+          offTime = moment();
+          let split = localTime.split("A")[1].split(":");
+          offTime.hours(split[0]);
+          offTime.minutes(split[1]);
         }
-      }
-      else {
-        
+      } else {
       }
       this.setState({
         name: schedules[type][edit].name,
-        time: time
+        time: time,
+        timeOff: offTime
       });
     }
   }
