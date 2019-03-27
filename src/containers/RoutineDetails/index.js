@@ -9,6 +9,7 @@ import TextInput from "components/TextInput";
 import TimePicker from "components/TimePicker";
 import DayPicker from "containers/DayPicker";
 import { createRoutine } from "actions/routines";
+import { getScene } from "actions/scenes";
 import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
 import { toast } from "react-toastify";
@@ -53,7 +54,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    const { resources, edit, schedules, type } = this.props;
+    const { resources, edit, schedules, type, scenes, getScene } = this.props;
     let resourceKey = "";
     let schedule = "";
     if (edit) {
@@ -98,7 +99,13 @@ class RoutineDetails extends Component {
         }
       } else {
       }
-      // fade
+      let scenes = [];
+      resourceLinks.forEach(link => {
+        if (link.includes("scenes")) {
+          scenes.push(link.split("/")[2]);
+        }
+      });
+      // write a getFades action/saga 
       // lights & rooms
       // scenes
       this.setState({
@@ -270,7 +277,7 @@ class RoutineDetails extends Component {
 
   handleLightCheck(e, lightKey) {
     const { routineLights } = this.state;
-    let tempLights = Object.assign({}, routineLights);
+    let tempLights = Array.from(routineLights)
     let keyIndex = tempLights.indexOf(lightKey);
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);
@@ -578,7 +585,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createRoutine: bindActionCreators(createRoutine.request, dispatch)
+  createRoutine: bindActionCreators(createRoutine.request, dispatch),
+  getScene: bindActionCreators(getScene.request, dispatch)
 });
 
 export default connect(
