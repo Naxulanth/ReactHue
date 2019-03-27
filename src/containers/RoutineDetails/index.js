@@ -107,8 +107,8 @@ class RoutineDetails extends Component {
       });
       scenes.forEach((scene, i) => {
         if (i === scenes.length - 1) {
-          getScene(scene, true);
-        } else getScene(scene);
+          getScene(scene, edit, true);
+        } else getScene(scene, edit);
       });
       // write
       // lights & rooms

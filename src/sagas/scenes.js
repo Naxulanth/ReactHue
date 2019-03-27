@@ -55,14 +55,17 @@ export function* watchModifyScene() {
   yield takeLatest(SCENES_PUT.REQUEST, modifyScene);
 }
 
-export function* getScene({ id, last = false }) {
+export function* getScene({ id, edit, last = false }) {
   try {
     let response = yield call(api.getScene, id);
     if (last) {
       response.data.completed = true;
     }
+    if (edit) {
+      response.data.edit = edit;
+    }
     response.data.id = id;
-    console.log(response)
+    console.log(response);
     yield put(actions.getScene.success(response));
     yield call(renew);
   } catch (e) {

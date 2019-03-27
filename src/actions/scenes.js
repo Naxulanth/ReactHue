@@ -16,7 +16,7 @@ export const getScenes = {
 };
 
 export const getScene = {
-  request: (id, last) => action(SCENE_GET.REQUEST, { id, last }),
+  request: (id, edit, last) => action(SCENE_GET.REQUEST, { id, edit, last }),
   success: response => action(SCENE_GET.SUCCESS, { response }),
   failure: error => action(SCENE_GET.FAILURE, { error })
 };

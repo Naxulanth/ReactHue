@@ -25,18 +25,25 @@ const scenes = (state = [], action) => {
     case SCENES_PUT.FAILURE:
       return state;
     case SCENE_GET.REQUEST:
-      return state;
+      return {
+        ...state
+      };
     case SCENE_GET.SUCCESS:
-      console.log(action.response.data);
+      let editData = {};
+      let activeScenes = Object.assign({}, state.activeScenes);
+      if (action.response.data.edit) {
+        editData = Object.assign({}, state.editData);
+        if (!editData[action.response.data.edit])
+          editData[action.response.data.edit] = {};
+        editData[action.response.data.edit][action.response.data.id] =
+          action.response.data;
+      } else {
+        activeScenes[action.response.data.group] = action.response.data;
+      }
       return {
         ...state,
-        activeScenes: {
-          [action.response.data.group]: action.response.data
-        },
-        editData: {
-          ...state.editData,
-          [action.response.data.id]: action.response.data
-        },
+        activeScenes: activeScenes,
+        editData: editData,
         completed: action.response.data.completed
       };
     case SCENE_GET.FAILURE:
