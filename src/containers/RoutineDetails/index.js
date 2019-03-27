@@ -100,12 +100,17 @@ class RoutineDetails extends Component {
       } else {
       }
       let scenes = [];
-      resourceLinks.forEach(link => {
+      resourceLinks.forEach((link, i) => {
         if (link.includes("scenes")) {
           scenes.push(link.split("/")[2]);
         }
       });
-      // write a getFades action/saga 
+      scenes.forEach((scene, i) => {
+        if (i === scenes.length - 1) {
+          getScene(scene, true);
+        } else getScene(scene);
+      });
+      // write
       // lights & rooms
       // scenes
       this.setState({
@@ -277,7 +282,7 @@ class RoutineDetails extends Component {
 
   handleLightCheck(e, lightKey) {
     const { routineLights } = this.state;
-    let tempLights = Array.from(routineLights)
+    let tempLights = Array.from(routineLights);
     let keyIndex = tempLights.indexOf(lightKey);
     if (keyIndex > -1) {
       tempLights.splice(keyIndex, 1);

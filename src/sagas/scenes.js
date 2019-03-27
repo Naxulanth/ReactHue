@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
 import {
   SCENES_GET,
   SCENES_PUT,
@@ -16,6 +16,7 @@ import { renew } from "./shared";
 export function* getScenes() {
   try {
     const response = yield call(api.getScenes);
+    console.log(response);
     yield put(actions.getScenes.success(response));
   } catch (e) {
     yield put(actions.getScenes.failure(e));
@@ -54,9 +55,14 @@ export function* watchModifyScene() {
   yield takeLatest(SCENES_PUT.REQUEST, modifyScene);
 }
 
-export function* getScene({ id }) {
+export function* getScene({ id, last = false }) {
   try {
-    const response = yield call(api.getScene, id);
+    let response = yield call(api.getScene, id);
+    if (last) {
+      response.data.completed = true;
+    }
+    response.data.id = id;
+    console.log(response)
     yield put(actions.getScene.success(response));
     yield call(renew);
   } catch (e) {
@@ -65,7 +71,7 @@ export function* getScene({ id }) {
 }
 
 export function* watchGetScene() {
-  yield takeLatest(SCENE_GET.REQUEST, getScene);
+  yield takeEvery(SCENE_GET.REQUEST, getScene);
 }
 
 export function* createScene({ body }) {

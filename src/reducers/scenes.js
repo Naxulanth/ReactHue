@@ -27,11 +27,17 @@ const scenes = (state = [], action) => {
     case SCENE_GET.REQUEST:
       return state;
     case SCENE_GET.SUCCESS:
+      console.log(action.response.data);
       return {
         ...state,
         activeScenes: {
           [action.response.data.group]: action.response.data
-        }
+        },
+        editData: {
+          ...state.editData,
+          [action.response.data.id]: action.response.data
+        },
+        completed: action.response.data.completed
       };
     case SCENE_GET.FAILURE:
       return state;

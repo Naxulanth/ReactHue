@@ -16,7 +16,7 @@ export const getScenes = {
 };
 
 export const getScene = {
-  request: id => action(SCENE_GET.REQUEST, { id }),
+  request: (id, last) => action(SCENE_GET.REQUEST, { id, last }),
   success: response => action(SCENE_GET.SUCCESS, { response }),
   failure: error => action(SCENE_GET.FAILURE, { error })
 };
@@ -39,7 +39,7 @@ export const modifySceneLights = {
   success: response => action(SCENE_LIGHTS_PUT.SUCCESS, { response }),
   failure: error => action(SCENE_LIGHTS_PUT.FAILURE, { error })
 };
-  
+
 export const deleteScene = {
   request: id => action(SCENE_DELETE.REQUEST, { id }),
   success: response => action(SCENE_DELETE.SUCCESS, { response }),
