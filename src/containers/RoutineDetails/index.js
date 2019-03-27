@@ -54,7 +54,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    const { resources, edit, schedules, type, scenes, getScene } = this.props;
+    const { resources, edit, schedules, type, scenes, getScene, editData } = this.props;
     let resourceKey = "";
     let schedule = "";
     if (edit) {
@@ -110,7 +110,8 @@ class RoutineDetails extends Component {
           getScene(scene, edit, true);
         } else getScene(scene, edit);
       });
-      // write
+      // access the data with editData[edit]
+      // fade
       // lights & rooms
       // scenes
       this.setState({
@@ -586,7 +587,8 @@ const mapStateToProps = state => ({
   scenes: state.scenes.list,
   createdRoom: state.rooms.createdRoom,
   resources: state.resources.list,
-  schedules: state.schedules.list
+  schedules: state.schedules.list,
+  editData: state.scenes.editData,
 });
 
 const mapDispatchToProps = dispatch => ({
