@@ -36,7 +36,9 @@ class RoutineDetails extends Component {
       routineLights: [],
       adjustmentSelect: null,
       roomScenes: {},
-      sceneSelectors: []
+      sceneSelectors: [],
+      loaded: false,
+      editScenes: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -54,7 +56,15 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    const { resources, edit, schedules, type, scenes, getScene, editData } = this.props;
+    const {
+      resources,
+      edit,
+      schedules,
+      type,
+      scenes,
+      getScene,
+      editData
+    } = this.props;
     let resourceKey = "";
     let schedule = "";
     if (edit) {
@@ -111,20 +121,20 @@ class RoutineDetails extends Component {
         } else getScene(scene, edit);
       });
       // access the data with editData[edit]
-      // fade
       // lights & rooms
       // scenes
       this.setState({
         name: schedules[type][edit].name,
         time: time,
-        timeOff: offTime
+        timeOff: offTime,
+        editScenes: scenes
       });
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { rooms, roomScenes, home } = this.state;
-    const { scenes } = this.props;
+    const { rooms, roomScenes, home, loaded, editScenes } = this.state;
+    const { scenes, editData, edit } = this.props;
     if (
       scenes &&
       (rooms.length > 0 || home) &&
@@ -132,6 +142,19 @@ class RoutineDetails extends Component {
         JSON.stringify(prevState.roomScenes) !== JSON.stringify(roomScenes))
     ) {
       this.sceneSelect();
+    }
+    if (editData && editData[edit] && Object.keys(editData[edit]).length === editScenes.length  && !loaded) {
+      let tempFade = null;
+      Object.keys(editData[edit]).forEach(key => {
+        let data = editData[key];
+        if (data["lightstates"]) {
+
+        }
+      })
+      this.setState({
+        fadeSelect: tempFade,
+        loaded: true
+      });
     }
   }
 
@@ -588,7 +611,7 @@ const mapStateToProps = state => ({
   createdRoom: state.rooms.createdRoom,
   resources: state.resources.list,
   schedules: state.schedules.list,
-  editData: state.scenes.editData,
+  editData: state.scenes.editData
 });
 
 const mapDispatchToProps = dispatch => ({

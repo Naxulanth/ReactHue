@@ -16,7 +16,6 @@ import { renew } from "./shared";
 export function* getScenes() {
   try {
     const response = yield call(api.getScenes);
-    console.log(response);
     yield put(actions.getScenes.success(response));
   } catch (e) {
     yield put(actions.getScenes.failure(e));
@@ -65,7 +64,6 @@ export function* getScene({ id, edit, last = false }) {
       response.data.edit = edit;
     }
     response.data.id = id;
-    console.log(response);
     yield put(actions.getScene.success(response));
     yield call(renew);
   } catch (e) {
