@@ -143,14 +143,26 @@ class RoutineDetails extends Component {
     ) {
       this.sceneSelect();
     }
-    if (editData && editData[edit] && Object.keys(editData[edit]).length === editScenes.length  && !loaded) {
+    if (
+      editData &&
+      editData[edit] &&
+      Object.keys(editData[edit]).length === editScenes.length &&
+      !loaded
+    ) {
       let tempFade = null;
       Object.keys(editData[edit]).forEach(key => {
-        let data = editData[key];
-        if (data["lightstates"]) {
-
+        let data = editData[edit][key];
+        if (
+          data &&
+          data["lightstates"] &&
+          data["lightstates"][data["lights"][0]] &&
+          data["lightstates"][data["lights"][0]]["transitiontime"]
+        ) {
+          tempFade =
+            data["lightstates"][data["lights"][0]]["transitiontime"] / 600 + 1;
+          tempFade = { label: tempFade + " minutes", value: tempFade };
         }
-      })
+      });
       this.setState({
         fadeSelect: tempFade,
         loaded: true
