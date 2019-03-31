@@ -24,8 +24,6 @@ export function absolute(localtime, time, raw) {
 
 export function recur(time, days) {
   let acc = 0;
-  console.log(time);
-  console.log(days);
   let dayValues = {
     sun: 1,
     sat: 2,

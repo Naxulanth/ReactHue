@@ -443,7 +443,6 @@ class RoutineDetails extends Component {
       sceneSelectors
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
-    console.log(this.state.days)
     const adjustmentField = (
       <Fragment>
         <Select
