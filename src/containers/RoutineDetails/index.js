@@ -108,6 +108,7 @@ class RoutineDetails extends Component {
           offTime.minutes(split[1]);
         }
       } else {
+        // fix this
       }
       let scenes = [];
       resourceLinks.forEach((link, i) => {
@@ -122,7 +123,7 @@ class RoutineDetails extends Component {
       });
       // scenes
       this.setState({
-        name: schedules[type][edit].name,
+        name: type === "sleep" ?  resources[resourceKey].name : schedules[type][edit].name,
         time: time,
         timeOff: offTime,
         editScenes: scenes
@@ -442,6 +443,7 @@ class RoutineDetails extends Component {
       sceneSelectors
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
+    console.log(this.state.days)
     const adjustmentField = (
       <Fragment>
         <Select

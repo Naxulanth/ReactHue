@@ -30,9 +30,10 @@ class DayPicker extends Component {
       e.target.getAttribute("value")
     ];
     this.setState({
-      selected: tempSelected
+      selected: tempSelected,
+      loaded: true
     });
-    days(selected);
+    days(tempSelected);
   }
 
   render() {
