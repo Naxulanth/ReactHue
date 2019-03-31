@@ -120,8 +120,6 @@ class RoutineDetails extends Component {
           getScene(scene, edit, true);
         } else getScene(scene, edit);
       });
-      // access the data with editData[edit]
-      // lights & rooms
       // scenes
       this.setState({
         name: schedules[type][edit].name,
@@ -133,8 +131,15 @@ class RoutineDetails extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { rooms, roomScenes, home, loaded, editScenes } = this.state;
-    const { scenes, editData, edit } = this.props;
+    const {
+      rooms,
+      roomScenes,
+      home,
+      loaded,
+      editScenes,
+      routineLights
+    } = this.state;
+    const { scenes, editData, edit, type } = this.props;
     if (
       scenes &&
       (rooms.length > 0 || home) &&
@@ -150,6 +155,8 @@ class RoutineDetails extends Component {
       !loaded
     ) {
       let tempFade = null;
+      let tempRooms = [];
+      let pass = false;
       Object.keys(editData[edit]).forEach(key => {
         let data = editData[edit][key];
         if (
@@ -162,8 +169,38 @@ class RoutineDetails extends Component {
             data["lightstates"][data["lights"][0]]["transitiontime"] / 600 + 1;
           tempFade = { label: tempFade + " minutes", value: tempFade };
         }
+        if (!pass) {
+          pass = true;
+          if (data["type"] === "GroupScene") {
+            if (data["group"] === "0") {
+              this.setState({
+                home: true
+              });
+            } else {
+              tempRooms.push(data["group"]);
+            }
+          } else {
+            data["lights"].forEach(light => {
+              tempRooms = Array.from(
+                new Set(
+                  tempRooms.concat(
+                    Object.keys(this.props.roomList).filter(roomKey => {
+                      let room = this.props.roomList[roomKey];
+                      return room.lights.includes(light);
+                    })
+                  )
+                )
+              );
+            });
+            if (type === "wake")
+              this.setState({
+                routineLights: data["lights"]
+              });
+          }
+        }
       });
       this.setState({
+        rooms: tempRooms,
         fadeSelect: tempFade,
         loaded: true
       });
@@ -420,7 +457,7 @@ class RoutineDetails extends Component {
       <Fragment>
         <Row className="vertical-center center">
           <Col lg="12" sm="12" md="12" xl="12">
-            {rooms.length > 0
+            {rooms.length > 0 && roomList
               ? rooms.map(roomKey => {
                   const room = roomList[roomKey];
                   return room.lights.map(lightKey => {
