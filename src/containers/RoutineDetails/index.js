@@ -123,7 +123,10 @@ class RoutineDetails extends Component {
       });
       // scenes
       this.setState({
-        name: type === "sleep" ?  resources[resourceKey].name : schedules[type][edit].name,
+        name:
+          type === "sleep"
+            ? resources[resourceKey].name
+            : schedules[type][edit].name,
         time: time,
         timeOff: offTime,
         editScenes: scenes
@@ -332,9 +335,11 @@ class RoutineDetails extends Component {
   }
 
   handleCheck(roomKey) {
-    const { rooms, home, roomScenes } = this.state;
+    const { rooms, home, roomScenes, routineLights } = this.state;
+    const { roomList } = this.props;
     let tempRooms = rooms.slice();
     let tempScenes = Object.assign({}, roomScenes);
+    let tempLights = routineLights;
     if (!roomKey) {
       this.setState({
         home: !home,
@@ -345,11 +350,22 @@ class RoutineDetails extends Component {
       if (keyIndex > -1) {
         tempRooms.splice(keyIndex, 1);
         delete tempScenes[roomKey];
+        let index = null;
+        roomList[roomKey]["lights"].forEach(roomLight => {
+          index = tempLights.findIndex(light => {
+            return roomLight === light;
+          });
+          if (index !== undefined) {
+            console.log(index)
+            tempLights.splice(index, 1);
+          }
+        });
       } else tempRooms.push(roomKey);
       this.setState({
         rooms: tempRooms,
         home: false,
-        roomScenes: tempScenes
+        roomScenes: tempScenes,
+        routineLights: tempLights
       });
     }
   }
