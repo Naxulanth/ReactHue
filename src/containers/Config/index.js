@@ -4,6 +4,7 @@ import axios from "axios";
 import validator from "validator";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
+import remoteQuery from "constants/remote";
 import "./style.css";
 import queryString from "query-string";
 import { user, bridge } from "constants/localStorage";
@@ -26,6 +27,7 @@ class Config extends Component {
     this.getBridges = this.getBridges.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleToken = this.handleToken.bind(this);
+    this.remoteAuth = this.remoteAuth.bind(this);
   }
 
   componentDidMount() {
@@ -36,6 +38,11 @@ class Config extends Component {
       username: localUser ? localUser : "",
       ip: localBridge ? localBridge : ""
     });
+  }
+
+  remoteAuth() {
+    axios.get("https://api.meethue.com/oauth2/auth?" + remoteQuery).then(res => {
+    })
   }
 
   getBridges() {
@@ -135,6 +142,7 @@ class Config extends Component {
   }
 
   render() {
+    console.log(remoteQuery)
     const { ip, username, text, redirect, bridges, generator } = this.state;
     const {
       handleIPInput,
