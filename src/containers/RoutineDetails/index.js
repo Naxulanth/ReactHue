@@ -120,7 +120,6 @@ class RoutineDetails extends Component {
         time.hours(split[0]);
         time.minutes(split[1]);
       }
-      console.log(time)
       let scenes = [];
       resourceLinks.forEach((link, i) => {
         if (link.includes("scenes")) {

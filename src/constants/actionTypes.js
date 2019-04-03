@@ -1,4 +1,5 @@
 import { createRequestTypes } from "../actions";
+import { create } from "domain";
 
 export const LIGHTS_GET = createRequestTypes("LIGHTS_GET");
 export const LIGHTS_PUT = createRequestTypes("LIGHTS_PUT");
@@ -38,3 +39,5 @@ export const RULE_PUT = createRequestTypes("RULE_PUT");
 export const RULE_DELETE = createRequestTypes("RULE_DELETE");
 
 export const ROUTINE_CREATE = createRequestTypes("ROUTINE_CREATE");
+export const ROUTINE_EDIT = createRequestTypes("ROUTINE_EDIT");
+export const ROUTINE_DELETE = createRequestTypes("ROUTINE_DELETE");
