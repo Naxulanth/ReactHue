@@ -83,7 +83,11 @@ class RoutineDetails extends Component {
         time.minutes(split[1]);
       } else if (localTime.includes("W") || localTime.includes("A")) {
         if (localTime.includes("W")) {
-          let split = localTime.split("/T")[0].substr(1);
+          let s = localTime.split("/T");
+          let split = s[0].substr(1);
+          let timeSplit = s[1].split(":");
+          time.hours(timeSplit[0]);
+          time.minutes(timeSplit[1]);
           let days = parseInt(split);
           let dayCounter = 64;
           let i = 0;
@@ -103,13 +107,20 @@ class RoutineDetails extends Component {
         }
         if (localTime.includes("A")) {
           offTime = moment();
-          let split = localTime.split("A")[1].split(":");
+          let s = localTime.split("A");
+          let split = s[1].split(":");
+          let timeSplit = s[0].split(":");
+          time.hours(timeSplit[0]);
+          time.minutes(timeSplit[1]);
           offTime.hours(split[0]);
           offTime.minutes(split[1]);
         }
       } else {
-        // fix this
+        let split = localTime.split("T")[1].split(":");
+        time.hours(split[0]);
+        time.minutes(split[1]);
       }
+      console.log(time)
       let scenes = [];
       resourceLinks.forEach((link, i) => {
         if (link.includes("scenes")) {
@@ -356,7 +367,7 @@ class RoutineDetails extends Component {
             return roomLight === light;
           });
           if (index !== undefined) {
-            console.log(index)
+            console.log(index);
             tempLights.splice(index, 1);
           }
         });

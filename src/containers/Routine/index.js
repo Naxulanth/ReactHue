@@ -33,6 +33,7 @@ class Routine extends Component {
         localTime = left + right;
       } else localTime = absolute(localtime, time);
     }
+    console.log(localTime)
     setSchedule(id, {
       status: schedules[type][id].status === "enabled" ? "disabled" : "enabled",
       localtime: localTime

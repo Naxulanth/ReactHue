@@ -4,12 +4,12 @@ export function absolute(localtime, time, raw) {
   if (!raw) {
     if (!localtime) {
       localtime = new Date(unrecur(unrandomize(time)) + "Z");
-      localtime.setUTCHours(localtime.getUTCHours() - offset);
     } else {
       localtime = new Date(unrecur(unrandomize(localtime)) + "Z");
     }
   } else {
     localtime = new Date(localtime);
+    localtime.setUTCHours(localtime.getUTCHours() - offset);
   }
   localtime.setDate(today.getDate());
   localtime.setMonth(today.getMonth());
@@ -17,7 +17,6 @@ export function absolute(localtime, time, raw) {
   if (today > localtime) {
     localtime.setDate(today.getUTCDate() + 1);
   }
-  localtime.setHours(localtime.getHours() - offset);
   localtime = localtime.toISOString().split(".")[0];
   return localtime;
 }
