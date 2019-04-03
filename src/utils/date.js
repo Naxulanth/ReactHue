@@ -1,4 +1,5 @@
 export function absolute(localtime, time, raw) {
+  console.log(localtime);
   let today = new Date();
   let offset = today.getTimezoneOffset() / 60;
   if (!raw) {
@@ -9,6 +10,7 @@ export function absolute(localtime, time, raw) {
     }
   } else {
     localtime = new Date(localtime);
+    console.log(localtime)
     localtime.setUTCHours(localtime.getUTCHours() - offset);
   }
   localtime.setDate(today.getDate());
@@ -50,11 +52,13 @@ function unrandomize(time) {
 }
 
 function unrecur(time) {
+  let today = new Date();
+  let offset = today.getTimezoneOffset() / 60;
   if (time.includes("W")) {
     let today = new Date();
     let t = time.split("T")[1];
     let split = t.split(":");
-    today.setHours(split[0]);
+    today.setUTCHours(split[0]);
     today.setMinutes(split[1]);
     return today.toISOString().split(".")[0];
   } else return time;
