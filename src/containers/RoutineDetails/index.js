@@ -26,7 +26,7 @@ class RoutineDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",                                  
+      name: "",
       days: {},
       rooms: [],
       fadeSelect: null,
@@ -38,7 +38,7 @@ class RoutineDetails extends Component {
       roomScenes: {},
       sceneSelectors: [],
       loaded: false,
-      editScenes: [],
+      editScenes: []
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -77,6 +77,7 @@ class RoutineDetails extends Component {
       let localTime = schedule.localtime;
       let time = moment();
       let offTime = null;
+      let adjustmentSelect = null;
       if (localTime.includes("PT")) {
         let split = localTime.split("PT")[1].split(":");
         time.hours(split[0]);
@@ -106,14 +107,14 @@ class RoutineDetails extends Component {
           });
         }
         if (localTime.includes("A")) {
-          offTime = moment();
           let s = localTime.split("A");
           let split = s[1].split(":");
           let timeSplit = s[0].split(":");
           time.hours(timeSplit[0]);
           time.minutes(timeSplit[1]);
-          offTime.hours(split[0]);
-          offTime.minutes(split[1]);
+          adjustmentSelect = adjustment.find(adj => {
+            return adj.value == split[1];
+          });
         }
       } else {
         let split = localTime.split("T")[1].split(":");
@@ -132,13 +133,14 @@ class RoutineDetails extends Component {
         } else getScene(scene, edit);
       });
       // scenes
+      // offtime
       this.setState({
         name:
           type === "sleep"
             ? resources[resourceKey].name
             : schedules[type][edit].name,
         time: time,
-        timeOff: offTime,
+        adjustmentSelect,
         editScenes: scenes
       });
     }
@@ -216,7 +218,7 @@ class RoutineDetails extends Component {
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
-        loaded: true,
+        loaded: true
       });
     }
   }
@@ -283,7 +285,7 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect,
       roomScenes,
-      adjustmentSelect,
+      adjustmentSelect
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
@@ -300,7 +302,8 @@ class RoutineDetails extends Component {
       formattedTimeOff,
       routineLights,
       fadeSelect,
-      roomScenes
+      roomScenes,
+      adjustmentSelect
     };
     if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
@@ -341,7 +344,8 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    else createRoutine({ props, state });
+    console.log(state);
+    createRoutine({ props, state });
   }
 
   handleCheck(roomKey) {

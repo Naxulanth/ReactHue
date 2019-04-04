@@ -228,7 +228,7 @@ export function ruleObject(
   return obj;
 }
 
-export function createLightstates(fade, type, init) {
+export function createLightstates(fade, type, init, scene) {
   let obj = {};
   let homeScenes = {
     dimmed: {
@@ -303,10 +303,10 @@ export function createLightstates(fade, type, init) {
   } else if (type === "sleep") {
     if (init) obj = sleepInit;
     else obj = sleepEnd;
-  } else if (Object.keys(homeScenes).includes(type)) {
+  } else if (Object.keys(homeScenes).includes(scene)) {
     return homeScenes[type];
   } else {
-    obj = type;
+    obj = scene;
     if (type === "routines") obj.transitiontime = (parseInt(fade) - 1) * 600;
   }
   return obj;

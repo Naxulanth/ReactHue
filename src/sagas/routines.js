@@ -305,11 +305,14 @@ export function* createRoutine({ body }) {
       startSchedule.description = "MyRoutine";
       startSchedule.name = state.name;
       startSchedule.command = sensorObject(sensorId);
+      console.log(state)
       if (state.adjustmentSelect) {
+        console.log(state.adjustmentSelect)
         startSchedule.localtime = randomize(
           startSchedule.localtime,
           state.adjustmentSelect.value
         );
+        console.log(startSchedule.localtime)
       }
       const startScheduleData = yield call(
         schedulesApi.createSchedule,
@@ -335,7 +338,7 @@ export function* createRoutine({ body }) {
             scenesApi.modifySceneLights,
             sceneId,
             light,
-            createLightstates(state.fadeSelect.value, sceneKey)
+            createLightstates(state.fadeSelect.value, null, false, sceneKey)
           );
           yield put(scenesActions.modifySceneLights.success(modifyScene));
           resource.links.push("/scenes/" + sceneId);
@@ -359,7 +362,7 @@ export function* createRoutine({ body }) {
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(state.fadeSelect.value, lightStates[room])
+              createLightstates(state.fadeSelect.value, props.type, false, lightStates[room])
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
