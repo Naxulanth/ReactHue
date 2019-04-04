@@ -38,7 +38,8 @@ class RoutineDetails extends Component {
       roomScenes: {},
       sceneSelectors: [],
       loaded: false,
-      editScenes: []
+      editScenes: [],
+      ids: {}
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -132,6 +133,8 @@ class RoutineDetails extends Component {
         } else getScene(scene, edit);
       });
       // scenes
+      let tempIds = Object.assign({}, this.state.ids);
+      tempids["schedule"] = edit;
       this.setState({
         name:
           type === "sleep"
@@ -151,7 +154,7 @@ class RoutineDetails extends Component {
       home,
       loaded,
       editScenes,
-      routineLights
+      routineLights, ids
     } = this.state;
     const { scenes, editData, edit, type } = this.props;
     if (
@@ -213,10 +216,13 @@ class RoutineDetails extends Component {
           }
         }
       });
+      let tempIds = Object.assign({}, ids);
+      ids["scenes"] = editData[edit];
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
-        loaded: true
+        loaded: true,
+        ids: tempIds
       });
     }
   }
@@ -283,7 +289,8 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect,
       roomScenes,
-      adjustmentSelect
+      adjustmentSelect,
+      ids
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
@@ -341,7 +348,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (edit) editRoutine(edit, { props, state });
+    if (edit) editRoutine(ids, { props, state });
     else createRoutine({ props, state });
   }
 
