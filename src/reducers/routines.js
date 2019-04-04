@@ -1,4 +1,4 @@
-import { ROUTINE_CREATE } from "../constants/actionTypes";
+import { ROUTINE_CREATE, ROUTINE_DELETE } from "../constants/actionTypes";
 
 const schedules = (state = [], action) => {
   switch (action.type) {
@@ -7,6 +7,12 @@ const schedules = (state = [], action) => {
     case ROUTINE_CREATE.SUCCESS:
       return { ...state, loading: false };
     case ROUTINE_CREATE.FAILURE:
+      return state;
+    case ROUTINE_DELETE.REQUEST:
+      return state;
+    case ROUTINE_DELETE.SUCCESS:
+      return state;
+    case ROUTINE_DELETE.FAILURE:
       return state;
     default:
       return state;

@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { ROUTINE_CREATE } from "../constants/actionTypes";
+import { ROUTINE_CREATE, ROUTINE_DELETE } from "../constants/actionTypes";
 import shortid from "shortid";
 import {
   wakeSensor,
@@ -36,6 +36,12 @@ import * as actions from "../actions/routines";
 shortid.characters(
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@"
 );
+
+export function* watchDeleteRoutine() {
+  yield takeLatest(ROUTINE_DELETE.REQUEST, createRoutine);
+}
+
+export function* deleteRoutine({ id }) {}
 
 export function* watchCreateRoutine() {
   yield takeLatest(ROUTINE_CREATE.REQUEST, createRoutine);
@@ -413,7 +419,7 @@ export function* createRoutine({ body }) {
       startSchedule.description = "Timer";
       startSchedule.name = state.name;
       startSchedule.command = sensorObject(sensorId);
-      let time = new Date(state.time)
+      let time = new Date(state.time);
       let hours = time.getHours();
       hours = ("00" + hours).slice(-2);
       let minutes = time.getMinutes();

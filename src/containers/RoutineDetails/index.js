@@ -8,7 +8,7 @@ import Button from "components/Button";
 import TextInput from "components/TextInput";
 import TimePicker from "components/TimePicker";
 import DayPicker from "containers/DayPicker";
-import { createRoutine } from "actions/routines";
+import { createRoutine, deleteRoutine } from "actions/routines";
 import { getScene } from "actions/scenes";
 import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
@@ -692,7 +692,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createRoutine: bindActionCreators(createRoutine.request, dispatch),
-  getScene: bindActionCreators(getScene.request, dispatch)
+  getScene: bindActionCreators(getScene.request, dispatch),
+  deleteRoutine: bindActionCreators(deleteRoutine.request, dispatch)
 });
 
 export default connect(
