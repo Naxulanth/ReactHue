@@ -26,7 +26,7 @@ class RoutineDetails extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "",
+      name: "",                                  
       days: {},
       rooms: [],
       fadeSelect: null,
@@ -272,7 +272,7 @@ class RoutineDetails extends Component {
 
   handleSubmit(e) {
     let formattedTimeOff = null;
-    const { type, roomList, createRoutine } = this.props;
+    const { type, roomList, createRoutine, edit } = this.props;
     const {
       name,
       days,
@@ -341,7 +341,8 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    createRoutine({ props, state });
+    if (edit) editRoutine(edit, { props, state });
+    else createRoutine({ props, state });
   }
 
   handleCheck(roomKey) {
