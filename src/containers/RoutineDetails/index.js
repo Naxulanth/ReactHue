@@ -63,7 +63,8 @@ class RoutineDetails extends Component {
       type,
       scenes,
       getScene,
-      editData
+      editData,
+      rules
     } = this.props;
     let resourceKey = "";
     let schedule = "";
@@ -122,9 +123,13 @@ class RoutineDetails extends Component {
         time.minutes(split[1]);
       }
       let scenes = [];
+      let tempRules = [];
       resourceLinks.forEach((link, i) => {
         if (link.includes("scenes")) {
           scenes.push(link.split("/")[2]);
+        }
+        if (link.includes("rules")) {
+          tempRules.push(link.split("/")[2]);
         }
       });
       scenes.forEach((scene, i) => {
@@ -132,8 +137,16 @@ class RoutineDetails extends Component {
           getScene(scene, edit, true);
         } else getScene(scene, edit);
       });
+      Object.keys(rules).forEach(key => {
+        if (tempRules.includes(key)) {
+          let c = rules[key].conditions.find(c => c.operator === "ddx");
+          if (c) {
+            offTime = c.value;
+            // revert this offtime to real time
+          }
+        }
+      });
       // scenes
-      // offtime
       this.setState({
         name:
           type === "sleep"
@@ -141,7 +154,8 @@ class RoutineDetails extends Component {
             : schedules[type][edit].name,
         time: time,
         adjustmentSelect,
-        editScenes: scenes
+        editScenes: scenes,
+        timeOff: offTime
       });
     }
   }
@@ -259,6 +273,8 @@ class RoutineDetails extends Component {
     let formatted = "PT" + hours + ":" + minutes + ":00";
     return formatted;
   }
+
+  revertTimeOff(time, timeOff) {}
 
   handleFade(e) {
     this.setState({
@@ -691,7 +707,8 @@ const mapStateToProps = state => ({
   createdRoom: state.rooms.createdRoom,
   resources: state.resources.list,
   schedules: state.schedules.list,
-  editData: state.scenes.editData
+  editData: state.scenes.editData,
+  rules: state.rules.list
 });
 
 const mapDispatchToProps = dispatch => ({

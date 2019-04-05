@@ -174,7 +174,7 @@ export function ruleObject(
   let ddx = {
     address: "/sensors/" + createdSensor + "/state/flag",
     operator: "ddx",
-    value: timeOff // fix this date format (PT time difference)
+    value: timeOff
   };
   let wakeSchedule = {
     address: "/schedules/" + createdSchedule,
