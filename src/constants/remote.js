@@ -8,7 +8,7 @@ const params = {
 
 var str = "";
 for (var key in params) {
-  if (str != "") {
+  if (str !== "") {
     str += "&";
   }
   str += key + "=" + encodeURIComponent(params[key]);

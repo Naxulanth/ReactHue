@@ -38,7 +38,8 @@ class RoutineDetails extends Component {
       roomScenes: {},
       sceneSelectors: [],
       loaded: false,
-      editScenes: []
+      editScenes: [],
+      resource: null,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -146,7 +147,6 @@ class RoutineDetails extends Component {
           }
         }
       });
-      // scenes
       this.setState({
         name:
           type === "sleep"
@@ -155,6 +155,7 @@ class RoutineDetails extends Component {
         time: time,
         adjustmentSelect,
         editScenes: scenes,
+        resource: resources[resourceKey]
       });
     }
   }
@@ -189,7 +190,11 @@ class RoutineDetails extends Component {
       let tempRoomScenes = {};
       Object.keys(editData[edit]).forEach(key => {
         let data = editData[edit][key];
-        tempRoomScenes[data.group] = {key: key, label: data.name, value: data}
+        tempRoomScenes[data.group] = {
+          key: key,
+          label: data.name,
+          value: data
+        };
         if (
           data &&
           data["lightstates"] &&
@@ -303,7 +308,8 @@ class RoutineDetails extends Component {
       routineLights,
       fadeSelect,
       roomScenes,
-      adjustmentSelect
+      adjustmentSelect,
+      resource
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
@@ -362,7 +368,9 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    console.log(state);
+    if (edit) {
+      deleteRoutine(resource);
+    }
     createRoutine({ props, state });
   }
 
@@ -491,7 +499,7 @@ class RoutineDetails extends Component {
       sceneSelectors
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
-    console.log(this.state.roomScenes)
+    console.log(this.state.roomScenes);
     const adjustmentField = (
       <Fragment>
         <Select
