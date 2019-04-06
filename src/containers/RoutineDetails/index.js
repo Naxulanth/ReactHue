@@ -155,7 +155,6 @@ class RoutineDetails extends Component {
         time: time,
         adjustmentSelect,
         editScenes: scenes,
-        timeOff: offTime
       });
     }
   }
@@ -187,8 +186,10 @@ class RoutineDetails extends Component {
       let tempFade = null;
       let tempRooms = [];
       let pass = false;
+      let tempRoomScenes = {};
       Object.keys(editData[edit]).forEach(key => {
         let data = editData[edit][key];
+        tempRoomScenes[data.group] = {key: key, label: data.name, value: data}
         if (
           data &&
           data["lightstates"] &&
@@ -232,7 +233,8 @@ class RoutineDetails extends Component {
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
-        loaded: true
+        loaded: true,
+        roomScenes: tempRoomScenes
       });
     }
   }
@@ -489,6 +491,7 @@ class RoutineDetails extends Component {
       sceneSelectors
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
+    console.log(this.state.roomScenes)
     const adjustmentField = (
       <Fragment>
         <Select
