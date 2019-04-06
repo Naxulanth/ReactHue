@@ -41,7 +41,9 @@ export function* watchDeleteRoutine() {
   yield takeLatest(ROUTINE_DELETE.REQUEST, createRoutine);
 }
 
-export function* deleteRoutine({ id }) {}
+export function* deleteRoutine({ id }) {
+  console.log(id)
+}
 
 export function* watchCreateRoutine() {
   yield takeLatest(ROUTINE_CREATE.REQUEST, createRoutine);
@@ -305,14 +307,11 @@ export function* createRoutine({ body }) {
       startSchedule.description = "MyRoutine";
       startSchedule.name = state.name;
       startSchedule.command = sensorObject(sensorId);
-      console.log(state)
       if (state.adjustmentSelect) {
-        console.log(state.adjustmentSelect)
         startSchedule.localtime = randomize(
           startSchedule.localtime,
           state.adjustmentSelect.value
         );
-        console.log(startSchedule.localtime)
       }
       const startScheduleData = yield call(
         schedulesApi.createSchedule,

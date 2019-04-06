@@ -297,7 +297,7 @@ class RoutineDetails extends Component {
 
   handleSubmit(e) {
     let formattedTimeOff = null;
-    const { type, roomList, createRoutine, edit } = this.props;
+    const { type, roomList, createRoutine, edit, deleteRoutine } = this.props;
     const {
       name,
       days,
@@ -396,7 +396,6 @@ class RoutineDetails extends Component {
             return roomLight === light;
           });
           if (index !== undefined) {
-            console.log(index);
             tempLights.splice(index, 1);
           }
         });
@@ -499,7 +498,6 @@ class RoutineDetails extends Component {
       sceneSelectors
     } = this.state;
     const { type, roomList, lightList, edit } = this.props;
-    console.log(this.state.roomScenes);
     const adjustmentField = (
       <Fragment>
         <Select

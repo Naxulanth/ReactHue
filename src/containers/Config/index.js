@@ -142,7 +142,6 @@ class Config extends Component {
   }
 
   render() {
-    console.log(remoteQuery)
     const { ip, username, text, redirect, bridges, generator } = this.state;
     const {
       handleIPInput,

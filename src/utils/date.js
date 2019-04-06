@@ -1,5 +1,4 @@
 export function absolute(localtime, time, raw) {
-  console.log(localtime);
   let today = new Date();
   let offset = today.getTimezoneOffset() / 60;
   if (!raw) {
@@ -10,7 +9,6 @@ export function absolute(localtime, time, raw) {
     }
   } else {
     localtime = new Date(localtime);
-    console.log(localtime)
     localtime.setUTCHours(localtime.getUTCHours() - offset);
   }
   localtime.setDate(today.getDate());
