@@ -144,6 +144,7 @@ class RoutineDetails extends Component {
           if (c) {
             offTime = c.value;
             // revert this offtime to real time
+            // need to convert PT format absolute time format here
           }
         }
       });
