@@ -39,7 +39,7 @@ class RoutineDetails extends Component {
       sceneSelectors: [],
       loaded: false,
       editScenes: [],
-      resource: null,
+      resource: null
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleName = this.handleName.bind(this);
@@ -54,6 +54,7 @@ class RoutineDetails extends Component {
     this.getRoomScenes = this.getRoomScenes.bind(this);
     this.handleScene = this.handleScene.bind(this);
     this.formatTimeOff = this.formatTimeOff.bind(this);
+    this.revertTimeOff = this.revertTimeOff.bind(this);
   }
 
   componentDidMount() {
@@ -143,8 +144,7 @@ class RoutineDetails extends Component {
           let c = rules[key].conditions.find(c => c.operator === "ddx");
           if (c) {
             offTime = c.value;
-            // revert this offtime to real time
-            // need to convert PT format absolute time format here
+            this.revertTimeOff(time, offTime)
           }
         }
       });
@@ -282,7 +282,21 @@ class RoutineDetails extends Component {
     return formatted;
   }
 
-  revertTimeOff(time, timeOff) {}
+  revertTimeOff(time, timeOff) {
+    let split = timeOff.split("PT")[1].split(":");
+    let h = time.getHours();
+    let m = time.getMinutes();
+    m += split[1];
+    if (m >= 60) {
+      m -= 60;
+      h++;
+    }
+    h += split[0];
+    if (h >= 24) h -= 24;
+    time.setHours(h);
+    time.setMinutes(m);
+    return time;
+  }
 
   handleFade(e) {
     this.setState({
