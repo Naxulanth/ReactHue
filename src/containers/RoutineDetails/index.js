@@ -144,7 +144,7 @@ class RoutineDetails extends Component {
           let c = rules[key].conditions.find(c => c.operator === "ddx");
           if (c) {
             offTime = c.value;
-            this.revertTimeOff(time, offTime)
+            offTime = this.revertTimeOff(time, offTime);
           }
         }
       });
@@ -156,7 +156,8 @@ class RoutineDetails extends Component {
         time: time,
         adjustmentSelect,
         editScenes: scenes,
-        resource: resources[resourceKey]
+        resource: resources[resourceKey],
+        timeOff: offTime
       });
     }
   }
@@ -283,19 +284,20 @@ class RoutineDetails extends Component {
   }
 
   revertTimeOff(time, timeOff) {
+    let t = moment(time);
     let split = timeOff.split("PT")[1].split(":");
-    let h = time.getHours();
-    let m = time.getMinutes();
-    m += split[1];
+    let h = time.hours();
+    let m = time.minutes();
+    m += parseInt(split[1]);
     if (m >= 60) {
       m -= 60;
       h++;
     }
-    h += split[0];
+    h += parseInt(split[0]);
     if (h >= 24) h -= 24;
-    time.setHours(h);
-    time.setMinutes(m);
-    return time;
+    t.hours(h);
+    t.minutes(m);
+    return t;
   }
 
   handleFade(e) {
