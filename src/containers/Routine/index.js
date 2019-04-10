@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { setSchedule } from "actions/schedules";
 import { bindActionCreators } from "redux";
 import Toggle from "components/Toggle";
@@ -9,7 +11,7 @@ import { objectToArray } from "utils";
 import "./style.css";
 import RoutineDetails from "../RoutineDetails";
 
-class Routine extends Component {
+class Routine extends Conent {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,6 +78,7 @@ class Routine extends Component {
           <Row>
             <Col lg="1" />
             <Col sm="7" md="7" lg="7" xl="7">
+              <FontAwesomeIcon icon={faTrashAlt} />
               <span className="routine-edit" onClick={handleDetails}>
                 {type === "sleep" ? findName() : schedules[type][id].name}
               </span>
@@ -91,9 +94,7 @@ class Routine extends Component {
           </Row>
           <Row>
             <Col sm="12" md="12" lg="12" xl="12">
-              {details ? (
-                <RoutineDetails type={type} edit={id} />
-              ) : null}
+              {details ? <RoutineDetails type={type} edit={id} /> : null}
             </Col>
           </Row>
         </div>
