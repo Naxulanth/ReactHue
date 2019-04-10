@@ -38,11 +38,11 @@ shortid.characters(
 );
 
 export function* watchDeleteRoutine() {
-  yield takeLatest(ROUTINE_DELETE.REQUEST, createRoutine);
+  yield takeLatest(ROUTINE_DELETE.REQUEST, deleteRoutine);
 }
 
 export function* deleteRoutine({ id }) {
-  console.log(id)
+  let links = id.links;
 }
 
 export function* watchCreateRoutine() {

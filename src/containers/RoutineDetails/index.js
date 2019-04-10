@@ -8,6 +8,8 @@ import Button from "components/Button";
 import TextInput from "components/TextInput";
 import TimePicker from "components/TimePicker";
 import DayPicker from "containers/DayPicker";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { createRoutine, deleteRoutine } from "actions/routines";
 import { getScene } from "actions/scenes";
 import { selectifyScenes } from "utils/scenes";
@@ -55,6 +57,7 @@ class RoutineDetails extends Component {
     this.handleScene = this.handleScene.bind(this);
     this.formatTimeOff = this.formatTimeOff.bind(this);
     this.revertTimeOff = this.revertTimeOff.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
   componentDidMount() {
@@ -262,6 +265,12 @@ class RoutineDetails extends Component {
     this.setState({
       timeOff: e
     });
+  }
+
+  handleDelete() {
+    const { deleteRoutine } = this.props;
+    const { resource } = this.state;
+    deleteRoutine(resource);
   }
 
   formatTimeOff(time, timeOff) {
@@ -501,7 +510,8 @@ class RoutineDetails extends Component {
       handleOffTime,
       handleTime,
       handleLightCheck,
-      handleAdjustment
+      handleAdjustment,
+      handleDelete
     } = this;
     const {
       name,
@@ -713,10 +723,17 @@ class RoutineDetails extends Component {
         ) : null}
         <Row className="vertical-center center">
           <Col lg="3" sm="3" md="3" xl="3" />
-          <Col lg="6" sm="6" md="6" xl="6">
+          <Col className="vertical-align" lg="6" sm="6" md="6" xl="6">
             <Button onClick={handleSubmit}>{edit ? "Submit" : "Create"}</Button>
           </Col>
-          <Col lg="3" sm="3" md="3" xl="3" />
+          <Col lg="2" sm="2" md="2" xl="2" />
+          <Col lg="1" sm="1" md="1" xl="1">
+            <FontAwesomeIcon
+              onClick={handleDelete}
+              className="trash"
+              icon={faTrashAlt}
+            />
+          </Col>
         </Row>
       </div>
     );

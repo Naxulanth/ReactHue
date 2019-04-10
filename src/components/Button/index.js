@@ -4,7 +4,7 @@ import { Button } from "reactstrap";
 
 const ButtonComponent = styled(Button)`
 width: ${props => (props.width ? "60%;" : "35%;")}
-margin-bottom: ${props => (props.width ? "0px;" : "10px;")}
+margin-bottom: 0px;
 background: green !important;
 border-radius: 20px !important;
 border: 0px !important;

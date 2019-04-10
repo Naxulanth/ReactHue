@@ -31,3 +31,7 @@
 .day-picker-col {
     padding: 4px;
 }
+
+.vertical-align {
+    align-self: center;
+}

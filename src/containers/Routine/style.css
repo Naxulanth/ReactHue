@@ -5,3 +5,8 @@
 .routine-edit {
     cursor: pointer;
 }
+
+.trash {
+    margin-right: 20px;
+    cursor: pointer;
+}
