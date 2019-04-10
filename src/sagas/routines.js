@@ -43,6 +43,12 @@ export function* watchDeleteRoutine() {
 
 export function* deleteRoutine({ id }) {
   let links = id.links;
+  for (let link of links) {
+    let id = link.split("/")[2];
+    if (link.includes("scene")) {
+      yield put(scenesActions.deleteScene.request, id);
+    }
+  }
 }
 
 export function* watchCreateRoutine() {
@@ -361,7 +367,12 @@ export function* createRoutine({ body }) {
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(state.fadeSelect.value, props.type, false, lightStates[room])
+              createLightstates(
+                state.fadeSelect.value,
+                props.type,
+                false,
+                lightStates[room]
+              )
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }
