@@ -151,6 +151,8 @@ class RoutineDetails extends Component {
           }
         }
       });
+      let tempResource = resources[resourceKey];
+      tempResource.push("/resource/" + resourceKey)
       this.setState({
         name:
           type === "sleep"
@@ -159,7 +161,7 @@ class RoutineDetails extends Component {
         time: time,
         adjustmentSelect,
         editScenes: scenes,
-        resource: resources[resourceKey],
+        resource: tempResource,
         timeOff: offTime
       });
     }
