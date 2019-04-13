@@ -152,7 +152,7 @@ class RoutineDetails extends Component {
         }
       });
       let tempResource = resources[resourceKey];
-      tempResource.push("/resource/" + resourceKey)
+      tempResource.links.push("/resource/" + resourceKey);
       this.setState({
         name:
           type === "sleep"
@@ -729,13 +729,17 @@ class RoutineDetails extends Component {
             <Button onClick={handleSubmit}>{edit ? "Submit" : "Create"}</Button>
           </Col>
           <Col lg="2" sm="2" md="2" xl="2" />
-          <Col lg="1" sm="1" md="1" xl="1">
-            <FontAwesomeIcon
-              onClick={handleDelete}
-              className="trash"
-              icon={faTrashAlt}
-            />
-          </Col>
+          {edit ? (
+            <Col lg="1" sm="1" md="1" xl="1">
+              <FontAwesomeIcon
+                onClick={handleDelete}
+                className="trash"
+                icon={faTrashAlt}
+              />
+            </Col>
+          ) : (
+            ""
+          )}
         </Row>
       </div>
     );

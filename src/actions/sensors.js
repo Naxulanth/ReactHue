@@ -2,7 +2,8 @@ import { action } from "./";
 import {
   SENSORS_GET,
   SENSOR_CREATE,
-  SENSOR_PUT
+  SENSOR_PUT,
+  SENSOR_DELETE
 } from "../constants/actionTypes";
 
 export const getSensors = {
@@ -21,4 +22,10 @@ export const modifySensor = {
   request: (id, body) => action(SENSOR_PUT.REQUEST, { id, body }),
   success: response => action(SENSOR_PUT.SUCCESS, { response }),
   failure: error => action(SENSOR_PUT.FAILURE, { error })
+};
+
+export const deleteSensor = {
+  request: (id) => action(SENSOR_DELETE.REQUEST, { id }),
+  success: response => action(SENSOR_DELETE.SUCCESS, { response }),
+  failure: error => action(SENSOR_DELETE.FAILURE, { error })
 };

@@ -9,9 +9,9 @@ const schedules = (state = [], action) => {
     case ROUTINE_CREATE.FAILURE:
       return state;
     case ROUTINE_DELETE.REQUEST:
-      return state;
+    return { ...state, loading: true };
     case ROUTINE_DELETE.SUCCESS:
-      return state;
+    return { ...state, loading: false };
     case ROUTINE_DELETE.FAILURE:
       return state;
     default:

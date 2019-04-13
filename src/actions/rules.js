@@ -1,5 +1,5 @@
 import { action } from "./";
-import { RULES_GET, RULE_CREATE, RULE_PUT } from "../constants/actionTypes";
+import { RULES_GET, RULE_CREATE, RULE_PUT, RULE_DELETE } from "../constants/actionTypes";
 
 export const getRules = {
   request: () => action(RULES_GET.REQUEST),
@@ -17,4 +17,10 @@ export const modifyRule = {
   request: (id, body) => action(RULE_PUT.REQUEST, { id, body }),
   success: response => action(RULE_PUT.SUCCESS, { response }),
   failure: error => action(RULE_PUT.FAILURE, { error })
+};
+
+export const deleteRule = {
+  request: id => action(RULE_DELETE.REQUEST, { id }),
+  success: response => action(RULE_DELETE.SUCCESS, { response }),
+  failure: error => action(RULE_DELETE.FAILURE, { error })
 };

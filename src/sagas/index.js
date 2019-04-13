@@ -26,9 +26,9 @@ import {
   watchDeleteSchedule,
   watchSetSchedule
 } from "./schedules";
-import { watchGetResources } from "./resources";
-import { watchGetRules } from "./rules";
-import { watchGetSensors } from "./sensors";
+import { watchGetResources, watchDeleteResource } from "./resources";
+import { watchGetRules, watchDeleteRule } from "./rules";
+import { watchGetSensors, watchDeleteSensor } from "./sensors";
 import { watchCreateRoutine, watchDeleteRoutine } from "./routines";
 
 export default function* root() {
@@ -55,4 +55,7 @@ export default function* root() {
   yield fork(watchCreateRoom);
   yield fork(watchCreateRoutine);
   yield fork(watchDeleteRoutine);
+  yield fork(watchDeleteResource);
+  yield fork(watchDeleteRule);
+  yield fork(watchDeleteSensor);
 }

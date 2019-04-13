@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { RULES_GET, RULE_CREATE } from "../constants/actionTypes";
+import { RULES_GET, RULE_CREATE, RULE_DELETE } from "../constants/actionTypes";
 
 import * as actions from "../actions/rules";
 import * as api from "../api/rules";
@@ -28,4 +28,17 @@ export function* createRule(body) {
 
 export function* watchCreateRule() {
   yield takeLatest(RULE_CREATE.REQUEST, createRule);
+}
+
+export function* deleteRule({id}) {
+  try {
+    const response = yield call(api.deleteRule, id);
+    yield put(actions.deleteRule.success(response));
+  } catch (e) {
+    yield put(actions.deleteRule.failure(e));
+  }
+}
+
+export function* watchDeleteRule() {
+  yield takeLatest(RULE_DELETE.REQUEST, deleteRule);
 }

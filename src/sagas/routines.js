@@ -43,21 +43,25 @@ export function* watchDeleteRoutine() {
 
 export function* deleteRoutine({ id }) {
   let links = id.links;
-  console.log(links)
+  console.log(links);
   for (let link of links) {
     let id = link.split("/")[2];
-    /*if (link.includes("resource")) {
-      yield put(resourcesActions.deleteResource.request, id);
+    console.log(id)
+    if (link.includes("resource")) {
+      yield put(resourcesActions.deleteResource.request(id));
     } else if (link.includes("schedule")) {
-      yield put(schedulesActions.deleteSchedule.request, id);
+      yield put(schedulesActions.deleteSchedule.request(id));
     } else if (link.includes("scene")) {
-      yield put(scenesActions.deleteScene.request, id);
+      yield put(scenesActions.deleteScene.request(id));
     } else if (link.includes("rule")) {
-      yield put(rulesActions.deleteRule.request, id);
+      yield put(rulesActions.deleteRule.request(id));
     } else if (link.includes("sensor")) {
-      yield put(sensorsActions.deleteSensor.request, id);
-    }*/
+      yield put(sensorsActions.deleteSensor.request(id));
+    }
   }
+  yield put(actions.deleteRoutine.success());
+  yield put(schedulesActions.getSchedules.request());
+  yield put(resourcesActions.getResources.request());
 }
 
 export function* watchCreateRoutine() {
