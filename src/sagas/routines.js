@@ -46,17 +46,22 @@ export function* deleteRoutine({ id }) {
   console.log(links);
   for (let link of links) {
     let id = link.split("/")[2];
-    console.log(id)
+    console.log(id);
     if (link.includes("resource")) {
-      yield put(resourcesActions.deleteResource.request(id));
+      yield call(resourcesApi.deleteResource, id);
+      yield put(resourcesActions.deleteResource.success());
     } else if (link.includes("schedule")) {
-      yield put(schedulesActions.deleteSchedule.request(id));
+      let resp = yield call(schedulesApi.deleteSchedule, id);
+      yield put(schedulesActions.deleteSchedule.success(resp));
     } else if (link.includes("scene")) {
-      yield put(scenesActions.deleteScene.request(id));
+      let resp = yield call(scenesApi.deleteScene, id);
+      yield put(scenesActions.deleteScene.success(resp));
     } else if (link.includes("rule")) {
-      yield put(rulesActions.deleteRule.request(id));
+      yield call(rulesApi.deleteRule, id);
+      yield put(rulesActions.deleteRule.success());
     } else if (link.includes("sensor")) {
-      yield put(sensorsActions.deleteSensor.request(id));
+      yield call(sensorsApi.deleteSensor, id);
+      yield put(sensorsActions.deleteSensor.success());
     }
   }
   yield put(actions.deleteRoutine.success());

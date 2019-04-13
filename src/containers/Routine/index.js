@@ -70,7 +70,7 @@ class Routine extends Component {
     const { handleToggle, findName, handleDetails, handleDelete } = this;
     const { schedules, type, id } = this.props;
     const { details } = this.state;
-    if (schedules && schedules[type]) {
+    if (schedules && schedules[type] && schedules[type][id]) {
       return (
         <div className="routine-single">
           <Row>
@@ -91,7 +91,9 @@ class Routine extends Component {
           </Row>
           <Row>
             <Col sm="12" md="12" lg="12" xl="12">
-              {details ? <RoutineDetails type={type} edit={id} /> : null}
+              {details ? (
+                <RoutineDetails details={details} type={type} edit={id} />
+              ) : null}
             </Col>
           </Row>
         </div>
