@@ -77,11 +77,12 @@ export function* createRoutine({ body }) {
     let startSchedule = {};
     let shortId = shortid.generate();
     startSchedule.status = "disabled";
-    startSchedule.recycle = true;
+    startSchedule.recycle = true; 
     let lights = [];
     if (state.home) {
       const allLights = yield call(lightsApi.getLights);
-      lights = Object.keys(allLights);
+      console.log(allLights)
+      lights = Object.keys(allLights.data);
     } else if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
         if (state.rooms.includes(roomKey)) {
@@ -472,16 +473,17 @@ export function* createRoutine({ body }) {
         });
         yield put(scenesActions.createScene.success(scene));
         sceneId = scene.data[0].success.id;
+        console.log(state.lights)
         for (let light of lights) {
           const modifyScene = yield call(
             scenesApi.modifySceneLights,
             sceneId,
             light,
-            createLightstates(state.fadeSelect.value, sceneKey)
+            createLightstates(11, null, null, sceneKey)
           );
           yield put(scenesActions.modifySceneLights.success(modifyScene));
-          resource.links.push("/scenes/" + sceneId);
         }
+        resource.links.push("/scenes/" + sceneId);
       } else {
         for (let room of state.rooms) {
           let sceneObj = state.roomScenes[room];
@@ -502,7 +504,7 @@ export function* createRoutine({ body }) {
               scenesApi.modifySceneLights,
               sceneId,
               light,
-              createLightstates(1, lightStates[room])
+              createLightstates(null, lightStates[room])
             );
             yield put(scenesActions.modifySceneLights.success(modifyScene));
           }

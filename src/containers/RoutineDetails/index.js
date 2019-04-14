@@ -177,8 +177,8 @@ class RoutineDetails extends Component {
     ) {
       let tempFade = null;
       let tempRooms = [];
-      let pass = false;
       let tempRoomScenes = {};
+      console.log(editData[edit]);
       Object.keys(editData[edit]).forEach(key => {
         let data = editData[edit][key];
         tempRoomScenes[data.group] = {
@@ -196,36 +196,34 @@ class RoutineDetails extends Component {
             data["lightstates"][data["lights"][0]]["transitiontime"] / 600 + 1;
           tempFade = { label: tempFade + " minutes", value: tempFade };
         }
-        if (!pass) {
-          pass = true;
-          if (data["type"] === "GroupScene") {
-            if (data["group"] === "0") {
-              this.setState({
-                home: true
-              });
-            } else {
-              tempRooms.push(data["group"]);
-            }
-          } else {
-            data["lights"].forEach(light => {
-              tempRooms = Array.from(
-                new Set(
-                  tempRooms.concat(
-                    Object.keys(this.props.roomList).filter(roomKey => {
-                      let room = this.props.roomList[roomKey];
-                      return room.lights.includes(light);
-                    })
-                  )
-                )
-              );
+        if (data["type"] === "GroupScene") {
+          if (data["group"] === "0") {
+            this.setState({
+              home: true
             });
-            if (type === "wake")
-              this.setState({
-                routineLights: data["lights"]
-              });
+          } else {
+            tempRooms.push(data["group"]);
           }
+        } else {
+          data["lights"].forEach(light => {
+            tempRooms = Array.from(
+              new Set(
+                tempRooms.concat(
+                  Object.keys(this.props.roomList).filter(roomKey => {
+                    let room = this.props.roomList[roomKey];
+                    return room.lights.includes(light);
+                  })
+                )
+              )
+            );
+          });
+          if (type === "wake")
+            this.setState({
+              routineLights: data["lights"]
+            });
         }
       });
+      console.log(tempRooms);
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
@@ -387,10 +385,9 @@ class RoutineDetails extends Component {
       return;
     }
     if (edit) {
-      console.log(resource)
+      console.log(resource);
       createRoutine({ props, state, resource });
-    }
-    else createRoutine({ props, state });
+    } else createRoutine({ props, state });
   }
 
   handleCheck(roomKey) {
