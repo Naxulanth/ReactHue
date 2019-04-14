@@ -309,7 +309,7 @@ class RoutineDetails extends Component {
 
   handleSubmit(e) {
     let formattedTimeOff = null;
-    const { type, roomList, createRoutine, edit, deleteRoutine } = this.props;
+    const { type, roomList, createRoutine, edit } = this.props;
     const {
       name,
       days,

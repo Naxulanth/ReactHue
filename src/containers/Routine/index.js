@@ -20,6 +20,7 @@ class Routine extends Component {
     this.findName = this.findName.bind(this);
   }
 
+
   handleToggle() {
     const { setSchedule, id, schedules, type } = this.props;
     let { localtime, time } = schedules[type][id];
@@ -104,7 +105,7 @@ class Routine extends Component {
 
 const mapStateToProps = state => ({
   schedules: state.schedules.list,
-  resources: state.resources.list,
+  resources: state.resources.list
 });
 
 const mapDispatchToProps = dispatch => ({

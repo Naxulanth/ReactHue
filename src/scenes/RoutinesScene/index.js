@@ -19,7 +19,8 @@ class RoutinesScene extends Component {
       test: false
     };
   }
-  async componentDidMount() {
+
+  componentDidMount() {
     const {
       getSchedules,
       getResources,
@@ -27,7 +28,7 @@ class RoutinesScene extends Component {
       getSensors,
       getRooms,
       getLights,
-      getScenes,
+      getScenes
     } = this.props;
     getSchedules();
     getResources();
@@ -65,7 +66,8 @@ class RoutinesScene extends Component {
 }
 
 const mapStateToProps = state => ({
-  schedules: state.schedules.list
+  schedules: state.schedules.list,
+  resources: state.resources.list
 });
 
 const mapDispatchToProps = dispatch => ({
