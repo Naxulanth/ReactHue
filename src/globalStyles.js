@@ -55,6 +55,14 @@ const GlobalStyle = createGlobalStyle`
 .last {
   margin-bottom: 15px !important;
 }
+
+input {
+  background: black;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid white;
+  padding: 5px;
+}
   
 `;
 
