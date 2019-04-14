@@ -218,7 +218,7 @@ class SceneWidget extends Component {
 SceneWidget.propTypes = {
   activeScenes: PropTypes.object,
   createdScene: PropTypes.object,
-  deletedScene: PropTypes.object,
+  deletedScene: PropTypes.string,
   lights: PropTypes.object,
   room: PropTypes.object,
   scenes: PropTypes.object,

@@ -53,7 +53,7 @@ class WidgetHeader extends Component {
             />
           </Col>
           <Col className="center-toggle" lg="3">
-            <Toggle checked={room[roomId].state.any_on} onChange={expand} />
+            <Toggle checked={room[roomId].state.all_on} onChange={expand} />
           </Col>
           <Col lg="1" />
         </Row>
