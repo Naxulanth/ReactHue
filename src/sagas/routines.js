@@ -365,7 +365,6 @@ export function* createRoutine({ body }) {
         }
       } else {
         for (let room of state.rooms) {
-          console.log(room);
           let sceneObj = state.roomScenes[room];
           const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
           const lightStates = detailedScene.data.lightstates;
@@ -452,7 +451,7 @@ export function* createRoutine({ body }) {
       let hours = time.getHours();
       hours = ("00" + hours).slice(-2);
       let minutes = time.getMinutes();
-      minutes = ("00" + hours).slice(-2);
+      minutes = ("00" + minutes).slice(-2);
       startSchedule.localtime = "PT" + hours + ":" + minutes + ":00";
       const startScheduleData = yield call(
         schedulesApi.createSchedule,

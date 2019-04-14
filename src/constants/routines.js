@@ -225,8 +225,6 @@ export function ruleObject(
   }
   if (!(!init && (type === "wake" || type === "routines")))
     addScenes(obj, groups, createdScene);
-
-    console.log(obj)
   return obj;
 }
 
