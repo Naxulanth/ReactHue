@@ -57,11 +57,18 @@ const GlobalStyle = createGlobalStyle`
 }
 
 input {
+  font-size: 18px;
+  padding: 5px;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
   background: black;
   color: white;
-  border-radius: 3px;
   border: 1px solid white;
-  padding: 5px;
+}
+
+input:focus {
+  outline: none
 }
   
 `;
