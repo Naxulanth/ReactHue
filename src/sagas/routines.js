@@ -19,7 +19,6 @@ import { absolute, recur, randomize } from "utils/date";
 
 import * as roomsActions from "../actions/rooms";
 import * as roomsApi from "../api/rooms";
-import * as lightsActions from "../actions/lights";
 import * as lightsApi from "../api/lights";
 import * as sensorsActions from "../actions/sensors";
 import * as sensorsApi from "../api/sensors";

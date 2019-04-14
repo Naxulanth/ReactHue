@@ -1,5 +1,4 @@
 import { createRequestTypes } from "../actions";
-import { create } from "domain";
 
 export const LIGHTS_GET = createRequestTypes("LIGHTS_GET");
 export const LIGHTS_PUT = createRequestTypes("LIGHTS_PUT");

@@ -66,9 +66,7 @@ class RoutineDetails extends Component {
       edit,
       schedules,
       type,
-      scenes,
       getScene,
-      editData,
       rules
     } = this.props;
     let resourceKey = "";
@@ -119,7 +117,7 @@ class RoutineDetails extends Component {
           time.hours(timeSplit[0]);
           time.minutes(timeSplit[1]);
           adjustmentSelect = adjustment.find(adj => {
-            return adj.value == split[1];
+            return adj.value === split[1];
           });
         }
       } else {
@@ -174,7 +172,6 @@ class RoutineDetails extends Component {
       home,
       loaded,
       editScenes,
-      routineLights
     } = this.state;
     const { scenes, editData, edit, type } = this.props;
     if (

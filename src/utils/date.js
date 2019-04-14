@@ -40,7 +40,7 @@ export function recur(time, days) {
   return prefix + "T" + time.split("T")[1];
 }
 export function randomize(time, interval) {
-  if (interval == 60) return time + "A01:00:00";
+  if (parseInt(interval) === 60) return time + "A01:00:00";
   else return time + "A00:" + interval + ":00";
 }
 
@@ -50,8 +50,6 @@ function unrandomize(time) {
 }
 
 function unrecur(time) {
-  let today = new Date();
-  let offset = today.getTimezoneOffset() / 60;
   if (time.includes("W")) {
     let today = new Date();
     let t = time.split("T")[1];
