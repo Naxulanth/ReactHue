@@ -465,7 +465,14 @@ class RoutineDetails extends Component {
             this.handleScene(e, roomKey);
           }}
           styles={selectStyle}
-          options={options}
+          options={options.filter(scene => {
+            return (
+              !scene.label.includes("Wake Up init") &&
+              !scene.label.includes("Wake Up end") &&
+              !scene.label.includes("Go to sleep start") &&
+              !scene.label.includes("Go to sleep end")
+            );
+          })}
         />
       );
     });
