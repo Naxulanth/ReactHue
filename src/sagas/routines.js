@@ -42,10 +42,8 @@ export function* watchDeleteRoutine() {
 
 export function* deleteRoutine({ id }) {
   let links = id.links;
-  console.log(links);
   for (let link of links) {
     let id = link.split("/")[2];
-    console.log(id);
     if (link.includes("resource")) {
       yield call(resourcesApi.deleteResource, id);
       yield put(resourcesActions.deleteResource.success());
@@ -64,8 +62,8 @@ export function* deleteRoutine({ id }) {
     }
   }
   yield put(actions.deleteRoutine.success());
-  yield put(schedulesActions.getSchedules.request());
   yield put(resourcesActions.getResources.request());
+  yield put(schedulesActions.getSchedules.request());
 }
 
 export function* watchCreateRoutine() {
@@ -367,6 +365,7 @@ export function* createRoutine({ body }) {
         }
       } else {
         for (let room of state.rooms) {
+          console.log(room);
           let sceneObj = state.roomScenes[room];
           const detailedScene = yield call(scenesApi.getScene, sceneObj.key);
           const lightStates = detailedScene.data.lightstates;
@@ -519,7 +518,7 @@ export function* createRoutine({ body }) {
           createdScenes,
           state.rooms,
           null,
-          false,
+          true,
           null,
           props.type
         )

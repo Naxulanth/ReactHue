@@ -61,14 +61,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidMount() {
-    const {
-      resources,
-      edit,
-      schedules,
-      type,
-      getScene,
-      rules
-    } = this.props;
+    const { resources, edit, schedules, type, getScene, rules } = this.props;
     let resourceKey = "";
     let schedule = "";
     if (edit) {
@@ -166,13 +159,7 @@ class RoutineDetails extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const {
-      rooms,
-      roomScenes,
-      home,
-      loaded,
-      editScenes,
-    } = this.state;
+    const { rooms, roomScenes, home, loaded, editScenes } = this.state;
     const { scenes, editData, edit, type } = this.props;
     if (
       scenes &&
@@ -372,7 +359,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (!fadeSelect) {
+    if (!fadeSelect && (type === "wake" || type === "routines")) {
       toast.error("Please choose fade amount", {
         position: toast.POSITION.TOP_RIGHT
       });
@@ -394,7 +381,7 @@ class RoutineDetails extends Component {
       return;
     }
     if (edit) {
-      deleteRoutine(resource);
+      // editRoutine({ props, state });
     }
     createRoutine({ props, state });
   }
@@ -523,7 +510,7 @@ class RoutineDetails extends Component {
       adjustmentSelect,
       sceneSelectors
     } = this.state;
-    const { type, roomList, lightList, edit, details } = this.props;
+    const { type, roomList, lightList, edit } = this.props;
     const adjustmentField = (
       <Fragment>
         <Select
@@ -582,168 +569,166 @@ class RoutineDetails extends Component {
     );
     return (
       <Fragment>
-        {details ? (
-          <div className="routine-details">
-            <Row className="vertical-center">
+        <div className="routine-details">
+          <Row className="vertical-center">
+            <Col lg="3" sm="3" md="3" xl="3" />
+            <Col className="center" lg="6" sm="6" md="6" xl="6">
+              <TextInput
+                onChange={handleName}
+                value={name}
+                placeholder={"Name..."}
+              />
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3" />
+          </Row>
+          <Row className="vertical-center">
+            <Col lg="3" sm="3" md="3" xl="3" />
+            <Col lg="3" sm="3" md="3" xl="3">
+              {type === "timers" ? (
+                <TimePicker
+                  placeholder={"Pick time"}
+                  showSecond={false}
+                  allowEmpty={false}
+                  value={time}
+                  onChange={handleTime}
+                />
+              ) : (
+                <TimePicker
+                  placeholder={"Pick time"}
+                  showSecond={false}
+                  use12Hours
+                  allowEmpty={false}
+                  value={time}
+                  onChange={handleTime}
+                />
+              )}
+            </Col>
+            <Col className="center" lg="3" sm="3" md="3" xl="3">
+              {type === "timers" ? null : (
+                <Select
+                  placeholder={"Fade"}
+                  value={fadeSelect}
+                  onChange={handleFade}
+                  styles={selectStyle}
+                  options={
+                    type === "wake"
+                      ? wakeFade
+                      : type === "sleep"
+                      ? sleepFade
+                      : otherFade
+                  }
+                />
+              )}
+            </Col>
+            <Col lg="6" sm="6" md="6" xl="6" />
+          </Row>
+          <Row className="vertical-center">
+            <Col lg="3" sm="3" md="3" xl="3" />
+            <Col lg="6" sm="6" md="6" xl="6">
+              {type === "routines" ? adjustmentField : null}
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3" />
+          </Row>
+          <Row className="vertical-center">
+            <Col lg="3" sm="3" md="3" xl="3" />
+            <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
+              {type === "timers" ? null : (
+                <DayPicker initial={this.state.days} days={getDays} />
+              )}
+            </Col>
+            <Col lg="3" sm="3" md="3" xl="3" />
+          </Row>
+          <Row className="vertical-center center">
+            <Col lg="12" sm="12" md="12" xl="12">
+              <Checkbox
+                name={"home"}
+                onChange={() => {
+                  handleCheck();
+                }}
+                checked={home}
+              >
+                Home
+              </Checkbox>
+              {roomList
+                ? Object.keys(roomList).map(roomKey => {
+                    const room = roomList[roomKey];
+                    return (
+                      <Checkbox
+                        key={uuidv4()}
+                        name={room.name}
+                        onChange={() => {
+                          handleCheck(roomKey);
+                        }}
+                        checked={rooms.includes(roomKey)}
+                      >
+                        {room.name}
+                      </Checkbox>
+                    );
+                  })
+                : null}
+            </Col>
+          </Row>
+          {type === "routines" ? (
+            <Row className="vertical-center last center">
               <Col lg="3" sm="3" md="3" xl="3" />
-              <Col className="center" lg="6" sm="6" md="6" xl="6">
-                <TextInput
-                  onChange={handleName}
-                  value={name}
-                  placeholder={"Name..."}
+              <Col lg="3" sm="3" md="3" xl="3">
+                Turn room(s) off
+              </Col>
+              <Col lg="3" sm="3" md="3" xl="3">
+                <TimePicker
+                  placeholder={"Pick time"}
+                  showSecond={false}
+                  use12Hours
+                  allowEmpty={true}
+                  value={timeOff}
+                  onChange={handleOffTime}
                 />
               </Col>
               <Col lg="3" sm="3" md="3" xl="3" />
             </Row>
+          ) : null}
+          {type === "wake" ? wakeOnly : null}
+          {type === "routines" || type === "timers"
+            ? rooms.map(roomKey => {
+                return (
+                  <Row key={uuidv4()} className="vertical-center">
+                    <Col lg="3" />
+                    <Col lg="6">{sceneSelectors[roomKey]}</Col>
+                    <Col lg="3" />
+                  </Row>
+                );
+              })
+            : null}
+          {(type === "routines" || type === "timers") &&
+          rooms.length === 0 &&
+          home ? (
             <Row className="vertical-center">
-              <Col lg="3" sm="3" md="3" xl="3" />
-              <Col lg="3" sm="3" md="3" xl="3">
-                {type === "timers" ? (
-                  <TimePicker
-                    placeholder={"Pick time"}
-                    showSecond={false}
-                    allowEmpty={false}
-                    value={time}
-                    onChange={handleTime}
-                  />
-                ) : (
-                  <TimePicker
-                    placeholder={"Pick time"}
-                    showSecond={false}
-                    use12Hours
-                    allowEmpty={false}
-                    value={time}
-                    onChange={handleTime}
-                  />
-                )}
-              </Col>
-              <Col className="center" lg="3" sm="3" md="3" xl="3">
-                {type === "timers" ? null : (
-                  <Select
-                    placeholder={"Fade"}
-                    value={fadeSelect}
-                    onChange={handleFade}
-                    styles={selectStyle}
-                    options={
-                      type === "wake"
-                        ? wakeFade
-                        : type === "sleep"
-                        ? sleepFade
-                        : otherFade
-                    }
-                  />
-                )}
-              </Col>
-              <Col lg="6" sm="6" md="6" xl="6" />
+              <Col lg="3" />
+              <Col lg="6">{sceneSelectors[0]}</Col>
+              <Col lg="3" />
             </Row>
-            <Row className="vertical-center">
-              <Col lg="3" sm="3" md="3" xl="3" />
-              <Col lg="6" sm="6" md="6" xl="6">
-                {type === "routines" ? adjustmentField : null}
+          ) : null}
+          <Row className="vertical-center center">
+            <Col lg="3" sm="3" md="3" xl="3" />
+            <Col className="vertical-align" lg="6" sm="6" md="6" xl="6">
+              <Button onClick={handleSubmit}>
+                {edit ? "Submit" : "Create"}
+              </Button>
+            </Col>
+            <Col lg="2" sm="2" md="2" xl="2" />
+            {edit ? (
+              <Col lg="1" sm="1" md="1" xl="1">
+                <FontAwesomeIcon
+                  onClick={handleDelete}
+                  className="trash"
+                  icon={faTrashAlt}
+                />
               </Col>
-              <Col lg="3" sm="3" md="3" xl="3" />
-            </Row>
-            <Row className="vertical-center">
-              <Col lg="3" sm="3" md="3" xl="3" />
-              <Col className="day-picker-col" lg="6" sm="6" md="6" xl="6">
-                {type === "timers" ? null : (
-                  <DayPicker initial={this.state.days} days={getDays} />
-                )}
-              </Col>
-              <Col lg="3" sm="3" md="3" xl="3" />
-            </Row>
-            <Row className="vertical-center center">
-              <Col lg="12" sm="12" md="12" xl="12">
-                <Checkbox
-                  name={"home"}
-                  onChange={() => {
-                    handleCheck();
-                  }}
-                  checked={home}
-                >
-                  Home
-                </Checkbox>
-                {roomList
-                  ? Object.keys(roomList).map(roomKey => {
-                      const room = roomList[roomKey];
-                      return (
-                        <Checkbox
-                          key={uuidv4()}
-                          name={room.name}
-                          onChange={() => {
-                            handleCheck(roomKey);
-                          }}
-                          checked={rooms.includes(roomKey)}
-                        >
-                          {room.name}
-                        </Checkbox>
-                      );
-                    })
-                  : null}
-              </Col>
-            </Row>
-            {type === "routines" ? (
-              <Row className="vertical-center last center">
-                <Col lg="3" sm="3" md="3" xl="3" />
-                <Col lg="3" sm="3" md="3" xl="3">
-                  Turn room(s) off
-                </Col>
-                <Col lg="3" sm="3" md="3" xl="3">
-                  <TimePicker
-                    placeholder={"Pick time"}
-                    showSecond={false}
-                    use12Hours
-                    allowEmpty={true}
-                    value={timeOff}
-                    onChange={handleOffTime}
-                  />
-                </Col>
-                <Col lg="3" sm="3" md="3" xl="3" />
-              </Row>
-            ) : null}
-            {type === "wake" ? wakeOnly : null}
-            {type === "routines" || type === "timers"
-              ? rooms.map(roomKey => {
-                  return (
-                    <Row key={uuidv4()} className="vertical-center">
-                      <Col lg="3" />
-                      <Col lg="6">{sceneSelectors[roomKey]}</Col>
-                      <Col lg="3" />
-                    </Row>
-                  );
-                })
-              : null}
-            {(type === "routines" || type === "timers") &&
-            rooms.length === 0 &&
-            home ? (
-              <Row className="vertical-center">
-                <Col lg="3" />
-                <Col lg="6">{sceneSelectors[0]}</Col>
-                <Col lg="3" />
-              </Row>
-            ) : null}
-            <Row className="vertical-center center">
-              <Col lg="3" sm="3" md="3" xl="3" />
-              <Col className="vertical-align" lg="6" sm="6" md="6" xl="6">
-                <Button onClick={handleSubmit}>
-                  {edit ? "Submit" : "Create"}
-                </Button>
-              </Col>
-              <Col lg="2" sm="2" md="2" xl="2" />
-              {edit ? (
-                <Col lg="1" sm="1" md="1" xl="1">
-                  <FontAwesomeIcon
-                    onClick={handleDelete}
-                    className="trash"
-                    icon={faTrashAlt}
-                  />
-                </Col>
-              ) : (
-                ""
-              )}
-            </Row>
-          </div>
-        ) : null}
+            ) : (
+              ""
+            )}
+          </Row>
+        </div>
       </Fragment>
     );
   }
