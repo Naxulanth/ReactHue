@@ -62,8 +62,8 @@ export function* deleteRoutine({ id }) {
     }
   }
   yield put(actions.deleteRoutine.success());
-  yield put(resourcesActions.getResources.request());
   yield put(schedulesActions.getSchedules.request());
+  yield put(resourcesActions.getResources.request());
 }
 
 export function* watchCreateRoutine() {
@@ -537,9 +537,11 @@ export function* createRoutine({ body }) {
       const resourceData = yield call(resourcesApi.createResource, resource);
       yield put(resourcesActions.createResource.success(resourceData));
     }
-
     yield put(actions.createRoutine.success());
     yield put(schedulesActions.getSchedules.request());
     yield put(resourcesActions.getResources.request());
+    if (body.resource) {
+      yield put(actions.deleteRoutine.request(body.resource));
+    }
   } catch (e) {}
 }

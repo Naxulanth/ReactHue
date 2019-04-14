@@ -353,6 +353,12 @@ class RoutineDetails extends Component {
       });
       return;
     }
+    if (routineLights.length < 1 && type === "wake") {
+      toast.error("Please fill out lights", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
     if (!home && rooms.length < 1) {
       toast.error("Please select room(s)", {
         position: toast.POSITION.TOP_RIGHT
@@ -381,9 +387,10 @@ class RoutineDetails extends Component {
       return;
     }
     if (edit) {
-      // editRoutine({ props, state });
+      console.log(resource)
+      createRoutine({ props, state, resource });
     }
-    createRoutine({ props, state });
+    else createRoutine({ props, state });
   }
 
   handleCheck(roomKey) {
