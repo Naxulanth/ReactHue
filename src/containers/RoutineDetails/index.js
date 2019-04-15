@@ -370,8 +370,10 @@ class RoutineDetails extends Component {
       return;
     }
     if (
-      (type === "routines" || type === "timers") &&
-      Object.keys(roomScenes).length < 1
+      ((type === "routines" || type === "timers") &&
+        (Object.keys(roomScenes).length < 1 ||
+          !rooms.every(key => Object.keys(roomScenes).includes(key)))) ||
+      (home && !Object.keys(roomScenes).some(key => key === "0"))
     ) {
       toast.error("Please choose scenes", {
         position: toast.POSITION.TOP_RIGHT
