@@ -190,7 +190,7 @@ class RoutineDetails extends Component {
           data &&
           data["lightstates"] &&
           data["lightstates"][data["lights"][0]] &&
-          data["lightstates"][data["lights"][0]]["transitiontime"]
+          data["lightstates"][data["lights"][0]]["transitiontime"] && data["lightstates"][data["lights"][0]]["transitiontime"] > 600
         ) {
           tempFade =
             data["lightstates"][data["lights"][0]]["transitiontime"] / 600 + 1;
@@ -319,14 +319,14 @@ class RoutineDetails extends Component {
       fadeSelect,
       roomScenes,
       adjustmentSelect,
-      resource,
+      resource
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
       type,
       roomList,
-      createRoutine,
-    }
+      createRoutine
+    };
     let state = {
       name,
       days,
@@ -370,10 +370,10 @@ class RoutineDetails extends Component {
       return;
     }
     if (
-      ((type === "routines" || type === "timers") &&
-        (Object.keys(roomScenes).length < 1 ||
-          !rooms.every(key => Object.keys(roomScenes).includes(key)))) ||
-      (home && !Object.keys(roomScenes).some(key => key === "0"))
+      (type === "routines" || type === "timers") &&
+      (Object.keys(roomScenes).length < 1 ||
+        !rooms.every(key => Object.keys(roomScenes).includes(key)) ||
+        (home && !Object.keys(roomScenes).some(key => key === "0")))
     ) {
       toast.error("Please choose scenes", {
         position: toast.POSITION.TOP_RIGHT
