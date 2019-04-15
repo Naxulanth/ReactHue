@@ -11,6 +11,7 @@ import DayPicker from "containers/DayPicker";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { createRoutine, deleteRoutine } from "actions/routines";
+import { clearEdits } from "actions/scenes";
 import { getScene } from "actions/scenes";
 import { selectifyScenes } from "utils/scenes";
 import Checkbox from "components/Checkbox";
@@ -178,7 +179,6 @@ class RoutineDetails extends Component {
       let tempFade = null;
       let tempRooms = [];
       let tempRoomScenes = {};
-      console.log(editData[edit]);
       Object.keys(editData[edit]).forEach(key => {
         let data = editData[edit][key];
         tempRoomScenes[data.group] = {
@@ -223,7 +223,6 @@ class RoutineDetails extends Component {
             });
         }
       });
-      console.log(tempRooms);
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
@@ -252,9 +251,10 @@ class RoutineDetails extends Component {
   }
 
   handleDelete() {
-    const { deleteRoutine } = this.props;
+    const { deleteRoutine, edit, clearEdits } = this.props;
     const { resource } = this.state;
     deleteRoutine(resource);
+    clearEdits(edit);
   }
 
   formatTimeOff(time, timeOff) {
@@ -307,7 +307,7 @@ class RoutineDetails extends Component {
 
   handleSubmit(e) {
     let formattedTimeOff = null;
-    const { type, roomList, createRoutine, edit } = this.props;
+    const { type, roomList, createRoutine, edit, clearEdits } = this.props;
     const {
       name,
       days,
@@ -319,14 +319,14 @@ class RoutineDetails extends Component {
       fadeSelect,
       roomScenes,
       adjustmentSelect,
-      resource
+      resource,
     } = this.state;
     if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
     let props = {
       type,
       roomList,
-      createRoutine
-    };
+      createRoutine,
+    }
     let state = {
       name,
       days,
@@ -387,8 +387,8 @@ class RoutineDetails extends Component {
       return;
     }
     if (edit) {
-      console.log(resource);
       createRoutine({ props, state, resource });
+      clearEdits(edit);
     } else createRoutine({ props, state });
   }
 
@@ -764,7 +764,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   createRoutine: bindActionCreators(createRoutine.request, dispatch),
   getScene: bindActionCreators(getScene.request, dispatch),
-  deleteRoutine: bindActionCreators(deleteRoutine.request, dispatch)
+  deleteRoutine: bindActionCreators(deleteRoutine.request, dispatch),
+  clearEdits: bindActionCreators(clearEdits.request, dispatch)
 });
 
 export default connect(

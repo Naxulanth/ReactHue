@@ -4,7 +4,8 @@ import {
   SCENES_PUT,
   SCENE_LIGHTS_PUT,
   SCENE_POST,
-  SCENE_DELETE
+  SCENE_DELETE,
+  CLEAR_EDITS
 } from "../constants/actionTypes";
 
 const scenes = (state = [], action) => {
@@ -53,6 +54,17 @@ const scenes = (state = [], action) => {
     case SCENE_LIGHTS_PUT.SUCCESS:
       return state;
     case SCENE_LIGHTS_PUT.FAILURE:
+      return state;
+    case CLEAR_EDITS.REQUEST:
+      let tempEditData = Object.assign({}, state.editData);
+      tempEditData[action.id] = {};
+      return {
+        ...state,
+        editData: tempEditData
+      };
+    case CLEAR_EDITS.SUCCESS:
+      return state;
+    case CLEAR_EDITS.FAILURE:
       return state;
     case SCENE_POST.REQUEST:
       return state;

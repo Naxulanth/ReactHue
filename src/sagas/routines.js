@@ -17,6 +17,7 @@ import {
 
 import { absolute, recur, randomize } from "utils/date";
 
+
 import * as roomsActions from "../actions/rooms";
 import * as roomsApi from "../api/rooms";
 import * as lightsApi from "../api/lights";
@@ -81,7 +82,6 @@ export function* createRoutine({ body }) {
     let lights = [];
     if (state.home) {
       const allLights = yield call(lightsApi.getLights);
-      console.log(allLights)
       lights = Object.keys(allLights.data);
     } else if (state.routineLights.length < 1) {
       Object.keys(props.roomList).forEach(roomKey => {
@@ -473,7 +473,6 @@ export function* createRoutine({ body }) {
         });
         yield put(scenesActions.createScene.success(scene));
         sceneId = scene.data[0].success.id;
-        console.log(state.lights)
         for (let light of lights) {
           const modifyScene = yield call(
             scenesApi.modifySceneLights,

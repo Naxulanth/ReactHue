@@ -39,3 +39,5 @@ export const RULE_DELETE = createRequestTypes("RULE_DELETE");
 
 export const ROUTINE_CREATE = createRequestTypes("ROUTINE_CREATE");
 export const ROUTINE_DELETE = createRequestTypes("ROUTINE_DELETE");
+
+export const CLEAR_EDITS = createRequestTypes("CLEAR_EDITS");

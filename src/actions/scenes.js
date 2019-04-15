@@ -6,7 +6,8 @@ import {
   SCENE_GET,
   SCENE_LIGHTS_PUT,
   SCENE_POST,
-  SCENE_DELETE
+  SCENE_DELETE,
+  CLEAR_EDITS
 } from "../constants/actionTypes";
 
 export const getScenes = {
@@ -44,4 +45,10 @@ export const deleteScene = {
   request: id => action(SCENE_DELETE.REQUEST, { id }),
   success: response => action(SCENE_DELETE.SUCCESS, { response }),
   failure: error => action(SCENE_DELETE.FAILURE, { error })
+};
+
+export const clearEdits = {
+  request: id => action(CLEAR_EDITS.REQUEST, { id }),
+  success: response => action(CLEAR_EDITS.SUCCESS, { response }),
+  failure: error => action(CLEAR_EDITS.FAILURE, { error })
 };
