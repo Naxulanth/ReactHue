@@ -5,6 +5,7 @@ import validator from "validator";
 import TextInput from "components/TextInput";
 import Button from "components/Button";
 import remoteQuery from "constants/remote";
+import uuidv4 from "uuid/v4";
 import "./style.css";
 import queryString from "query-string";
 import { user, bridge } from "constants/localStorage";
@@ -159,7 +160,7 @@ class Config extends Component {
               Bridges discovered in the network:
               {bridges.map(bridge => {
                 return (
-                  <Row>
+                  <Row key={uuidv4()}>
                     <Col>
                       <span className="pointer" onClick={handleClick}>
                         {bridge}

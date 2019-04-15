@@ -190,7 +190,8 @@ class RoutineDetails extends Component {
           data &&
           data["lightstates"] &&
           data["lightstates"][data["lights"][0]] &&
-          data["lightstates"][data["lights"][0]]["transitiontime"] && data["lightstates"][data["lights"][0]]["transitiontime"] > 600
+          data["lightstates"][data["lights"][0]]["transitiontime"] &&
+          data["lightstates"][data["lights"][0]]["transitiontime"] > 600
         ) {
           tempFade =
             data["lightstates"][data["lights"][0]]["transitiontime"] / 600 + 1;
@@ -339,6 +340,7 @@ class RoutineDetails extends Component {
       roomScenes,
       adjustmentSelect
     };
+    console.log(home);
     if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
         position: toast.POSITION.TOP_RIGHT
@@ -351,7 +353,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if (routineLights.length < 1 && type === "wake") {
+    if ((!home && routineLights.length < 1) && type === "wake") {
       toast.error("Please fill out lights", {
         position: toast.POSITION.TOP_RIGHT
       });
