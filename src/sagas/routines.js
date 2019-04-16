@@ -17,6 +17,7 @@ import {
 
 import { absolute, recur, randomize } from "utils/date";
 
+import { toast } from "react-toastify";
 
 import * as roomsActions from "../actions/rooms";
 import * as roomsApi from "../api/rooms";
@@ -543,9 +544,9 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
     }
     yield put(actions.createRoutine.success());
-    yield put(schedulesActions.getSchedules.request());
-    yield put(resourcesActions.getResources.request());
-    yield put(rulesActions.getRules.request());
+   // yield put(schedulesActions.getSchedules.request());
+    //yield put(resourcesActions.getResources.request());
+    // yield put(rulesActions.getRules.request());
     if (body.resource) {
       yield put(actions.deleteRoutine.request(body.resource));
     }

@@ -2,8 +2,10 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import validator from "validator";
 import PropTypes from "prop-types";
 import { modifyLight } from "actions/lights";
+import { toast } from "react-toastify";
 import {
   getScene,
   modifyScene,
@@ -96,6 +98,12 @@ class SceneWidget extends Component {
     const { selectedOption, modifyName } = this.state;
     const { room, roomId, lights, modifyScene, modifySceneLights } = this.props;
     const roomLights = room[roomId].lights;
+    if (validator.isEmpty(modifyName)) {
+      toast.error("Scene name empty for modification", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
     modifyScene(selectedOption.key, { name: modifyName });
     for (let i = 0; i < roomLights.length; ++i) {
       let tempState = this.prepareState(lights[roomLights[i]].state);
@@ -103,6 +111,9 @@ class SceneWidget extends Component {
     }
     let selector = selectedOption;
     selector.label = modifyName;
+    toast.success("Scene modified successfully", {
+      position: toast.POSITION.TOP_RIGHT
+    });
     this.setState({
       selectedOption: selector
     });
@@ -119,6 +130,12 @@ class SceneWidget extends Component {
     } = this.props;
     const { sceneName } = this.state;
     const roomLights = room[roomId].lights;
+    if (validator.isEmpty(sceneName)) {
+      toast.error("Scene name empty for creation", {
+        position: toast.POSITION.TOP_RIGHT
+      });
+      return;
+    }
     createScene({
       name: sceneName,
       group: roomId.toString(),
@@ -129,6 +146,9 @@ class SceneWidget extends Component {
       let tempState = this.prepareState(lights[roomLights[i]].state);
       modifySceneLights(createdScene, roomLights[i], tempState);
     }
+    toast.success("Scene created successfully", {
+      position: toast.POSITION.TOP_RIGHT
+    });
     this.setState({
       sceneName: ""
     });
@@ -159,7 +179,8 @@ class SceneWidget extends Component {
       </Button>
     ) : null;
     const modifyText = selectedOption ? (
-      <TextInput className="push"
+      <TextInput
+        className="push"
         placeholder={"Edit scene name..."}
         value={modifyName}
         onChange={this.handleModifyText}
@@ -217,7 +238,7 @@ class SceneWidget extends Component {
 
 SceneWidget.propTypes = {
   activeScenes: PropTypes.object,
-  createdScene: PropTypes.object,
+  createdScene: PropTypes.string,
   deletedScene: PropTypes.string,
   lights: PropTypes.object,
   room: PropTypes.object,

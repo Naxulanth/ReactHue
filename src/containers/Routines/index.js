@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
 import Button from "components/Button";
 import Routine from "containers/Routine";
+import _ from "lodash/core";
 import RoutineDetails from "containers/RoutineDetails";
 import Animate from "components/Animate";
 import uuidv4 from "uuid/v4";
@@ -33,8 +34,7 @@ class Routines extends Component {
     if (
       schedules &&
       (routines.length === 0 ||
-        Object.keys(schedules[type]).length !==
-          Object.keys(prevProps.schedules[type]).length)
+        !_.isEqual(prevProps.schedules[type], schedules[type]))
     ) {
       this.mapRoutines(type);
     }
@@ -67,6 +67,7 @@ class Routines extends Component {
         <RoutineDetails key={uuidv4()} type={type} />
       </Animate>
     );
+    console.log(this.props.schedules);
     if (schedules && schedules[type]) {
       return (
         <div className={"routines-main " + type}>
@@ -96,11 +97,10 @@ class Routines extends Component {
 
 const mapStateToProps = state => ({
   schedules: state.schedules.list,
-  loading: state.routines.loading,
+  loading: state.routines.loading
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
   mapStateToProps,
