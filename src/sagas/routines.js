@@ -89,7 +89,6 @@ export function* createRoutine({ body }) {
     let shortId = shortid.generate();
     startSchedule.status = "disabled";
     startSchedule.recycle = true;
-    startSchedule.autodelete = false;
     let lights = [];
     if (state.home) {
       const allLights = yield call(lightsApi.getLights);
@@ -115,8 +114,8 @@ export function* createRoutine({ body }) {
       );
     } else {
       // absolute time
-      console.log(state.time);
       startSchedule.localtime = absolute(state.time, null, true);
+      startSchedule.autodelete = false;
     }
     if (props.type === "wake") {
       // sensor

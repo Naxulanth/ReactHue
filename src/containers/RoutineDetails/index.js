@@ -176,6 +176,7 @@ class RoutineDetails extends Component {
       Object.keys(editData[edit]).length === editScenes.length &&
       !loaded
     ) {
+      let tempTime = this.state.time;
       let tempFade = null;
       let tempRooms = [];
       let tempRoomScenes = {};
@@ -218,17 +219,22 @@ class RoutineDetails extends Component {
               )
             );
           });
-          if (type === "wake")
+          if (type === "wake") {
             this.setState({
               routineLights: data["lights"]
             });
+          }
         }
       });
+      if (type === "wake") {
+        tempTime.minutes(tempTime.minutes() + tempFade.value);
+      }
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
         loaded: true,
-        roomScenes: tempRoomScenes
+        roomScenes: tempRoomScenes,
+        time: tempTime
       });
     }
   }
@@ -308,13 +314,13 @@ class RoutineDetails extends Component {
 
   handleSubmit(e) {
     let formattedTimeOff = null;
+    let time = moment(this.state.time);
     const { type, roomList, createRoutine, edit, clearEdits } = this.props;
     const {
       name,
       days,
       rooms,
       home,
-      time,
       timeOff,
       routineLights,
       fadeSelect,
@@ -322,7 +328,11 @@ class RoutineDetails extends Component {
       adjustmentSelect,
       resource
     } = this.state;
-    if (timeOff) formattedTimeOff = this.formatTimeOff(time, timeOff);
+    if (timeOff)
+      formattedTimeOff = this.formatTimeOff(this.state.time, timeOff);
+    if (type === "wake") {
+      time.minutes(time.minutes() - fadeSelect.value);
+    }
     let props = {
       type,
       roomList,
@@ -340,14 +350,13 @@ class RoutineDetails extends Component {
       roomScenes,
       adjustmentSelect
     };
-    console.log(home);
     if (validator.isEmpty(name)) {
       toast.error("Please fill out the name field", {
         position: toast.POSITION.TOP_RIGHT
       });
       return;
     }
-    if (!time) {
+    if (!this.state.time) {
       toast.error("Please fill out the time field", {
         position: toast.POSITION.TOP_RIGHT
       });
