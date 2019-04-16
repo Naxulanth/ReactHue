@@ -65,6 +65,7 @@ export function* deleteRoutine({ id }) {
   yield put(actions.deleteRoutine.success());
   yield put(schedulesActions.getSchedules.request());
   yield put(resourcesActions.getResources.request());
+  yield put(rulesActions.getRules.request());
 }
 
 export function* watchCreateRoutine() {
@@ -104,6 +105,7 @@ export function* createRoutine({ body }) {
       );
     } else {
       // absolute time
+      console.log(state.time)
       startSchedule.localtime = absolute(state.time, null, true);
     }
     if (props.type === "wake") {
@@ -122,10 +124,12 @@ export function* createRoutine({ body }) {
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
       // first scene
+      console.log(startScheduleId)
       const endScene = yield call(
         scenesApi.createScene,
         sceneObject(false, props.type, lights, false)
       );
+      console.log(endScene)
       yield put(scenesActions.createScene.success(endScene));
       const endSceneId = endScene.data[0].success.id;
       for (let light of lights) {
@@ -541,6 +545,7 @@ export function* createRoutine({ body }) {
     yield put(actions.createRoutine.success());
     yield put(schedulesActions.getSchedules.request());
     yield put(resourcesActions.getResources.request());
+    yield put(rulesActions.getRules.request());
     if (body.resource) {
       yield put(actions.deleteRoutine.request(body.resource));
     }
