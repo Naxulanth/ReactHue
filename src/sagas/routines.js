@@ -89,6 +89,7 @@ export function* createRoutine({ body }) {
     let shortId = shortid.generate();
     startSchedule.status = "disabled";
     startSchedule.recycle = true;
+    startSchedule.autodelete = false;
     let lights = [];
     if (state.home) {
       const allLights = yield call(lightsApi.getLights);
@@ -155,6 +156,7 @@ export function* createRoutine({ body }) {
       endSchedule.description = shortId + "_trigger end scene";
       endSchedule.name = shortId;
       endSchedule.command = groupObject(endSceneId);
+      startSchedule.autodelete = false;
       endSchedule.localtime = "PT00:01:00";
       const endScheduleData = yield call(
         schedulesApi.createSchedule,
