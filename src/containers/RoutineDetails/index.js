@@ -353,7 +353,7 @@ class RoutineDetails extends Component {
       });
       return;
     }
-    if ((!home && routineLights.length < 1) && type === "wake") {
+    if (!home && routineLights.length < 1 && type === "wake") {
       toast.error("Please fill out lights", {
         position: toast.POSITION.TOP_RIGHT
       });
@@ -525,7 +525,14 @@ class RoutineDetails extends Component {
       adjustmentSelect,
       sceneSelectors
     } = this.state;
-    const { type, roomList, lightList, edit } = this.props;
+    const {
+      type,
+      roomList,
+      lightList,
+      edit,
+      isDeleting,
+      isCreating
+    } = this.props;
     const adjustmentField = (
       <Fragment>
         <Select
@@ -726,8 +733,15 @@ class RoutineDetails extends Component {
           <Row className="vertical-center center">
             <Col lg="3" sm="3" md="3" xl="3" />
             <Col className="vertical-align" lg="6" sm="6" md="6" xl="6">
-              <Button onClick={handleSubmit}>
-                {edit ? "Submit" : "Create"}
+              <Button
+                disabled={isCreating || isDeleting}
+                onClick={handleSubmit}
+              >
+                {isCreating || isDeleting
+                  ? "Loading..."
+                  : edit
+                  ? "Submit"
+                  : "Create"}
               </Button>
             </Col>
             <Col lg="2" sm="2" md="2" xl="2" />
@@ -760,7 +774,9 @@ const mapStateToProps = state => ({
   resources: state.resources.list,
   schedules: state.schedules.list,
   editData: state.scenes.editData,
-  rules: state.rules.list
+  rules: state.rules.list,
+  isCreating: state.routines.isCreating,
+  isDeleting: state.routines.isDeleting
 });
 
 const mapDispatchToProps = dispatch => ({
