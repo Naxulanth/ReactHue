@@ -67,6 +67,14 @@ export function* deleteRoutine({ id }) {
   yield put(schedulesActions.getSchedules.request());
   yield put(resourcesActions.getResources.request());
   yield put(rulesActions.getRules.request());
+  if (id.toast)
+    toast.success("Routine edited successfully", {
+      position: toast.POSITION.TOP_RIGHT
+    });
+  else
+    toast.success("Routine deleted successfully", {
+      position: toast.POSITION.TOP_RIGHT
+    });
 }
 
 export function* watchCreateRoutine() {
@@ -80,7 +88,7 @@ export function* createRoutine({ body }) {
     let startSchedule = {};
     let shortId = shortid.generate();
     startSchedule.status = "disabled";
-    startSchedule.recycle = true; 
+    startSchedule.recycle = true;
     let lights = [];
     if (state.home) {
       const allLights = yield call(lightsApi.getLights);
@@ -106,7 +114,7 @@ export function* createRoutine({ body }) {
       );
     } else {
       // absolute time
-      console.log(state.time)
+      console.log(state.time);
       startSchedule.localtime = absolute(state.time, null, true);
     }
     if (props.type === "wake") {
@@ -125,12 +133,12 @@ export function* createRoutine({ body }) {
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
       // first scene
-      console.log(startScheduleId)
+      console.log(startScheduleId);
       const endScene = yield call(
         scenesApi.createScene,
         sceneObject(false, props.type, lights, false)
       );
-      console.log(endScene)
+      console.log(endScene);
       yield put(scenesActions.createScene.success(endScene));
       const endSceneId = endScene.data[0].success.id;
       for (let light of lights) {
@@ -544,11 +552,15 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
     }
     yield put(actions.createRoutine.success());
-   // yield put(schedulesActions.getSchedules.request());
+    // yield put(schedulesActions.getSchedules.request());
     //yield put(resourcesActions.getResources.request());
     // yield put(rulesActions.getRules.request());
     if (body.resource) {
+      body.resource["toast"] = true;
       yield put(actions.deleteRoutine.request(body.resource));
-    }
+    } else
+      toast.success("Routine created successfully", {
+        position: toast.POSITION.TOP_RIGHT
+      });
   } catch (e) {}
 }
