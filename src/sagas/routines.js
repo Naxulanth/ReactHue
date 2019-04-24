@@ -553,15 +553,16 @@ export function* createRoutine({ body }) {
       yield put(resourcesActions.createResource.success(resourceData));
     }
     yield put(actions.createRoutine.success());
-    // yield put(schedulesActions.getSchedules.request());
-    //yield put(resourcesActions.getResources.request());
-    // yield put(rulesActions.getRules.request());
     if (body.resource) {
       body.resource["toast"] = true;
       yield put(actions.deleteRoutine.request(body.resource));
-    } else
+    } else {
       toast.success("Routine created successfully", {
         position: toast.POSITION.TOP_RIGHT
       });
+      yield put(schedulesActions.getSchedules.request());
+      yield put(resourcesActions.getResources.request());
+      yield put(rulesActions.getRules.request());
+    }
   } catch (e) {}
 }

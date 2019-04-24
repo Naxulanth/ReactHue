@@ -177,6 +177,7 @@ class RoutineDetails extends Component {
       !loaded
     ) {
       let tempTime = this.state.time;
+      let tempOffTime = this.state.timeOff;
       let tempFade = null;
       let tempRooms = [];
       let tempRoomScenes = {};
@@ -228,13 +229,15 @@ class RoutineDetails extends Component {
       });
       if (type === "wake") {
         tempTime.minutes(tempTime.minutes() + tempFade.value);
+        tempOffTime.minutes(tempOffTime.minutes() + tempFade.value);
       }
       this.setState({
         rooms: tempRooms,
         fadeSelect: tempFade,
         loaded: true,
         roomScenes: tempRoomScenes,
-        time: tempTime
+        time: tempTime,
+        timeOff: tempOffTime
       });
     }
   }
