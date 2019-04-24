@@ -424,7 +424,7 @@ export function* createRoutine({ body }) {
       );
       yield put(rulesActions.createRule.success(startRule));
       const startRuleId = startRule.data[0].success.id;
-      if (state.timeOff) {
+      if (state.formattedTimeOff) {
         const endRule = yield call(
           rulesApi.createRule,
           ruleObject(

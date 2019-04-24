@@ -20,7 +20,6 @@ class Routine extends Component {
     this.findName = this.findName.bind(this);
   }
 
-
   handleToggle() {
     const { setSchedule, id, schedules, type } = this.props;
     let { localtime, time } = schedules[type][id];
@@ -31,7 +30,7 @@ class Routine extends Component {
         let left = localTime[0];
         let right = localTime[1];
         left = absolute(left);
-        localTime = left + right;
+        localTime = left + "A" + right;
       } else localTime = absolute(localtime, time);
     }
     setSchedule(id, {
