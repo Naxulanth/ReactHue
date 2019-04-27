@@ -33,8 +33,8 @@ class RoomSetupWidget extends Component {
     arr.forEach((lightId, i) => {
       insert.push(
         <Row key={uuidv4()}>
-        <Col lg="12">
-          <RoomSetupSingle />
+          <Col lg="12">
+            <RoomSetupSingle lightId={lightId.toString()} />
           </Col>
         </Row>
       );
