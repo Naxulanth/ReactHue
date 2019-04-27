@@ -8,6 +8,7 @@ import { getXYtoRGB, getFormattedXYtoRGB } from "utils/colorConverter";
 import "./style.css";
 import colorChanger from "utils/colorChanger";
 import { objectToArray } from "utils";
+import RoomSetupSingle from "containers/RoomSetupSingle";
 
 class RoomSetupWidget extends Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class RoomSetupWidget extends Component {
       lights: []
     };
     this.c = null;
-    this.id = "RoomSetupWidget" + props.roomId;
     this.main = React.createRef();
   }
 
@@ -33,8 +33,8 @@ class RoomSetupWidget extends Component {
     arr.forEach((lightId, i) => {
       insert.push(
         <Row key={uuidv4()}>
-          <Col lg="12" sm="12" md="12" xl="12">
-            test
+        <Col lg="12">
+          <RoomSetupSingle />
           </Col>
         </Row>
       );
