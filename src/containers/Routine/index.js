@@ -68,7 +68,7 @@ class Routine extends Component {
 
   render() {
     const { handleToggle, findName, handleDetails } = this;
-    const { schedules, type, id, deleting } = this.props;
+    const { schedules, type, id, } = this.props;
     const { details } = this.state;
     if (schedules && schedules[type] && schedules[type][id]) {
       return (
