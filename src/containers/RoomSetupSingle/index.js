@@ -28,7 +28,6 @@ class RoomSetupSingle extends Component {
   render() {
     const { roomId, room, rooms, lights, lightId } = this.props;
     const { props, selected } = this.state;
-    console.log(rooms);
     return (
       <Fragment>
         <Row className="vertical-center rsetup-single">

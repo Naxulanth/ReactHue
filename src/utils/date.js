@@ -15,8 +15,6 @@ export function absolute(localtime, time, raw) {
   localtime.setMonth(today.getMonth());
   localtime.setFullYear(today.getFullYear());
   today.setUTCHours(today.getUTCHours() - offset);
-  console.log(today)
-  console.log(localtime)
   if (today > localtime) {
     localtime.setDate(today.getUTCDate() + 1);
   }
