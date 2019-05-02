@@ -37,10 +37,12 @@ class RoomSetupSingle extends Component {
             <Select
               onChange={this.handleChange}
               value={selected}
-              options={Object.keys(rooms).map(roomKey => {
-                let room = rooms[roomKey];
-                return { label: room.name, value: roomKey };
-              })}
+              options={Object.keys(rooms)
+                .map(roomKey => {
+                  let room = rooms[roomKey];
+                  return { label: room.name, value: roomKey };
+                })
+                .filter(e => e.label !== room.name)}
               styles={sceneSelectStyle}
             />
           </Col>

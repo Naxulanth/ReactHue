@@ -29,12 +29,16 @@ class RoomSetupWidget extends Component {
   }
 
   populateLights(arr) {
+    const { room, roomId } = this.props;
     let insert = [];
     arr.forEach((lightId, i) => {
       insert.push(
         <Row key={uuidv4()}>
           <Col lg="12">
-            <RoomSetupSingle lightId={lightId.toString()} />
+            <RoomSetupSingle
+              room={room[roomId]}
+              lightId={lightId.toString()}
+            />
           </Col>
         </Row>
       );
