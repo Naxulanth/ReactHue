@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, takeEvery } from "redux-saga/effects";
 import {
   ROOMS_GET,
   ROOMS_PUT,
@@ -57,7 +57,7 @@ export function* modifyRoomAttr({ id, body }) {
 }
 
 export function* watchModifyRoomAttr() {
-  yield takeLatest(ROOMS_PUT_ATTR.REQUEST, modifyRoomAttr);
+  yield takeEvery(ROOMS_PUT_ATTR.REQUEST, modifyRoomAttr);
 }
 
 export function* createRoom({ body }) {
