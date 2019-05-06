@@ -24,11 +24,13 @@ class RoomSetupSingle extends Component {
     let room = rooms[e.value];
     Object.keys(rooms).forEach(roomKey => {
       let r = rooms[roomKey];
-      r.lights.filter(l => l !== lightId);
-      modifyRoomAttr(roomKey, r);
+      r.lights = r.lights.filter(l => {
+        return l != lightId;
+      });
+      modifyRoomAttr(roomKey, { lights: r.lights });
     });
     room.lights.push(lightId);
-    modifyRoomAttr(e.value, room);
+    modifyRoomAttr(e.value, { lights: room.lights });
   };
 
   render() {
