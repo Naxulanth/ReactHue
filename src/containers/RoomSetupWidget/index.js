@@ -4,10 +4,7 @@ import uuidv4 from "uuid/v4";
 import { connect } from "react-redux";
 import EditableLabel from "react-inline-editing";
 import PropTypes from "prop-types";
-import { getXYtoRGB, getFormattedXYtoRGB } from "utils/colorConverter";
 import "./style.css";
-import colorChanger from "utils/colorChanger";
-import { objectToArray } from "utils";
 import RoomSetupSingle from "containers/RoomSetupSingle";
 
 class RoomSetupWidget extends Component {

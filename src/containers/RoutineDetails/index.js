@@ -3,7 +3,6 @@ import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import uuidv4 from "uuid/v4";
-import PropTypes from "prop-types";
 import Button from "components/Button";
 import TextInput from "components/TextInput";
 import TimePicker from "components/TimePicker";

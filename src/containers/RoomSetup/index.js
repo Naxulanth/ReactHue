@@ -23,7 +23,7 @@ class RoomSetup extends Component {
   }
 
   componentDidMount() {
-    const { getRooms, getLights, getScenes } = this.props;
+    const { getRooms, getLights } = this.props;
     getRooms();
     getLights();
   }
@@ -68,7 +68,7 @@ class RoomSetup extends Component {
   }
 
   render() {
-    const { roomAmount, rooms } = this.state;
+    const { rooms } = this.state;
     return (
       <Fragment>
         <Row>
