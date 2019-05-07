@@ -12,14 +12,16 @@ class RoomSetupSingle extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null
+      selected: null,
+      loading: false
     };
   }
 
   handleChange = e => {
     const { rooms, modifyRoomAttr, lightId } = this.props;
     this.setState({
-      selected: e
+      selected: e,
+      loading: true
     });
     let room = rooms[e.value];
     Object.keys(rooms).forEach(roomKey => {
@@ -35,23 +37,27 @@ class RoomSetupSingle extends Component {
 
   render() {
     const { room, rooms, lights, lightId } = this.props;
-    const { selected } = this.state;
+    const { selected, loading } = this.state;
     return (
       <Fragment>
         <Row className="vertical-center rsetup-single">
           <Col lg="6">{lights[lightId].name}</Col>
           <Col className="center" lg="6">
-            <Select
-              onChange={this.handleChange}
-              value={selected}
-              options={Object.keys(rooms)
-                .map(roomKey => {
-                  let room = rooms[roomKey];
-                  return { label: room.name, value: roomKey };
-                })
-                .filter(e => e.label !== room.name)}
-              styles={sceneSelectStyle}
-            />
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <Select
+                onChange={this.handleChange}
+                value={selected}
+                options={Object.keys(rooms)
+                  .map(roomKey => {
+                    let room = rooms[roomKey];
+                    return { label: room.name, value: roomKey };
+                  })
+                  .filter(e => e.label !== room.name)}
+                styles={sceneSelectStyle}
+              />
+            )}
           </Col>
         </Row>
       </Fragment>
