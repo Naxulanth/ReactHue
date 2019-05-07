@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import _ from "lodash/core";
 import PropTypes from "prop-types";
 import uuidv4 from "uuid/v4";
 import Title from "components/Title";
@@ -30,7 +31,11 @@ class RoomSetup extends Component {
 
   componentDidUpdate(prevProps) {
     const { lights, rooms } = this.props;
-    if (this.state.rooms.length === 0 && lights && rooms) {
+    if (
+      lights &&
+      rooms &&
+      (this.state.rooms.length === 0 || !_.isEqual(prevProps.rooms, rooms))
+    ) {
       this.populateWidgets(rooms);
     }
   }
@@ -94,12 +99,12 @@ RoomSetup.propTypes = {
 
 const mapStateToProps = state => ({
   rooms: state.rooms.list,
-  lights: state.lights.list,  
+  lights: state.lights.list
 });
 
 const mapDispatchToProps = dispatch => ({
   getRooms: bindActionCreators(getRooms.request, dispatch),
-  getLights: bindActionCreators(getLights.request, dispatch),
+  getLights: bindActionCreators(getLights.request, dispatch)
 });
 
 export default connect(

@@ -25,7 +25,7 @@ class RoomSetupSingle extends Component {
     Object.keys(rooms).forEach(roomKey => {
       let r = rooms[roomKey];
       r.lights = r.lights.filter(l => {
-        return l !== parseInt(lightId);
+        return parseInt(l) !== parseInt(lightId);
       });
       modifyRoomAttr(roomKey, { lights: r.lights });
     });
