@@ -109,7 +109,9 @@ class RoomSetup extends Component {
           <Fragment>
             <Row style={{ marginBottom: "50px" }}>
               <Col lg="1" />
-              <Col lg="3">Unassigned Lights</Col>
+              <Col lg="3" style={{ fontSize: "22px" }}>
+                Unassigned Lights
+              </Col>
               <Col lg="1" />
             </Row>
             <Row style={{ marginBottom: "50px" }}>
