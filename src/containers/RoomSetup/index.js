@@ -87,8 +87,16 @@ class RoomSetup extends Component {
   render() {
     const { rooms } = this.state;
     const { lights } = this.props;
+    let unassigned = rooms && lights && this.findUnassigned().map(u => u.name);
     return (
       <Fragment>
+        {unassigned ? (
+          <Row>
+            <Col lg="1" />
+            <Col lg="10">{unassigned}</Col>
+            <Col lg="1" />
+          </Row>
+        ) : null}
         <Row>
           <Col lg="1" />
           <Col className="title-text" lg={{ size: 9 }}>
@@ -97,11 +105,6 @@ class RoomSetup extends Component {
           <Col lg="1" />
         </Row>
         {rooms}
-        <Row>
-          <Col lg="1" />
-          <Col lg="10">{rooms && lights && this.findUnassigned().map(u => u.name)}</Col>
-          <Col lg="1" />
-        </Row>
       </Fragment>
     );
   }
