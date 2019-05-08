@@ -133,7 +133,6 @@ RoomSetup.propTypes = {
   getLights: PropTypes.func,
   lights: PropTypes.object,
   rooms: PropTypes.object,
-  scenes: PropTypes.object
 };
 
 const mapStateToProps = state => ({
