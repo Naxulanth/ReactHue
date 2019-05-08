@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import uuidv4 from "uuid/v4";
 import Title from "components/Title";
 import RoomSetupWidget from "containers/RoomSetupWidget";
+import RoomSetupSingle from "containers/RoomSetupSingle";
 import { getRooms } from "actions/rooms";
 import { getLights } from "actions/lights";
 import "./style.css";
@@ -80,23 +81,23 @@ class RoomSetup extends Component {
     );
     let unassigned = Object.keys(lights)
       .filter(l => !allRooms.includes(l))
-      .map(u => lights[u]);
+      .map(u => {
+        lights[u].key = u;
+        return lights[u];
+      });
+    console.log(unassigned);
     return unassigned;
   }
 
   render() {
     const { rooms } = this.state;
     const { lights } = this.props;
-    let unassigned = rooms && lights && this.findUnassigned().map(u => u.name);
+    let unassigned =
+      rooms &&
+      lights &&
+      this.findUnassigned().map(u => <RoomSetupSingle lightId={u.key} />);
     return (
       <Fragment>
-        {unassigned ? (
-          <Row>
-            <Col lg="1" />
-            <Col lg="10">{unassigned}</Col>
-            <Col lg="1" />
-          </Row>
-        ) : null}
         <Row>
           <Col lg="1" />
           <Col className="title-text" lg={{ size: 9 }}>
@@ -104,6 +105,20 @@ class RoomSetup extends Component {
           </Col>
           <Col lg="1" />
         </Row>
+        {unassigned ? (
+          <Fragment>
+            <Row style={{ marginBottom: "50px" }}>
+              <Col lg="1" />
+              <Col lg="3">Unassigned Lights</Col>
+              <Col lg="1" />
+            </Row>
+            <Row style={{ marginBottom: "50px" }}>
+              <Col lg="1" />
+              <Col lg="3">{unassigned}</Col>
+              <Col lg="1" />
+            </Row>
+          </Fragment>
+        ) : null}
         {rooms}
       </Fragment>
     );

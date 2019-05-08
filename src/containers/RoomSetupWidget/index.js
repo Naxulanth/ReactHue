@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import { Row, Col } from "reactstrap";
 import uuidv4 from "uuid/v4";
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import EditableLabel from "react-inline-editing";
+import { modifyRoomAttr } from "actions/rooms";
 import PropTypes from "prop-types";
 import "./style.css";
 import RoomSetupSingle from "containers/RoomSetupSingle";
@@ -15,6 +17,8 @@ class RoomSetupWidget extends Component {
     };
     this.c = null;
     this.main = React.createRef();
+    this.populateLights = this.populateLights.bind(this);
+    this.changeName = this.changeName.bind(this);
   }
 
   componentDidMount() {
@@ -32,10 +36,7 @@ class RoomSetupWidget extends Component {
       insert.push(
         <Row key={uuidv4()}>
           <Col lg="12">
-            <RoomSetupSingle
-              room={room[roomId]}
-              lightId={lightId.toString()}
-            />
+            <RoomSetupSingle room={room[roomId]} lightId={lightId.toString()} />
           </Col>
         </Row>
       );
@@ -43,6 +44,15 @@ class RoomSetupWidget extends Component {
     this.setState({
       lights: insert
     });
+  }
+
+  changeName(e) {
+    const { roomId, modifyRoomAttr } = this.props;
+    console.log(this.props)
+    this.setState({
+      roomName: e
+    });
+    modifyRoomAttr(roomId, { name: e });
   }
 
   render() {
@@ -83,7 +93,9 @@ const mapStateToProps = state => ({
   lights: state.lights.list
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  modifyRoomAttr: bindActionCreators(modifyRoomAttr.request, dispatch)
+});
 
 export default connect(
   mapStateToProps,

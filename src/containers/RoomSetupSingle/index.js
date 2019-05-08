@@ -3,8 +3,10 @@ import { Row, Col } from "reactstrap";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import EditableLabel from "react-inline-editing";
 import Select from "react-select";
 import { modifyRoomAttr } from "actions/rooms";
+import { modifyLightAttr } from "actions/lights";
 import { sceneSelectStyle } from "constants/selectStyle";
 import "./style.css";
 
@@ -15,6 +17,8 @@ class RoomSetupSingle extends Component {
       selected: null,
       loading: false
     };
+    this.changeName = this.changeName.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange = e => {
@@ -35,13 +39,31 @@ class RoomSetupSingle extends Component {
     modifyRoomAttr(e.value, { lights: room.lights });
   };
 
+  changeName(e) {
+    let { lightId, modifyLightAttr } = this.props;
+    this.setState({
+      lightName: e
+    });
+    modifyLightAttr(lightId, { name: e });
+  }
+
   render() {
     const { room, rooms, lights, lightId } = this.props;
     const { selected, loading } = this.state;
+    let opts = Object.keys(rooms).map(roomKey => {
+      let room = rooms[roomKey];
+      return { label: room.name, value: roomKey };
+    });
     return (
       <Fragment>
         <Row className="vertical-center rsetup-single">
-          <Col lg="6">{lights[lightId].name}</Col>
+          <Col lg="6">
+            <EditableLabel
+              text={lights[lightId].name}
+              onFocusOut={this.changeName}
+              inputWidth="120px"
+            />
+          </Col>
           <Col className="center" lg="6">
             {loading ? (
               <div>Loading...</div>
@@ -49,12 +71,7 @@ class RoomSetupSingle extends Component {
               <Select
                 onChange={this.handleChange}
                 value={selected}
-                options={Object.keys(rooms)
-                  .map(roomKey => {
-                    let room = rooms[roomKey];
-                    return { label: room.name, value: roomKey };
-                  })
-                  .filter(e => e.label !== room.name)}
+                options={room ? opts.filter(e => e.label !== room.name) : opts}
                 styles={sceneSelectStyle}
               />
             )}
@@ -76,7 +93,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  modifyRoomAttr: bindActionCreators(modifyRoomAttr.request, dispatch)
+  modifyRoomAttr: bindActionCreators(modifyRoomAttr.request, dispatch),
+  modifyLightAttr: bindActionCreators(modifyLightAttr.request, dispatch)
 });
 
 export default connect(
