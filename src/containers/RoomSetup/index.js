@@ -85,7 +85,6 @@ class RoomSetup extends Component {
         lights[u].key = u;
         return lights[u];
       });
-    console.log(unassigned);
     return unassigned;
   }
 
@@ -95,7 +94,9 @@ class RoomSetup extends Component {
     let unassigned =
       rooms &&
       lights &&
-      this.findUnassigned().map(u => <RoomSetupSingle lightId={u.key} />);
+      this.findUnassigned().map(u => (
+        <RoomSetupSingle key={uuidv4()} lightId={u.key} />
+      ));
     return (
       <Fragment>
         <Row>

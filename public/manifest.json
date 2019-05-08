@@ -1,6 +1,6 @@
 {
-  "short_name": "Hue Console",
-  "name": "Hue Console",
+  "short_name": "ReactHue",
+  "name": "ReactHue",
   "icons": [
     {
       "src": "favicon.ico",

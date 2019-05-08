@@ -133,12 +133,10 @@ export function* createRoutine({ body }) {
       yield put(schedulesActions.createSchedule.success(startScheduleData));
       const startScheduleId = startScheduleData.data[0].success.id;
       // first scene
-      console.log(startScheduleId);
       const endScene = yield call(
         scenesApi.createScene,
         sceneObject(false, props.type, lights, false)
       );
-      console.log(endScene);
       yield put(scenesActions.createScene.success(endScene));
       const endSceneId = endScene.data[0].success.id;
       for (let light of lights) {

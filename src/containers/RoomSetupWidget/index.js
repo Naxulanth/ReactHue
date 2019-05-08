@@ -48,7 +48,6 @@ class RoomSetupWidget extends Component {
 
   changeName(e) {
     const { roomId, modifyRoomAttr } = this.props;
-    console.log(this.props)
     this.setState({
       roomName: e
     });
