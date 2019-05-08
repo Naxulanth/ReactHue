@@ -72,8 +72,21 @@ class RoomSetup extends Component {
     });
   }
 
+  findUnassigned() {
+    const { lights, rooms } = this.props;
+    let allRooms = [];
+    Object.keys(rooms).forEach(
+      r => (allRooms = allRooms.concat(rooms[r].lights))
+    );
+    let unassigned = Object.keys(lights)
+      .filter(l => !allRooms.includes(l))
+      .map(u => lights[u]);
+    return unassigned;
+  }
+
   render() {
     const { rooms } = this.state;
+    const { lights } = this.props;
     return (
       <Fragment>
         <Row>
@@ -84,6 +97,11 @@ class RoomSetup extends Component {
           <Col lg="1" />
         </Row>
         {rooms}
+        <Row>
+          <Col lg="1" />
+          <Col lg="10">{rooms && lights && this.findUnassigned().map(u => u.name)}</Col>
+          <Col lg="1" />
+        </Row>
       </Fragment>
     );
   }
