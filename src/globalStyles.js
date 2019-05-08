@@ -70,6 +70,10 @@ input {
 input:focus {
   outline: none
 }
+
+label {
+  margin-bottom: 0 !important;
+}
   
 `;
 

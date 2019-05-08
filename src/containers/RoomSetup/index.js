@@ -106,7 +106,7 @@ class RoomSetup extends Component {
           </Col>
           <Col lg="1" />
         </Row>
-        {unassigned ? (
+        {unassigned && unassigned.length > 0 ? (
           <Fragment>
             <Row style={{ marginBottom: "50px" }}>
               <Col lg="1" />
