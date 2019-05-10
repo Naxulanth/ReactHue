@@ -42,8 +42,7 @@ class Config extends Component {
   }
 
   remoteAuth() {
-    axios.get("https://api.meethue.com/oauth2/auth?" + remoteQuery).then(res => {
-    })
+    window.open("https://api.meethue.com/oauth2/auth?" + remoteQuery, "_blank");
   }
 
   getBridges() {
@@ -81,24 +80,29 @@ class Config extends Component {
     } else {
       this.setState({
         generator: "Connecting..."
-      })
-      axios.post("http://" + ip + "/api", { devicetype: "hue_console" }).then(res => {
-        if (res.data[0].error) {
-          this.setState({
-            generator: res.data[0].error.description + ", click this link again to try again"
-          })
-        }
-        else if (res.data[0].success) {
-          this.setState({
-            username: res.data[0].success.username,
-            generator: "Success"
-          })
-        }
-      }).catch(e => {
-        this.setState({
-          generator: "Bridge not found, make sure to enter the correct Bridge IP"
-        })
       });
+      axios
+        .post("http://" + ip + "/api", { devicetype: "hue_console" })
+        .then(res => {
+          if (res.data[0].error) {
+            this.setState({
+              generator:
+                res.data[0].error.description +
+                ", click this link again to try again"
+            });
+          } else if (res.data[0].success) {
+            this.setState({
+              username: res.data[0].success.username,
+              generator: "Success"
+            });
+          }
+        })
+        .catch(e => {
+          this.setState({
+            generator:
+              "Bridge not found, make sure to enter the correct Bridge IP"
+          });
+        });
     }
   }
 
@@ -239,6 +243,13 @@ class Config extends Component {
         <Row>
           <Col lg="12" sm="12" md="12" xl="12">
             <div>{text}</div>
+          </Col>
+        </Row>
+        <Row>
+          <Col lg="12" sm="12" md="12" xl="12">
+            <div style={{ cursor: "pointer" }} onClick={this.remoteAuth}>
+              Remote Auth
+            </div>
           </Col>
         </Row>
       </div>
