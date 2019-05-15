@@ -245,6 +245,7 @@ class Config extends Component {
             <div>{text}</div>
           </Col>
         </Row>
+        {/*
         <Row>
           <Col lg="12" sm="12" md="12" xl="12">
             <div style={{ cursor: "pointer" }} onClick={this.remoteAuth}>
@@ -252,6 +253,7 @@ class Config extends Component {
             </div>
           </Col>
         </Row>
+        */}
       </div>
     );
   }

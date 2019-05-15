@@ -1,11 +1,13 @@
 import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
+import axios from "axios";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import PropTypes from "prop-types";
 import uuidv4 from "uuid/v4";
 import Title from "components/Title";
 import RoomWidget from "containers/RoomWidget";
+import header from "constants/authorization";
 import { getRooms } from "actions/rooms";
 import { getLights } from "actions/lights";
 import { getScenes } from "actions/scenes";
@@ -25,6 +27,26 @@ class Rooms extends Component {
 
   componentDidMount() {
     const { getRooms, getLights, getScenes } = this.props;
+    /*const query = new URLSearchParams(window.location.search);
+    const code = query.get("code");
+    if (code) {
+      axios.post(
+        "https://api.meethue.com/oauth2/token?code=" +
+          code +
+          "&grant_type=authorization_code",{
+            code: code,
+            grant_type: "authorization_code"
+          }, {
+            headers: {
+              Authorization: "Basic " + header
+            },
+            withCredentials: false,
+            crossdomain: true
+          }
+      ).then(res => {
+        console.log(res)
+      });
+    }*/
     getRooms();
     getLights();
     getScenes();

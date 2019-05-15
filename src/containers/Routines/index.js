@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import RoutineTitle from "components/RoutineTitle";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
@@ -69,26 +69,28 @@ class Routines extends Component {
     );
     if (schedules && schedules[type]) {
       return (
-        <div className={"routines-main " + type}>
-          <div className="child">
-            <Row className="vertical-center push-bottom">
-              <Col sm="8" md="8" lg="8" xl="8">
-                <RoutineTitle>
-                  {type.charAt(0).toUpperCase() + type.slice(1)}
-                </RoutineTitle>
-              </Col>
-              <Col className="align-right" sm="4" md="4" lg="4" xl="4">
-                <Button onClick={handleCreator} width="true">
-                  {creator ? "Cancel" : "Create"}
-                </Button>
-              </Col>
-            </Row>
-            <div style={{ pointerEvents: creator ? "auto" : "none" }}>
-              {details}
+        <Fragment>
+          <div className={"routines-main " + type}>
+            <div className="child">
+              <Row className="vertical-center push-bottom">
+                <Col sm="8" md="8" lg="8" xl="8">
+                  <RoutineTitle>
+                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  </RoutineTitle>
+                </Col>
+                <Col className="align-right" sm="4" md="4" lg="4" xl="4">
+                  <Button onClick={handleCreator} width="true">
+                    {creator ? "Cancel" : "Create"}
+                  </Button>
+                </Col>
+              </Row>
+              <div style={{ pointerEvents: creator ? "auto" : "none" }}>
+                {details}
+              </div>
+              {routines}
             </div>
-            {routines}
           </div>
-        </div>
+        </Fragment>
       );
     } else return null;
   }

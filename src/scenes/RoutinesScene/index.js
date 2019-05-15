@@ -1,8 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { Row, Col } from "reactstrap";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Routines from "containers/Routines";
+import Title from "components/Title";
 import { getSchedules } from "actions/schedules";
 import { getResources } from "actions/resources";
 import { getRules } from "actions/rules";
@@ -41,7 +42,15 @@ class RoutinesScene extends Component {
 
   render() {
     return (
-      <div className="routines-scene pad">
+      <Fragment>
+      <Row>
+      <Col lg="1" />
+      <Col className="title-text" lg={{ size: 9 }}>
+        <Title>Routines</Title>
+      </Col>
+      <Col lg="1" />
+    </Row>
+      <div>
         <Row>
           <Col lg={{ offset: 1, size: 5 }}>
             <Routines type="wake" />
@@ -61,6 +70,7 @@ class RoutinesScene extends Component {
           <Col lg="1" />
         </Row>
       </div>
+      </Fragment>
     );
   }
 }

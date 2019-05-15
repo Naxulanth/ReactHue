@@ -72,16 +72,6 @@ class MenuBar extends Component {
                   Config
                 </MenuBarLink>
               </Col>
-              <Col className="about" sm="3" md="2" lg="2" xl="2">
-                <MenuBarLink
-                  to={{
-                    pathname: process.env.PUBLIC_URL + "/faq",
-                    search: this.props.location.search
-                  }}
-                >
-                  FAQ
-                </MenuBarLink>
-              </Col>
             </Row>
           </Col>
         </Row>
