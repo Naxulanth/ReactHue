@@ -18,7 +18,7 @@ class ColorPickerExpanded extends React.Component {
           />{" "}
         </div>
         <div className="color-picker-sat">
-          <Saturation {...refinedProps}  />
+          <Saturation {...refinedProps} style={{height: "20px"}}  />
         </div>
       </div>
     );

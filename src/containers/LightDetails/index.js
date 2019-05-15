@@ -50,15 +50,6 @@ class LightDetails extends Component {
     const { room, lightId, light } = this.props;
     if (
       !room &&
-      prevProps.light[lightId].state.xy !== light[lightId].state.xy
-    ) {
-      let converted = getFormattedXYtoRGB(light, lightId);
-      this.setState({
-        colorRgb: converted
-      });
-    }
-    if (
-      !room &&
       prevProps.light[lightId].state.bri !== light[lightId].state.bri
     ) {
       this.setState({

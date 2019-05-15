@@ -43,39 +43,34 @@ export function getRGBtoXY(c) {
   cred = c[0];
   cgreen = c[1];
   cblue = c[2];
+  console.log(cred, cgreen, cblue);
   normalizedToOne[0] = cred / 255;
   normalizedToOne[1] = cgreen / 255;
   normalizedToOne[2] = cblue / 255;
   let red, green, blue;
-
   // Make red more vivid
   if (normalizedToOne[0] > 0.04045) {
     red = Math.pow((normalizedToOne[0] + 0.055) / (1.0 + 0.055), 2.4);
   } else {
     red = normalizedToOne[0] / 12.92;
   }
-
   // Make green more vivid
   if (normalizedToOne[1] > 0.04045) {
     green = Math.pow((normalizedToOne[1] + 0.055) / (1.0 + 0.055), 2.4);
   } else {
     green = normalizedToOne[1] / 12.92;
   }
-
   // Make blue more vivid
   if (normalizedToOne[2] > 0.04045) {
     blue = Math.pow((normalizedToOne[2] + 0.055) / (1.0 + 0.055), 2.4);
   } else {
     blue = normalizedToOne[2] / 12.92;
   }
-
   let X = red * 0.649926 + green * 0.103455 + blue * 0.197109;
   let Y = red * 0.234327 + green * 0.743075 + blue * 0.022598;
   let Z = red * 0.0 + green * 0.053077 + blue * 1.035763;
-
   let x = X / (X + Y + Z);
   let y = Y / (X + Y + Z);
-
   let xy = [];
   xy[0] = x;
   xy[1] = y;
