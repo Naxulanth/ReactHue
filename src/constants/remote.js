@@ -6,7 +6,6 @@ const params = {
   state: "6c981565-c346-4a2f-a569-0647a134bfa7"
 };
 
-let header = btoa(params.clientid + ":" + params.clientsecret);
 
 var str = "";
 for (var key in params) {
