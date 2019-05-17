@@ -187,6 +187,7 @@ class SceneWidget extends Component {
       />
     ) : null;
     if (roomScenes.length > 0) {
+      console.log(roomScenes)
       return (
         <div ref={this.main} className="scene-widget">
           <Row className="vertical-center">
