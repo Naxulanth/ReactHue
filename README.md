@@ -10,7 +10,15 @@ I'm not a big fan of using mobile applications, (especially when I'm on the comp
 
 ![Demo]()
 
-## Modify lights and scenes
+## Modify lights
+
+![Demo]()
+
+## Create scenes
+
+![Demo]()
+
+## Modify scenes
 
 ![Demo]()
 
@@ -22,7 +30,7 @@ I'm not a big fan of using mobile applications, (especially when I'm on the comp
 
 ![Demo]()
 
-## Upcoming features
+## Known issues
 
 - Remote access: Unfortunately I am unable to implement this as the Hue API has an issue with CORS. This will be done as soon as the API is fixed.
 

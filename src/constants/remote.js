@@ -1,5 +1,5 @@
 const params = {
-  clientid: "WiBe6A9jomNZ6UK9DGjY9AygB765LOTT",
+  clientid: "AR4TrBFjmuxRGYLeEaTvviA1jbehG5N9",
   appid: "reacthue",
   response_type: "code",
   deviceid: "52eb92e3-4488-4d8d-853c-2c747f878f88",
