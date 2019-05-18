@@ -43,7 +43,6 @@ export function getRGBtoXY(c) {
   cred = c[0];
   cgreen = c[1];
   cblue = c[2];
-  console.log(cred, cgreen, cblue);
   normalizedToOne[0] = cred / 255;
   normalizedToOne[1] = cgreen / 255;
   normalizedToOne[2] = cblue / 255;
