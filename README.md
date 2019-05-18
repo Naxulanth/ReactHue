@@ -4,8 +4,6 @@ A web user interface for [Philips Hue](https://www2.meethue.com/en-us) lights.
 
 I'm not a big fan of using mobile applications, (especially when I'm on the computer) which is why I built this application to control the lights in my home.
 
-[**Try it here!**]()
-
 ## Configuration
 
 ![Demo](https://s3.eu-central-1.amazonaws.com/www.deniz.gg/config.gif)
