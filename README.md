@@ -1,4 +1,4 @@
-# [ReactHue](http://naxulanth.github.io/reacthue/)
+# [ReactHue](https://github.com/Naxulanth/ReactHue/)
 
 A web user interface for [Philips Hue](https://www2.meethue.com/en-us) lights.
 
